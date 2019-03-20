@@ -1,9 +1,8 @@
 import Interaction from "./Interaction";
-export default class Scene {
-  constructor() {
-    this.container = document.createElement("div");
-    this.container.id = "main";
-    document.body.appendChild(this.container);
+
+export default class Canvas3D {
+  constructor({ container }) {
+    this.container = container || document.body;
     this.camera = new THREE.PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
@@ -14,6 +13,7 @@ export default class Scene {
     this.camera.position.y = 5;
     this.camera.position.x = 5;
 
+    this.camera.lookAt(0, 0, 0);
     var size = 10;
     var divisions = 10;
 

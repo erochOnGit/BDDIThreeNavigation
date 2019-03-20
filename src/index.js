@@ -1,6 +1,6 @@
+import React from "react";
+import ReactDom from "react-dom";
+import App from "./web/App";
 import "./style.css";
 
-// import App from "./scripts/App";
-import App from "./scripts/App";
-
-window.app = new App();
+ReactDom.render(<App />, document.getElementById("app"));

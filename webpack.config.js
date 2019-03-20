@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
+const srcPath = path.resolve(__dirname, "src");
 
 module.exports = {
   mode: "development",
@@ -29,7 +30,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
-      title: "Output Management"
+      template: "src/index.html"
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
@@ -37,12 +38,12 @@ module.exports = {
     rules: [
       //load js files
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.js$/,
+        include: [srcPath],
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"]
+            presets: ["@babel/react"]
           }
         }
       },
