@@ -1,5 +1,6 @@
 import React from "react";
 import ThreeContainer from "./components/ThreeContainer/ThreeContainer";
+import EnhanceApp from "./EnhanceApp";
 
 const App = props => {
   return (
@@ -8,4 +9,4 @@ const App = props => {
     </div>
   );
 };
-export default App;
+export default EnhanceApp()(App);
