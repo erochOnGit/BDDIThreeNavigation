@@ -1,4 +1,5 @@
 import Interaction from "./Interaction";
+import InteractionOne from "../InteractionOne/InteractionOne";
 
 export default class Canvas3D {
   constructor({ container }) {
@@ -21,7 +22,7 @@ export default class Canvas3D {
 
     this.scene = new THREE.Scene();
     this.interactions = [];
-    this.interactions.push(new Interaction(this.scene));
+    this.interactions.push(new InteractionOne(this.scene));
 
     this.scene.add(gridHelper);
 
