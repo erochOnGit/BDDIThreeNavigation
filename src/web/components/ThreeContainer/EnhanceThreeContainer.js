@@ -9,7 +9,8 @@ const ThreeContainer = () =>
     lifecycle({
       componentDidMount() {
         let can3d = new Canvas3D({
-          container: document.querySelector(".threeContainer")
+          container: document.querySelector(".threeContainer"),
+          setStep: this.props.setStep
         });
       }
     })

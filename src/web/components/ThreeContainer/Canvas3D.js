@@ -1,8 +1,10 @@
 import Interaction from "./Interaction";
-import InteractionOne from "../InteractionOne/InteractionOne";
+import InteractionOne from "../InteractionOne";
+import InteractionFour from "../InteractionFour/";
 
 export default class Canvas3D {
-  constructor({ container }) {
+  constructor({ container, setStep }) {
+    this.setStep = setStep;
     this.container = container || document.body;
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -22,9 +24,12 @@ export default class Canvas3D {
 
     this.scene = new THREE.Scene();
     this.interactions = [];
-    this.interactions.push(new InteractionOne(this.scene));
+    this.interactionsStep = 1;
+    this.interactions.push(new InteractionOne());
+    this.interactions.push(new InteractionFour());
 
     this.scene.add(gridHelper);
+    this.setInteractionStep(1);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.shadowMap.enabled = true;
@@ -48,6 +53,23 @@ export default class Canvas3D {
   }
   display() {
     this.container.style.display = "block";
+  }
+  setInteractionStep(index) {
+    this.removeAllMesh();
+    this.setStep(index);
+
+    //here we sub one because the global step zero is linked to the home screen
+    this.AddInteractionMesh(this.interactions[index - 1]);
+  }
+  removeAllMesh() {
+    this.scene.children = this.scene.children.filter(child => {
+      return child.type != "Mesh";
+    });
+  }
+  AddInteractionMesh(interaction) {
+    interaction.meshes.forEach(mesh => {
+      this.scene.add(mesh);
+    });
   }
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;

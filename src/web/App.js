@@ -4,27 +4,24 @@ import Home from "./components/Home/";
 import EnhanceApp from "./EnhanceApp";
 
 const App = props => {
-  switch (props.step) {
-    case 0:
-      return (
-        <div
-          onClick={() => {
-            props.setStep(1);
-          }}
-        >
-          <Home />
-        </div>
-      );
-      break;
-    case 1:
-      return (
-        <div>
-          <ThreeContainer />
-        </div>
-      );
-      break;
-    default:
-      return <div>nothing found for the current step provided</div>;
+  if (props.step === 0) {
+    return (
+      <div
+        onClick={() => {
+          props.setStep(1);
+        }}
+      >
+        <Home />
+      </div>
+    );
+  } else if (props.step > 0) {
+    return <ThreeContainer setStep={props.setStep} />;
+  } else {
+    return (
+      <div>
+        <div>nothing found for the current step provided</div>
+      </div>
+    );
   }
 };
 export default EnhanceApp()(App);
