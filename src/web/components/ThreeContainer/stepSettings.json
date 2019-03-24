@@ -1,0 +1,20 @@
+[
+  {
+    "name": "interaction1",
+    "camera": {
+      "position": [5, 5, -5]
+    }
+  },
+  {
+    "name": "interaction2"
+  },
+  {
+    "name": "interaction3"
+  },
+  {
+    "name": "interaction4",
+    "camera": {
+      "position": [-0.5, 0.7, 1]
+    }
+  }
+]

@@ -1,6 +1,8 @@
 export default class Interaction {
   constructor() {
-    this.meshes = [];
+    this.objects = [];
+    this.lights = [];
+    this.events = [];
   }
   removeFromScene() {}
   addToScene() {}

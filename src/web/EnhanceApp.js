@@ -6,6 +6,6 @@ import { compose, withState } from "recompose";
  * 0 Loading Screen
  */
 
-const EnhanceApp = () => compose(withState("step", "setStep", 0));
+const EnhanceApp = () => compose(withState("step", "setStep", 3));
 
 export default EnhanceApp;
