@@ -57,7 +57,9 @@ export default class Canvas3D {
   }
 
   render() {
-    this.interactions[this.interactionsIndex].update();
+    this.interactions[this.interactionsIndex].update(
+      this.clock.getElapsedTime()
+    );
     this.renderer.render(this.scene, this.camera);
   }
   hide() {

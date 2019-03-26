@@ -33,6 +33,7 @@
   "dependencies": {
     "dat.gui": "^0.7.3",
     "lodash": "^4.17.11",
+    "perlin-simplex": "0.0.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "recompose": "^0.30.0",

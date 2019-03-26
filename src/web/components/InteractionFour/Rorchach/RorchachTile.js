@@ -1,6 +1,6 @@
 import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.glsl";
-
+import Simplex from "perlin-simplex";
 export default class RorchachTile {
   constructor({ position, rotation, width, height, rows, columns, fluid }) {
     this.previousMouse = new THREE.Vector2();
@@ -26,7 +26,8 @@ export default class RorchachTile {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         color: { type: "t", value: this.colors },
-        pointer: { value: new THREE.Vector2(0.5, 0.5) }
+        pointer: { value: new THREE.Vector2(0.5, 0.5) },
+        time: { type: "f", value: this.time }
       },
       // side: THREE.BackSide,
       vertexShader: simulation_vs,
@@ -35,6 +36,7 @@ export default class RorchachTile {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
     this.id = this.mesh.uuid;
+    this.simplex = new Simplex();
   }
   getRandomData(width, height, size) {
     var len = width * height * 3;
@@ -72,13 +74,20 @@ export default class RorchachTile {
   }
 
   update(time) {
+    //auto drag
+    let simplex = this.simplex.noise(time, 0) * 0.05;
+    let simpley = this.simplex.noise(-time, 0) * 0.05;
+    this.updatePointer(new THREE.Vector2(simplex, simpley));
+
+    //apply fluid
     this.fluid.step({
       success: density => {
         density.forEach((dst, index) => {
-          this.data[index * 3] = dst * 0.6;
-          this.data[index * 3 + 1] = dst * 0.6;
-          this.data[index * 3 + 2] = dst * 1.8;
+          this.data[index * 3] = dst;
+          this.data[index * 3 + 1] = dst;
+          this.data[index * 3 + 2] = dst;
         });
+        this.mesh.material.uniforms.time.value = time;
       }
     });
     this.fluid.renderD(this.mesh, this.colors);
