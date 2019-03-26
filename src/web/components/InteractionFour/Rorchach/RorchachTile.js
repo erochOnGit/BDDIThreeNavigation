@@ -75,8 +75,8 @@ export default class RorchachTile {
 
   update(time) {
     //auto drag
-    let simplex = this.simplex.noise(time, 0) * 0.05;
-    let simpley = this.simplex.noise(-time, 0) * 0.05;
+    let simplex = this.simplex.noise(time, 0) * 0.08;
+    let simpley = this.simplex.noise(-time, 0) * 0.08;
     this.updatePointer(new THREE.Vector2(simplex, simpley));
 
     //apply fluid
