@@ -1,22 +1,46 @@
 import Interaction from "../ThreeContainer/Interaction";
-import RorchachTile from "./Rorchach/RorchachTile";
+// import RorchachTile from "./Rorchach/RorchachTile";
+import RorchachTile from "./Rorchach/RorchachShaderRendering";
 import Fluid from "./Rorchach/Fluid";
+import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.1.glsl";
+import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.1.glsl";
 
 export default class InteractionFour extends Interaction {
-  constructor() {
+  constructor({ renderer }) {
     super();
+
     /**
      * obj
      */
-    this.fluid = new Fluid(128, 8.2, 0, 0.0000001);
+    // this.fluid = new Fluid(128, 8.2, 0, 0.0000001);
+    // let rorchach = new RorchachTile({
+    //   inversed: true,
+    //   position: new THREE.Vector3(-0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(rorchach);
+
+    // let rorchach2 = new RorchachTile({
+    //   inversed: false,
+    //   position: new THREE.Vector3(0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(rorchach2);
+
     let rorchach = new RorchachTile({
-      position: new THREE.Vector3(0, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid
+      renderer
     });
     this.objects.push(rorchach);
 

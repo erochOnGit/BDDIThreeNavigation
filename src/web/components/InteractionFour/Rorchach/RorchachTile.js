@@ -1,8 +1,22 @@
 import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.glsl";
+import simulation_fs_inversed from "src/web/assets/shaders/basic/simulation_fs_inversed.glsl";
 import Simplex from "perlin-simplex";
 export default class RorchachTile {
-  constructor({ position, rotation, width, height, rows, columns, fluid }) {
+  constructor({
+    position,
+    rotation,
+    width,
+    height,
+    rows,
+    columns,
+    fluid,
+    inversed,
+    renderer
+  }) {
+    var gl = renderer.getContext();
+    console.log(gl);
+
     this.previousMouse = new THREE.Vector2();
     this.pos = position;
     this.rows = rows || 10;
@@ -21,6 +35,7 @@ export default class RorchachTile {
       THREE.RGBFormat,
       THREE.FloatType
     );
+    console.log(this.colors);
     this.colors.needsUpdate = true;
 
     this.material = new THREE.ShaderMaterial({
@@ -30,8 +45,9 @@ export default class RorchachTile {
         time: { type: "f", value: this.time }
       },
       // side: THREE.BackSide,
+      transparent: true,
       vertexShader: simulation_vs,
-      fragmentShader: simulation_fs
+      fragmentShader: inversed ? simulation_fs : simulation_fs_inversed
     });
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
@@ -75,8 +91,8 @@ export default class RorchachTile {
 
   update(time) {
     //auto drag
-    let simplex = this.simplex.noise(time, 0) * 0.08;
-    let simpley = this.simplex.noise(-time, 0) * 0.08;
+    let simplex = this.simplex.noise(time, 0) * 0.15;
+    let simpley = this.simplex.noise(-time, 0) * 0.15;
     this.updatePointer(new THREE.Vector2(simplex, simpley));
 
     //apply fluid

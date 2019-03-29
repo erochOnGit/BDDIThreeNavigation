@@ -26,13 +26,7 @@ export default class Canvas3D {
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
-
     this.intersects = [];
-    this.interactions = [];
-    this.interactions.push(new InteractionOne());
-    this.interactions.push(new Interaction());
-    this.interactions.push(new Interaction());
-    this.interactions.push(new InteractionFour());
 
     var size = 10;
     var divisions = 10;
@@ -40,14 +34,19 @@ export default class Canvas3D {
     var gridHelper = new THREE.GridHelper(size, divisions);
     this.scene.add(gridHelper);
 
-    this.setInteractionStep(this.interactionsIndex);
-
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
+
+    this.interactions = [];
+    this.interactions.push(new InteractionOne());
+    this.interactions.push(new Interaction());
+    this.interactions.push(new Interaction());
+    this.interactions.push(new InteractionFour({ renderer: this.renderer }));
+    this.setInteractionStep(this.interactionsIndex);
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
     this.onWindowResize();
