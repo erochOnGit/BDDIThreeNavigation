@@ -1,14 +1,33 @@
 import stepSettings from "./stepSettings.json";
 import InteractionOne from "../InteractionOne";
+import InteractionThree from "../InteractionThree";
 import InteractionFour from "../InteractionFour/";
 import Interaction from "./Interaction.js";
+import dat from "dat.gui";
 var OrbitControls = require("three-orbit-controls")(THREE);
+
+//POST PROC
+import "three/examples/js/postprocessing/EffectComposer";
+import "three/examples/js/postprocessing/RenderPass";
+import "three/examples/js/postprocessing/ShaderPass";
+import "three/examples/js/shaders/CopyShader";
+
+import "three/examples/js/shaders/DotScreenShader";
+import "three/examples/js/shaders/LuminosityHighPassShader";
+import "three/examples/js/postprocessing/UnrealBloomPass";
+let composer;
+let params = {
+  exposure: 1,
+  bloomStrength: 2.1,
+  bloomThreshold: 0.3,
+  bloomRadius: 0.8
+};
 
 export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 3;
+    this.interactionsIndex = 2;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -17,11 +36,9 @@ export default class Canvas3D {
       1000
     );
     let initCamPos = stepSettings[this.interactionsIndex].camera.position;
-    this.camera.position.z = initCamPos[2];
-    this.camera.position.y = initCamPos[1];
-    this.camera.position.x = initCamPos[0];
+    this.camera.position.set(initCamPos[0], initCamPos[1], initCamPos[2]);
     this.camera.lookAt(0, 0, 0);
-    // this.controls = new OrbitControls(this.camera);
+    this.controls = new OrbitControls(this.camera);
 
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
@@ -31,20 +48,53 @@ export default class Canvas3D {
     var size = 10;
     var divisions = 10;
 
-    var gridHelper = new THREE.GridHelper(size, divisions);
-    this.scene.add(gridHelper);
+    // var gridHelper = new THREE.GridHelper(size, divisions);
+    // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
 
+    //Gui
+    const gui = new dat.GUI();
+    gui.add(params, "bloomThreshold", 0.0, 1.0).onChange(function(value) {
+      bloomPass.threshold = Number(value);
+    });
+    gui.add(params, "bloomStrength", 0.0, 3.0).onChange(function(value) {
+      bloomPass.strength = Number(value);
+    });
+    gui
+      .add(params, "bloomRadius", 0.0, 2.0)
+      .step(0.01)
+      .onChange(function(value) {
+        bloomPass.radius = Number(value);
+      });
+    //BLOOM RENDER
+    let renderScene = new THREE.RenderPass(this.scene, this.camera);
+    let bloomPass = new THREE.UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1.5,
+      0.4,
+      0.85
+    );
+    //bloomPass.renderToScreen = true;
+    bloomPass.threshold = params.bloomThreshold;
+    bloomPass.strength = params.bloomStrength;
+    bloomPass.radius = params.bloomRadius;
+    composer = new THREE.EffectComposer(this.renderer);
+    composer.setSize(window.innerWidth, window.innerHeight);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+    //Add to fixe
+    let copyPass = new THREE.ShaderPass(THREE.CopyShader);
+    copyPass.renderToScreen = true;
+    composer.addPass(copyPass);
+
     this.interactions = [];
     this.interactions.push(new InteractionOne());
     this.interactions.push(new Interaction());
-    this.interactions.push(new Interaction());
+    this.interactions.push(new InteractionThree());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
     this.setInteractionStep(this.interactionsIndex);
 
@@ -59,7 +109,8 @@ export default class Canvas3D {
     this.interactions[this.interactionsIndex].update(
       this.clock.getElapsedTime()
     );
-    this.renderer.render(this.scene, this.camera);
+    // this.renderer.render(this.scene, this.camera);
+    composer.render(); //Bloom
   }
   hide() {
     this.container.style.display = "none";

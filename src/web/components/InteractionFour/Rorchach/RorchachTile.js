@@ -2,6 +2,7 @@ import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.glsl";
 import simulation_fs_inversed from "src/web/assets/shaders/basic/simulation_fs_inversed.glsl";
 import Simplex from "perlin-simplex";
+
 export default class RorchachTile {
   constructor({
     position,
@@ -15,7 +16,7 @@ export default class RorchachTile {
     renderer
   }) {
     var gl = renderer.getContext();
-    console.log(gl);
+    // console.log(gl);
 
     this.previousMouse = new THREE.Vector2();
     this.pos = position;
@@ -35,7 +36,7 @@ export default class RorchachTile {
       THREE.RGBFormat,
       THREE.FloatType
     );
-    console.log(this.colors);
+    // console.log(this.colors);
     this.colors.needsUpdate = true;
 
     this.material = new THREE.ShaderMaterial({

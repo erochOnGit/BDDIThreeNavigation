@@ -8,7 +8,7 @@ const App = props => {
     return (
       <div
         onClick={() => {
-          props.setStep(1);
+          props.setStep(2);
         }}
       >
         <Home />

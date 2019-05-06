@@ -9,12 +9,15 @@
     "name": "interaction2"
   },
   {
-    "name": "interaction3"
+    "name": "interaction3",
+    "camera": {
+      "position": [0, 0, 6]
+    }
   },
   {
     "name": "interaction4",
     "camera": {
-      "position": [0.3, 0.8, 2]
+      "position": [0.3, 0.8, 3]
     }
   }
 ]
