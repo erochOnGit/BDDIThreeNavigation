@@ -92,7 +92,7 @@ export default class Canvas3D {
     composer.addPass(copyPass);
 
     this.interactions = [];
-    this.interactions.push(new InteractionOne());
+    this.interactions.push(new InteractionOne({ camera: this.camera }));
     this.interactions.push(new Interaction());
     this.interactions.push(new InteractionThree());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
