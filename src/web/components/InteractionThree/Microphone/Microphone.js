@@ -7,7 +7,6 @@ export default class Microphone {
     var self = this;
     var audioContext = new AudioContext();
     var SAMPLE_RATE = audioContext.sampleRate;
-    console.log("iniiiitilaiteiozon");
     // this is just a browser check to see
     // if it supports AudioContext and getUserMedia
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -27,13 +26,11 @@ export default class Microphone {
   }
 
   startMic(context) {
-    console.log("startmic", this);
     navigator.getUserMedia({ audio: true }, processSound.bind(this), error);
     function processSound(stream) {
       // analyser extracts frequency, waveform, etc.
       var analyser = context.createAnalyser();
       analyser.smoothingTimeConstant = 0.2;
-      console.log("fft?", this.FFT_SIZE);
       analyser.fftSize = this.FFT_SIZE;
       var node = context.createScriptProcessor(this.FFT_SIZE * 2, 1, 1);
       node.onaudioprocess = this.audioProcess(analyser).bind(this);
@@ -59,7 +56,7 @@ export default class Microphone {
       // get peak - a hack when our volumes are low
       if (this.vol > this.peak_volume) this.peak_volume = this.vol;
       this.volume = this.vol;
-      console.log(this.volume);
+      //   console.log(this.volume);
     };
   }
   //////// SOUND UTILITIES  ////////

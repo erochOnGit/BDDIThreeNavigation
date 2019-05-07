@@ -18,16 +18,16 @@ import "three/examples/js/postprocessing/UnrealBloomPass";
 let composer;
 let params = {
   exposure: 1,
-  bloomStrength: 2.1,
+  bloomStrength: 2.3,
   bloomThreshold: 0.3,
-  bloomRadius: 0.8
+  bloomRadius: 0.08
 };
 
 export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 2;
+    this.interactionsIndex = 0;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
