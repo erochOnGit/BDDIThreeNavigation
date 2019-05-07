@@ -2,9 +2,10 @@ import React from "react";
 import ThreeContainer from "./components/ThreeContainer";
 import Home from "./components/Home/";
 import EnhanceApp from "./EnhanceApp";
+import Toto from "./components/Toto/Toto";
 
 const App = props => {
-  if (props.step === 0) {
+  if (props.step < 0) {
     return (
       <div
         onClick={() => {
@@ -12,9 +13,10 @@ const App = props => {
         }}
       >
         <Home />
+        <Toto />
       </div>
     );
-  } else if (props.step > 0) {
+  } else if (props.step >= 0) {
     return <ThreeContainer setStep={props.setStep} />;
   } else {
     return (

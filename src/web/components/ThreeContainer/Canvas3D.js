@@ -27,7 +27,7 @@ export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 2;
+    this.interactionsIndex = 0;
 
     this.camera = new THREE.PerspectiveCamera(
       70,

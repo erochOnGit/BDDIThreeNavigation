@@ -59,7 +59,7 @@ export default class Microphone {
       // get peak - a hack when our volumes are low
       if (this.vol > this.peak_volume) this.peak_volume = this.vol;
       this.volume = this.vol;
-      console.log(this.volume);
+      //   console.log(this.volume);
     };
   }
   //////// SOUND UTILITIES  ////////
