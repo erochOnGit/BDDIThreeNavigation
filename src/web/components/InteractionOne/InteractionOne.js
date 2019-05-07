@@ -25,6 +25,9 @@ import "three/examples/js/postprocessing/UnrealBloomPass";
 import Landscape from "./Landscape/Landscape";
 import SpherePollen from "./SpherePollen/SpherePollen";
 
+//CAMERA
+import diffCamEngine from "./diffCamEngine/diffCamEngine";
+
 export default class InteractionOne extends Interaction {
   constructor() {
     super();
@@ -44,6 +47,7 @@ export default class InteractionOne extends Interaction {
         this.objects.push({ mesh: this.groupPollen });
       }
     }
+
     /**
      * lights
      */
@@ -72,6 +76,30 @@ export default class InteractionOne extends Interaction {
     /**
      * events
      */
+    this.camCaptor = diffCamEngine();
+    let score = document.createElement("p");
+    score.id = "score";
+
+    document.body.appendChild(score);
+
+    function initSuccess() {
+      this.camCaptor.start();
+    }
+
+    function initError(e) {
+      console.warn("Something went wrong.");
+      console.log(e);
+    }
+
+    function capture(payload) {
+      score.textContent = payload.score;
+    }
+
+    this.camCaptor.init({
+      initSuccessCallback: initSuccess.bind(this),
+      initErrorCallback: initError,
+      captureCallback: capture
+    });
   }
   update(time) {
     //do nothing forthe moment
@@ -83,5 +111,6 @@ export default class InteractionOne extends Interaction {
     this.pointLight.position.z = Math.sin(time * 1.474) * 0.1;
     this.pointLightCircle.position.x = Math.cos(time * -1.474) * 1.6;
     this.pointLightCircle.position.y = Math.sin(time * -1.474) * 1.6;
+    console.log(this.camCaptor);
   }
 }
