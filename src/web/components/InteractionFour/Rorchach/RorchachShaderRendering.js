@@ -267,6 +267,36 @@ export default class RorchachTile {
     this.diffuseSim.render();
     this.diffuseShaderMaterial.uniforms.initTexture.value = null;
 
+    /**
+     * project methode
+     */
+    this.projectShaderMaterial = new THREE.RawShaderMaterial({
+      uniforms: {
+        N: { type: "f", value: this.textureWidth },
+        initTexture: { type: "t", value: initTexture },
+        b: { type: "f", value: 0 },
+        x: { type: "t", value: initTexture },
+        x0: { type: "t", value: initTexture },
+        diff: { type: "f", value: this.visc },
+        dt: { type: "f", value: this.dt },
+        //inputTexture is the backbuffer
+        inputTexture: { type: "t", value: null }
+      },
+      // side: THREE.DoubleSide,
+      vertexShader: simulation_vs,
+      fragmentShader: project_fs,
+      depthTest: false,
+      depthWrite: false
+    });
+    this.projectSim = new GPUSim(
+      renderer,
+      this.textureWidth,
+      this.textureHeight,
+      this.projectShaderMaterial
+    );
+    this.projectSim.render();
+    this.projectShaderMaterial.uniforms.initTexture.value = null;
+
     this.material = new THREE.MeshPhongMaterial({
       map: this.densitySim.fbos[1].texture
     });
