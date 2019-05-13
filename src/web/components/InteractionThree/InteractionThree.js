@@ -3,6 +3,7 @@ import Simplex from "perlin-simplex";
 import Ring from "./Ring/Ring";
 import dat from "dat.gui";
 import Microphone from "./Microphone/Microphone";
+import Landscape from "./Landscape/Landscape";
 
 export default class InteractionThree extends Interaction {
   constructor() {
@@ -13,32 +14,61 @@ export default class InteractionThree extends Interaction {
      */
     this.rings = [];
 
-    let r = new Ring({
-      innerRadius: 1,
-      radius: 5,
-      segment: 256,
-      wireframe: false,
-      seed: 0.1,
-      opacity: 0.2
-    });
-    this.rings.push(r);
-    r.mesh.position.set(0, 0, -7);
-
-    for (let i = 0; i < 50; i++) {
+    this.firstTubeSimplex = new Simplex();
+    this.secondTubeSimplex = new Simplex();
+    this.thirdTubeSimplex = new Simplex();
+    this.fourthTubeSimplex = new Simplex();
+    for (let i = 0; i < 15; i++) {
       let ring = new Ring({
         innerRadius: 1,
-        radius: 1.01,
+        radius: 1.05,
         segment: 256,
         wireframe: false,
-        seed: i * 0.05
+        // seed: i * 0.008,
+        ondulaire: i * 0.05,
+        tubulaire: i * 0.0,
+        opacity: 0.2,
+        simplex: this.firstTubeSimplex
       });
       this.rings.push(ring);
-      ring.mesh.position.set(0, 0, i * 0.01);
     }
+    for (let i = 0; i < 10; i++) {
+      let ring = new Ring({
+        innerRadius: 0.8,
+        radius: 1.15,
+        segment: 256,
+        wireframe: false,
+        // seed: i * 0.008,
+        ondulaire: i * 0.03,
+        opacity: 0.03,
+        simplex: this.thirdTubeSimplex
+      });
+      this.rings.push(ring);
+    }
+    for (let i = 0; i < 10; i++) {
+      let ring = new Ring({
+        innerRadius: 0.6,
+        radius: 1.3,
+        segment: 256,
+        wireframe: false,
+        // seed: i * 0.008,
+        ondulaire: i * 0.03,
+        opacity: 0.025,
+        simplex: this.fourthTubeSimplex
+      });
+      this.rings.push(ring);
+    }
+
+    this.rings.forEach((ring, index) => {
+      ring.mesh.position.set(0, 0, index * 0.04);
+    });
 
     this.rings.forEach(ring => {
       this.objects.push(ring);
     });
+
+    this.landscape = new Landscape();
+    this.objects.push(this.landscape);
 
     /**
      * lights
@@ -69,8 +99,13 @@ export default class InteractionThree extends Interaction {
 
   update(time) {
     //do nothing forthe moment
-    this.rings.forEach(ring => {
-      ring.update(time);
+    this.landscape.update();
+    this.rings.forEach((ring, index) => {
+      ring.update(
+        time,
+        this.mic.spectrum[Math.round((index / 50) * 511)] * 0.001 || 0,
+        this.mic.volume || 0
+      );
     });
   }
 }

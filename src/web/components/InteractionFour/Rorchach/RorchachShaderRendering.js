@@ -6,6 +6,8 @@ import diffuse_fs from "src/web/assets/shaders/fluidShaders/diffuse_fs.glsl";
 import lin_solve_fs from "src/web/assets/shaders/fluidShaders/lin_solve_fs.glsl";
 import set_bnd_fs from "src/web/assets/shaders/fluidShaders/set_bnd_fs.glsl";
 import stocking_fs from "src/web/assets/shaders/fluidShaders/stocking_fs.glsl";
+import project_fs from "src/web/assets/shaders/fluidShaders/project_fs.glsl";
+import project_compute_velo_fs from "src/web/assets/shaders/fluidShaders/project_compute_velo_fs.glsl";
 // import Simplex from "perlin-simplex";
 import GPUSim from "./GPUSim";
 // import FBOHelper from "three.fbo-helper";
@@ -274,17 +276,16 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
-        b: { type: "f", value: 0 },
-        x: { type: "t", value: initTexture },
-        x0: { type: "t", value: initTexture },
-        diff: { type: "f", value: this.visc },
-        dt: { type: "f", value: this.dt },
+        velocX: { type: "t", value: initTexture },
+        velocY: { type: "t", value: initTexture },
+        p: { type: "t", value: initTexture },
+        div: { type: "t", value: initTexture },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
       // side: THREE.DoubleSide,
       vertexShader: simulation_vs,
-      fragmentShader: project_fs,
+      fragmentShader: project_compute_velo_fs,
       depthTest: false,
       depthWrite: false
     });
@@ -297,7 +298,37 @@ export default class RorchachTile {
     this.projectSim.render();
     this.projectShaderMaterial.uniforms.initTexture.value = null;
 
+    /**
+     * project methode
+     */
+    this.project22ShaderMaterial = new THREE.RawShaderMaterial({
+      uniforms: {
+        N: { type: "f", value: this.textureWidth },
+        initTexture: { type: "t", value: initTexture },
+        velocX: { type: "t", value: initTexture },
+        velocY: { type: "t", value: initTexture },
+        p: { type: "t", value: initTexture },
+        div: { type: "t", value: initTexture },
+        //inputTexture is the backbuffer
+        inputTexture: { type: "t", value: null }
+      },
+      // side: THREE.DoubleSide,
+      vertexShader: simulation_vs,
+      fragmentShader: project_fs,
+      depthTest: false,
+      depthWrite: false
+    });
+    this.project2Sim = new GPUSim(
+      renderer,
+      this.textureWidth,
+      this.textureHeight,
+      this.project2ShaderMaterial
+    );
+    this.project2Sim.render();
+    this.project2ShaderMaterial.uniforms.initTexture.value = null;
+
     this.material = new THREE.MeshPhongMaterial({
+      // map: this.vxSim.fbos[1].texture
       map: this.densitySim.fbos[1].texture
     });
 
@@ -351,53 +382,92 @@ export default class RorchachTile {
     this.densitySim.render();
     // this.addDensitySim.render();
   }
+
   step() {
     let visc = this.visc;
     let diff = this.diff;
     let dt = this.dt;
-    // this.vx = new ();
-    this.diffuse(1, this.vxSim, this.vx0Sim, tex => {
+    this.diffuse(1, this.vxSim, this.vx0Sim, visc, tex => {
       this.vx.uniforms.initTexture = tex;
       this.vxSim.render();
     });
-    this.diffuse(2, this.vxSim, this.vx0Sim, tex => {
+    this.diffuse(2, this.vxSim, this.vx0Sim, visc, tex => {
       this.vx.uniforms.initTexture = tex;
       this.vxSim.render();
     });
-    this.diffuse(1, this.vySim, this.vy0Sim, tex => {
+    this.diffuse(1, this.vySim, this.vy0Sim, visc, tex => {
       this.vy.uniforms.initTexture = tex;
       this.vySim.render();
     });
-    this.diffuse(2, this.vySim, this.vy0Sim, tex => {
+    this.diffuse(2, this.vySim, this.vy0Sim, visc, tex => {
       this.vy.uniforms.initTexture = tex;
       this.vySim.render();
+    });
+    //vx0, vy0, vx, vy
+    this.project(this.vx0Sim, this.vy0Sim, this.vxSim, this.vySim);
+    this.diffuse(0, this.densitySim, this.vx0Sim, diff, tex => {
+      this.densityShaderMaterial.uniforms.initTexture = tex;
+      this.densitySim.render();
     });
   }
-  diffuse(b, x, x0, success) {
-    // this.diffuseShaderMaterial.uniforms.time.value = time;
-    this.diffuseSim.render();
-
+  setBnd(b, x, success) {
+    this.setBndShaderMaterial.uniforms.x.value = x;
+    this.setBndShaderMaterial.uniforms.b.value = b;
+    this.setBndSim.render();
+    success(this.setBndSim.fbos[1].texture);
+  }
+  // b, x, x0, a, c
+  linSolve(b, x, x0, success) {
     this.linSolveShaderMaterial.uniforms.x.value = x.fbos[1].texture;
     this.linSolveShaderMaterial.uniforms.x0.value = x0.fbos[1].texture;
     this.linSolveShaderMaterial.uniforms.diffuse.value = this.diffuseSim.fbos[1].texture;
     this.linSolveSim.render();
 
-    this.setBndShaderMaterial.uniforms.x.value = this.linSolveSim.fbos[1].texture;
-    this.setBndShaderMaterial.uniforms.b.value = b;
-    this.setBndSim.render();
-    for (let k = 0; k < 3; k++) {
-      this.linSolveShaderMaterial.uniforms.x.value = this.setBndSim.fbos[1].texture;
-      this.linSolveShaderMaterial.uniforms.x0.value = x0.fbos[1].texture;
-      this.linSolveShaderMaterial.uniforms.diffuse.value = this.diffuseSim.fbos[1].texture;
-      this.linSolveSim.render();
+    this.setBnd(b, this.linSolveSim.fbos[1].texture, tex => {
+      for (let k = 0; k < 3; k++) {
+        this.linSolveShaderMaterial.uniforms.x.value = tex;
+        this.linSolveShaderMaterial.uniforms.x0.value = x0.fbos[1].texture;
+        this.linSolveShaderMaterial.uniforms.diffuse.value = this.diffuseSim.fbos[1].texture;
+        this.linSolveSim.render();
 
-      this.setBndShaderMaterial.uniforms.x.value = this.linSolveSim.fbos[1].texture;
-      this.setBndShaderMaterial.uniforms.b.value = b;
-      this.setBndSim.render();
-    }
-    success(this.setBndSim.fbos[1].texture);
-    // this.vx.uniforms.initTexture = this.setBndSim.fbos[1].texture;
-    // this.vxSim.render();
-    //set_bnd-classic.resolve
+        this.setBnd(b, this.linSolveSim.fbos[1].texture, tex => {
+          success(tex);
+        });
+      }
+    });
+  }
+  diffuse(b, x, x0, diff, success) {
+    // this.diffuseShaderMaterial.uniforms.time.value = time;
+    this.diffuseShaderMaterial.uniforms.diff.value = diff;
+    this.diffuseSim.render();
+
+    this.linSolve(b, x, x0, tex => {
+      success(tex);
+    });
+  }
+  project(velocX, velocY, p, div) {
+    this.projectShaderMaterial.uniforms.velocX.value = velocX.fbos[1].texture;
+    this.projectShaderMaterial.uniforms.velocY.value = velocY.fbos[1].texture;
+    this.projectShaderMaterial.uniforms.p.value = p.fbos[1].texture;
+    this.projectShaderMaterial.uniforms.div.value = div.fbos[1].texture;
+    this.projectSim.render();
+
+    this.setBnd(0, div, tex => {
+      let editedDiv = tex;
+      this.setBnd(0, p, tex => {
+        let editedP = tex;
+        // lin_solve(0, p, div, 1, 6);
+        this.linSolve(0, editedP, editedDiv, tex => {
+          // for (let j = 1; j < N - 1; j++) {
+          //   for (let i = 1; i < N - 1; i++) {
+          //     velocX[IX(i, j)] -= 0.5 * (p[IX(i + 1, j)] - p[IX(i - 1, j)]) * N;
+          //     velocY[IX(i, j)] -= 0.5 * (p[IX(i, j + 1)] - p[IX(i, j - 1)]) * N;
+          //   }
+          // }
+          // set_bnd(1, velocX);
+          // set_bnd(2, velocY);
+        });
+      });
+    });
   }
 }

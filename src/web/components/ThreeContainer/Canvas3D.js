@@ -19,7 +19,7 @@ let composer;
 let params = {
   exposure: 1,
   bloomStrength: 2.3,
-  bloomThreshold: 0.3,
+  bloomThreshold: 1,
   bloomRadius: 0.08
 };
 
@@ -38,7 +38,7 @@ export default class Canvas3D {
     let initCamPos = stepSettings[this.interactionsIndex].camera.position;
     this.camera.position.set(initCamPos[0], initCamPos[1], initCamPos[2]);
     this.camera.lookAt(0, 0, 0);
-    this.controls = new OrbitControls(this.camera);
+    // this.controls = new OrbitControls(this.camera);
 
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
@@ -48,8 +48,8 @@ export default class Canvas3D {
     var size = 10;
     var divisions = 10;
 
-    // var gridHelper = new THREE.GridHelper(size, divisions);
-    // this.scene.add(gridHelper);
+    var gridHelper = new THREE.GridHelper(size, divisions);
+    this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -109,8 +109,8 @@ export default class Canvas3D {
     this.interactions[this.interactionsIndex].update(
       this.clock.getElapsedTime()
     );
-    // this.renderer.render(this.scene, this.camera);
-    composer.render(); //Bloom
+    this.renderer.render(this.scene, this.camera);
+    // composer.render(); //Bloom
   }
   hide() {
     this.container.style.display = "none";
