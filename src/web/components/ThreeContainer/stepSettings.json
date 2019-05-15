@@ -22,5 +22,11 @@
     "camera": {
       "position": [0.3, 0.8, 3]
     }
+  },
+  {
+    "name": "interaction5",
+    "camera": {
+      "position": [0.3, 0.8, 3]
+    }
   }
 ]

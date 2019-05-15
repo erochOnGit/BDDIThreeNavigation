@@ -3,6 +3,7 @@ import InteractionOne from "../InteractionOne";
 import InteractionTwo from "../InteractionTwo";
 import InteractionThree from "../InteractionThree";
 import InteractionFour from "../InteractionFour/";
+import InteractionFive from "../InteractionFive/";
 import Interaction from "./Interaction.js";
 import dat from "dat.gui";
 var OrbitControls = require("three-orbit-controls")(THREE);
@@ -28,7 +29,7 @@ export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 0;
+    this.interactionsIndex = 4;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -93,12 +94,15 @@ export default class Canvas3D {
     composer.addPass(copyPass);
 
     this.interactions = [];
-    this.interactions.push(new InteractionOne({ camera: this.camera }));
-    this.interactions.push(new InteractionTwo({ camera: this.camera }));
+    // this.interactions.push(new InteractionOne({ camera: this.camera }));
+    // this.interactions.push(new InteractionTwo({ camera: this.camera }));
+    // this.interactions.push(new InteractionThree());
     this.interactions.push(new Interaction());
-    this.interactions.push(new InteractionThree());
+    this.interactions.push(new Interaction());
+    this.interactions.push(new Interaction());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
-    this.initializeInteraction(this.interactionsIndex);
+    this.interactions.push(new InteractionFive());
+    this.setInteractionStep(this.interactionsIndex);
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
     this.onWindowResize();
@@ -112,8 +116,8 @@ export default class Canvas3D {
       this.clock.getElapsedTime(),
       t
     );
-    // this.renderer.render(this.scene, this.camera);
-    composer.render(); //Bloom
+    this.renderer.render(this.scene, this.camera);
+    // composer.render(); //Bloom
   }
   hide() {
     this.container.style.display = "none";
@@ -121,20 +125,13 @@ export default class Canvas3D {
   display() {
     this.container.style.display = "block";
   }
-  initializeInteraction(index) {
-    this.removeAllMesh();
-    this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
-    //here we add one because the global step zero is linked to the home screen
 
-    this.addInteractionMesh(this.interactions[index]);
-    this.addInteractionEvent(this.interactions[index]);
-  }
   setInteractionStep(index) {
     this.removeAllMesh();
     this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
     //here we add one because the global step zero is linked to the home screen
 
-    this.setStep(index + 1);
+    this.setStep(index);
     this.addInteractionMesh(this.interactions[index]);
     this.addInteractionEvent(this.interactions[index]);
   }
