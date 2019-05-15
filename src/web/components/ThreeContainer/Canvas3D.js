@@ -98,7 +98,7 @@ export default class Canvas3D {
     this.interactions.push(new Interaction());
     this.interactions.push(new InteractionThree());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
-    this.setInteractionStep(this.interactionsIndex);
+    this.initializeInteraction(this.interactionsIndex);
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
     this.onWindowResize();
@@ -109,7 +109,8 @@ export default class Canvas3D {
 
   render(t) {
     this.interactions[this.interactionsIndex].update(
-      this.clock.getElapsedTime(),t
+      this.clock.getElapsedTime(),
+      t
     );
     // this.renderer.render(this.scene, this.camera);
     composer.render(); //Bloom
@@ -119,6 +120,14 @@ export default class Canvas3D {
   }
   display() {
     this.container.style.display = "block";
+  }
+  initializeInteraction(index) {
+    this.removeAllMesh();
+    this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
+    //here we add one because the global step zero is linked to the home screen
+
+    this.addInteractionMesh(this.interactions[index]);
+    this.addInteractionEvent(this.interactions[index]);
   }
   setInteractionStep(index) {
     this.removeAllMesh();
