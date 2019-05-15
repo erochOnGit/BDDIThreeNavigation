@@ -1,5 +1,5 @@
 import React from "react";
-import './SoundIcon.scss';
+import "./SoundIcon.scss"
 
 const SoundIcon = props => {
 
