@@ -1,5 +1,6 @@
 import stepSettings from "./stepSettings.json";
 import InteractionOne from "../InteractionOne";
+import InteractionTwo from "../InteractionTwo";
 import InteractionThree from "../InteractionThree";
 import InteractionFour from "../InteractionFour/";
 import Interaction from "./Interaction.js";
@@ -17,10 +18,10 @@ import "three/examples/js/shaders/LuminosityHighPassShader";
 import "three/examples/js/postprocessing/UnrealBloomPass";
 let composer;
 let params = {
-  exposure: 1,
-  bloomStrength: 2.3,
-  bloomThreshold: 0.3,
-  bloomRadius: 0.08
+  exposure: 1, //1
+  bloomStrength: 1.7, //2.3
+  bloomThreshold: 0.33, //0.3
+  bloomRadius: 0.01 //0.08
 };
 
 export default class Canvas3D {
@@ -93,6 +94,7 @@ export default class Canvas3D {
 
     this.interactions = [];
     this.interactions.push(new InteractionOne({ camera: this.camera }));
+    this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new Interaction());
     this.interactions.push(new InteractionThree());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
@@ -105,9 +107,9 @@ export default class Canvas3D {
     this.renderer.setAnimationLoop(this.render.bind(this));
   }
 
-  render() {
+  render(t) {
     this.interactions[this.interactionsIndex].update(
-      this.clock.getElapsedTime()
+      this.clock.getElapsedTime(),t
     );
     // this.renderer.render(this.scene, this.camera);
     composer.render(); //Bloom
@@ -122,6 +124,7 @@ export default class Canvas3D {
     this.removeAllMesh();
     this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
     //here we add one because the global step zero is linked to the home screen
+
     this.setStep(index + 1);
     this.addInteractionMesh(this.interactions[index]);
     this.addInteractionEvent(this.interactions[index]);

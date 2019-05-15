@@ -6,7 +6,10 @@
     }
   },
   {
-    "name": "interaction2"
+    "name": "interaction2",
+    "camera": {
+      "position": [0, 0, 3.5]
+    }
   },
   {
     "name": "interaction3",

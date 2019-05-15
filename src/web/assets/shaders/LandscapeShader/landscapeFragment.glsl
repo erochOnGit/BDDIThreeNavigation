@@ -94,6 +94,7 @@ float snoise(vec3 v)
 
 //uniform sampler2D tDiffuse;
 uniform float uTime;
+uniform float uMixColor;
 
 //color
 varying vec3 vPosition;
@@ -101,48 +102,9 @@ varying vec3 vPosition;
 //Dégradé de matiere avec shaderific mix function et le snoise
 void main() {
 
-    //BASIS
-    /*vec3 color1 = vec3(9., 12., 70.) / 255.;
-    vec3 color2 = vec3(255., 33., 166.) / 255.;
-
-    vec3 color3 = mix(color1,color2,snoise(vPosition * 0.1 + uTime));
-
-    vec3 color4 = vec3(0., 117., 205.) / 255.;
-    vec3 color5 = vec3(255., 33., 166.) / 255.;
-
-    vec3 color6 = mix(color4,color5,snoise(vPosition * 0.1 + uTime));
-
-    vec3 color = mix(color3,color6,snoise(vPosition * 1. + uTime));*/
-
-
-    //NOISE SA MERE
-    /*  vec3 color1 = vec3(0., 117./10., 205./4.) / 255.;
-    vec3 color2 = vec3(255./3., 33./10., 166./1.) / 255.;
-
-    vec3 color = mix(color1,color2,snoise(vPosition * 0.1 + uTime/10.));*/
-
-    //GOOD BUT NOT NOISE
-    /*vec3 color1 = vec3(0., 117./10., 205./4.) / 255.;
-    vec3 color2 = vec3(255./4., 33./6., 166./3.) / 255.;
-
-    vec3 color = mix(color1,color2,snoise(vPosition * 0.1 + uTime/10.));*/
-
-    //GOOD
-    /*vec3 color1 = vec3(9., 12., 70./2.) / 255.;
-    vec3 color2 = vec3(255./2., 33., 166./2.) / 255.;
-
-    vec3 color3 = mix(color1,color2,snoise(vPosition * .1 + uTime/10.));//TAILLE VITESSE PINK
-
-    vec3 color4 = vec3(50., 17., 255.) / 255.;
-    vec3 color5 = vec3(25., 3., 16.) / 255.;
-
-    vec3 color6 = mix(color4,color5,snoise(vPosition * 100. + uTime));//NOISE
-
-    vec3 color = mix(color3,color6,snoise(vPosition * 100. + uTime));//NOISE*/
-
-    //BEST PURPLE
+    //MIX COLOR
     vec3 color1 = vec3(9., 12., 70./2.) / 255.;
-    vec3 color2 = vec3(255./4., 33., 166./2.) / 255.;
+    vec3 color2 = vec3(uMixColor/4., 33., 166./2.) / 255.;
 
     vec3 color3 = mix(color1,color2,snoise(vPosition * .1 + uTime/10.));//TAILLE VITESSE PINK
 

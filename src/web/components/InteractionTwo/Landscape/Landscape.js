@@ -9,7 +9,7 @@ export default class Landscape {
     this.uniforms = {
       uTime: { type: "f", value: 0 },
       uAmp: { type: "f", value: 2 },
-      uMixColor: { type: "f", value: 255.}
+      uMixColor: { type: "f", value: 25.}
     };
     this.landscapeMaterial = new THREE.ShaderMaterial({
       transparent: true,

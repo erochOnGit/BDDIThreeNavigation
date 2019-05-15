@@ -1,0 +1,93 @@
+.main-home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1d1d1d;
+  .center-container {
+    width: 550px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .start-btn {
+      font-family: MadeCanvas;
+      font-size: 20px;
+      margin: 30px 0;
+      padding: 10px 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      text-align: center;
+      animation: appear 1.5s ease-out forwards;
+      animation-delay: 1s;
+      .link-btn {
+        opacity: 0.6;
+        position: absolute;
+        margin: auto;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,.6);
+        width: 10em;
+        outline: none;
+        overflow: hidden;
+        color: #fff;
+        transition: color 0.3s 0.25s ease-out;
+        text-align: center;
+        line-height: 250%;
+        &::before {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          content: '';
+          border-radius: 50%;
+          display: block;
+          width: 20em;
+          height: 20em;
+          line-height: 20em;
+          left: -5em;
+          text-align: center;
+          transition: box-shadow 0.25s ease-out;
+          z-index: -1;
+        }
+        &:hover {
+          opacity: 0.99 !important;
+          color: #000;
+        }
+        &:hover::before {
+          box-shadow: inset 300px 0 0 10em #fff;
+        }
+      }
+    }
+    h1 {
+      opacity: 0;
+      font-family: MadeCanvas;
+      font-size: 9rem;
+      margin: 14vh 0 0 0;
+      animation: appear .5s ease-out forwards;
+    }
+    h3 {
+      opacity: 0;
+      font-family: MadeCanvas;
+      font-size: 30px;
+      animation: appear .5s ease-out forwards;
+    }
+    p {
+      opacity: 0;
+      text-align: center;
+      animation: appear 1.5s ease-out forwards;
+      animation-delay: 1.5s;
+      color: rgba(255,255,255,0.6);
+    }
+  }
+  &.leave-container {
+    .center-container {
+      transition: all .5s;
+
+    }
+  }
+}

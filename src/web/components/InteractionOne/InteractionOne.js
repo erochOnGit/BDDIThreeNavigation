@@ -37,7 +37,6 @@ export default class InteractionOne extends Interaction {
         /**
          * Objects
          */
-
         //LANDSCAPE
         this.landscape = new Landscape();
         this.objects.push(this.landscape);
@@ -124,7 +123,7 @@ export default class InteractionOne extends Interaction {
             captureCallback: capture.bind(this)
         });
     }
-    update(time) {
+    update(time,t) {
 
         let random = Math.floor(Math.random()*(this.groupPollen.children.length-1));
         //console.log(this.scoreInteractionOne);
@@ -141,7 +140,7 @@ export default class InteractionOne extends Interaction {
         })
 
         //LANDSCAPE ANIMATION
-        this.landscape.update(time);
+        this.landscape.update();
 
         //LIGHT MOVEMENT
         this.pointLight.position.x = Math.cos(time * 1.329) * 1;
@@ -150,21 +149,39 @@ export default class InteractionOne extends Interaction {
         this.pointLightCircle.position.x = Math.cos(time * -1.474) * 1.6;
         this.pointLightCircle.position.y = Math.sin(time * -1.474) * 1.6;
 
-        /*//HEART MOVEMENT
+        //HEART MOVEMENT
         let scaling = 1 + Math.abs(Math.sin(t/1000)*.05)
         this.heart.mesh.scale.set(scaling - movemento,scaling - movemento,scaling - movemento)
 
         for ( let i = 0; i < this.groupPollen.children.length; i ++ ) {
+
             //POLLEN POSITION
             this.groupPollen.children[i].position.x += Math.cos((t * 0.001) + this.groupPollen.children[i].position.x) * 0.0005;
             this.groupPollen.children[i].position.y += Math.sin((t * 0.001) + this.groupPollen.children[i].position.y) * 0.0005;
             this.groupPollen.children[i].position.z += Math.sin((t * 0.001) + this.groupPollen.children[i].position.z) * 0.0001;
 
             //LINE POSITION
-            this.groupLine.children[i].geometry.vertices[1].x += Math.cos((t * 0.001) + this.groupPollen.children[i].position.x) * 0.0005;
-            this.groupLine.children[i].geometry.vertices[1].y += Math.sin((t * 0.001) + this.groupPollen.children[i].position.y) * 0.0005;
-            this.groupLine.children[i].geometry.vertices[1].z += Math.sin((t * 0.001) + this.groupPollen.children[i].position.z) * 0.0001;
-            this.groupLine.children[i].geometry.verticesNeedUpdate = true;
-        }*/
+            this.curve.update(t,this.groupPollen,i)
+        }
+
+        //LOW MOVEMENT
+        if(movemento > 0.08){
+            let tl = new TimelineLite();
+            tl.to(this.groupPollen.children[random].position, 100 , { x:Math.random() * (60 + 30 ) - 30, y:Math.random() * (40 + 20 ) - 20, z:Math.random() * (50 + 30 ) - 30, ease:Elastic.easeOut, useFrames:true})
+                .to(this.stem.mesh.rotation, 2, {x:-.3-(movemento*2),y:4.6,z:.6, ease:Elastic.easeOut, useFrames:true}, '-=100');
+
+            this.curve.updateCurvePos(movemento,random)
+        }
+        //STRONG MOVEMENT
+        if(movemento > 0.15){
+            let tl = new TimelineLite();
+            tl.to(this.groupPollen.children[random].position, 20 , { x:Math.random() * (60 + 30 ) - 30, y:Math.random() * (40 + 20 ) - 20, z:Math.random() * (50 + 30 ) - 30, ease:Elastic.easeOut, useFrames:true})
+                .to(this.stem.mesh.rotation, 2, {x:-.3-(movemento*2),y:4.6,z:.6, ease:Elastic.easeOut, useFrames:true}, '-=20')
+        }
+
+        else {
+            let tl = new TimelineLite();
+            tl.to(this.stem.mesh.rotation, 2, {x:-.2,y:4.6,z:.4, ease:Elastic.easeOut, useFrames:true})
+        }
     }
 }

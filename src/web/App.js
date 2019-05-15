@@ -1,28 +1,31 @@
 import React from "react";
 import ThreeContainer from "./components/ThreeContainer";
 import Home from "./components/Home/";
+import One from "./components/InteractionOne/One";
 import EnhanceApp from "./EnhanceApp";
-import Toto from "./components/Toto/Toto";
+import Transition from "./components/Transition"
+//<Transition/>
 
 const App = props => {
   if (props.step < 0) {
     return (
-      <div
-        onClick={() => {
-          props.setStep(2);
-        }}
-      >
-        <Home />
-        <Toto />
-      </div>
-    );
+          <Home setStep={props.setStep}/>
+  );
   } else if (props.step >= 0) {
-    return <ThreeContainer setStep={props.setStep} />;
+    return (<div>
+        {(() => {
+            switch (props.step) {
+                case 1:  return <One/>;
+                case 2:  return <div>Two</div>;
+                case 3:  return <div>three</div>;
+                default: return <div>error</div>;
+            }
+        })()}
+        <ThreeContainer setStep={props.setStep} />;
+        </div>)
   } else {
     return (
-      <div>
-        <div>nothing found for the current step provided</div>
-      </div>
+        <div>Nothing found for the current step provided</div>
     );
   }
 };
