@@ -50,8 +50,8 @@ export default class Canvas3D {
     var size = 10;
     var divisions = 10;
 
-    // var gridHelper = new THREE.GridHelper(size, divisions);
-    // this.scene.add(gridHelper);
+    var gridHelper = new THREE.GridHelper(size, divisions);
+    this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);

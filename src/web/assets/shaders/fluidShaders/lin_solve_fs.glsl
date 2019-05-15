@@ -7,6 +7,7 @@ varying vec2 vUv;
 uniform sampler2D x;
 uniform sampler2D x0;
 uniform float N;
+uniform float useDiffuse;
 uniform sampler2D diffuse;
 
 vec4 get(sampler2D tex,float x,float y){
@@ -14,10 +15,19 @@ vec4 get(sampler2D tex,float x,float y){
 }
 
 void main() {
-  vec2 diffuse = texture2D( diffuse, vUv ).rg;
-  float a = diffuse.r;
-  float c = diffuse.g;
+  float a;
+  float c;
   
+if(useDiffuse==0.){
+  vec2 diffuse = texture2D( diffuse, vUv ).rg;
+   a = diffuse.r;
+   c = diffuse.g;
+  }
+  else {
+   a = 1.;
+   c = 6.;
+  }
+
   float cRecip = 1.0 / c;
   float newX =
               (get(x0,0., 0.).r +

@@ -188,7 +188,6 @@ export default function() {
             if (pixelDiff >= pixelDiffThreshold) {
                 score++;
                 let coords = calculateCoordinates(i / 4);
-                //console.log(score)
 
                 if (includeMotionBox) {
                     motionBox = calculateMotionBox(motionBox, coords.x, coords.y);

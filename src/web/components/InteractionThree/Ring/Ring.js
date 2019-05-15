@@ -2,13 +2,26 @@ import Simplex from "perlin-simplex";
 import dat from "dat.gui";
 
 export default class Ring {
-  constructor({ innerRadius, radius, segment, wireframe, seed, opacity }) {
+  constructor({
+    innerRadius,
+    radius,
+    segment,
+    wireframe,
+    ondulaire,
+    tubulaire,
+    opacity,
+    simplex
+  }) {
     this.rows = segment ? Math.trunc(Math.sqrt(segment)) : 5;
     this.columns = segment ? segment / Math.trunc(Math.sqrt(segment)) : 5;
     this.radius = radius || 1;
     this.innerRadius = innerRadius || 0.5;
-    this.seed = seed || 0;
+    this.ondulaire = ondulaire || 0;
+    this.tubulaire = tubulaire || 0;
     this.opacity = opacity || 0.8;
+    this.index = 0;
+    this.speed = 0;
+    this.simplex = simplex;
 
     this.geometry = new THREE.BufferGeometry();
     // create a simple square shape. We duplicate the top left and bottom right
@@ -41,7 +54,6 @@ export default class Ring {
       wireframe: wireframe
     });
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.simplex = new Simplex();
   }
 
   setVertices(radius) {
@@ -74,45 +86,90 @@ export default class Ring {
     return indices;
   }
 
-  update(time) {
+  update(time, frequence, volume) {
     //o shit
-    var positions = this.mesh.geometry.attributes.position.array;
+    // var positions = this.mesh.geometry.attributes.position.array;
 
-    var x, y, z, index, indiceIndex, indiceInnerIndex;
-    x = y = z = indiceIndex = 0;
-    indiceInnerIndex = this.verticesCircleCount * 3;
+    // var index, indiceIndex, indiceInnerIndex;
+    // indiceIndex = 0;
+    // indiceInnerIndex = this.verticesCircleCount * 3;
+    // indiceIndex = 0;
+    // index = this.verticesCircleCount * 3;
+    // let a = 0;
+
+    // for (var i = 0, l = this.verticesCircleCount; i < l; i++) {
+    //   // (Math.PI * 2)/this.verticesCircleCount ;
+
+    //   a += (Math.PI * 2) / this.verticesCircleCount;
+    //   let xOffest = Math.abs(Math.cos(a + time * frequence * 0.1) * 0.2) + 1;
+    //   let yOffest =
+    //     Math.abs(Math.sin(a + Math.sin(time * frequence * 0.1)) * 0.2) + 1;
+    //   let value2d =
+    //     Math.abs(this.simplex.noise3d(xOffest, yOffest, this.seed)) * 0.5;
+
+    //   let theta =
+    //     (Math.PI *
+    //       ((360 / this.verticesCircleCount) * (i + this.verticesCircleCount))) /
+    //     180;
+    //   positions[indiceInnerIndex++] =
+    //     (value2d + this.innerRadius) * Math.cos(theta);
+    //   positions[indiceInnerIndex++] =
+    //     (value2d + this.innerRadius) * Math.sin(theta);
+    //   indiceInnerIndex++;
+
+    //   positions[indiceIndex++] =
+    //     (frequence * 0.1 + value2d + this.radius) * Math.cos(theta);
+    //   positions[indiceIndex++] =
+    //     (frequence * 0.1 + value2d + this.radius) * Math.sin(theta);
+    //   indiceIndex++;
+    //   // positions[index++] += z;
+
+    //   // z += Math.random() * 0.001;
+    // }
+    // this.mesh.geometry.attributes.position.needsUpdate = true; // required after the first render
+
+    var positions = this.mesh.geometry.attributes.position.array;
+    var indiceIndex, indiceInnerIndex;
     indiceIndex = 0;
-    index = this.verticesCircleCount * 3;
+    indiceInnerIndex = this.verticesCircleCount * 3;
+
     let a = 0;
 
+    // console.log(frequence, this.radius);
     for (var i = 0, l = this.verticesCircleCount; i < l; i++) {
-      // (Math.PI * 2)/this.verticesCircleCount ;
-      x = (Math.random() - 0.5) * 0.001;
-      y = (Math.random() - 0.5) * 0.001;
+      a += Math.abs(Math.PI / this.verticesCircleCount);
 
-      a += (Math.PI * 2) / this.verticesCircleCount;
-      let xOffest = Math.abs(Math.cos(a + time) * 0.2) + 1;
-      let yOffest = Math.abs(Math.sin(a + Math.sin(time)) * 0.2) + 1;
+      let xOffest = Math.abs(Math.cos(a + this.ondulaire + this.speed));
+      let yOffest = Math.abs(Math.sin(a + this.ondulaire + this.speed));
       let value2d =
-        Math.abs(this.simplex.noise(xOffest, yOffest, +this.seed)) * 0.5;
-
+        (this.simplex.noise3d(
+          xOffest,
+          yOffest,
+          this.index + this.ondulaire + this.tubulaire
+        ) +
+          1) *
+        0.3;
+      0.3;
       let theta =
         (Math.PI *
           ((360 / this.verticesCircleCount) * (i + this.verticesCircleCount))) /
         180;
+
       positions[indiceInnerIndex++] =
-        (value2d + this.innerRadius) * Math.cos(theta);
+        value2d + this.innerRadius * Math.cos(theta);
       positions[indiceInnerIndex++] =
-        (value2d + this.innerRadius) * Math.sin(theta);
+        value2d + this.innerRadius * Math.sin(theta);
       indiceInnerIndex++;
 
-      positions[indiceIndex++] = (value2d + this.radius) * Math.cos(theta);
-      positions[indiceIndex++] = (value2d + this.radius) * Math.sin(theta);
+      positions[indiceIndex++] = value2d + this.radius * Math.cos(theta);
+      positions[indiceIndex++] = value2d + this.radius * Math.sin(theta);
       indiceIndex++;
-      // positions[index++] += z;
 
-      // z += Math.random() * 0.001;
+      // positions[index++] += z;
     }
-    this.mesh.geometry.attributes.position.needsUpdate = true; // required after the first render
+    this.speed += volume * 0.00025 + 0.005;
+    this.index += volume * 0.001 + 0.001;
+
+    this.mesh.geometry.attributes.position.needsUpdate = true;
   }
 }
