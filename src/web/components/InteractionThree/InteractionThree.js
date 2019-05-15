@@ -94,7 +94,7 @@ export default class InteractionThree extends Interaction {
     /**
      * other
      */
-    this.mic = new Microphone();
+    // this.mic = new Microphone();
   }
 
   update(time) {

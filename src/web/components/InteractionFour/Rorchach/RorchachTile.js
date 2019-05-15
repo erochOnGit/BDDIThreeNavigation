@@ -16,7 +16,6 @@ export default class RorchachTile {
     renderer
   }) {
     var gl = renderer.getContext();
-    // console.log(gl);
 
     this.previousMouse = new THREE.Vector2();
     this.pos = position;
@@ -36,7 +35,6 @@ export default class RorchachTile {
       THREE.RGBFormat,
       THREE.FloatType
     );
-    // console.log(this.colors);
     this.colors.needsUpdate = true;
 
     this.material = new THREE.ShaderMaterial({
@@ -75,7 +73,6 @@ export default class RorchachTile {
   }
 
   updatePointer(pos) {
-    // console.log("pos", pos.x + 0.5, pos.y + 0.5);
     let x = pos.x + 0.5;
     let y = pos.y + 0.5;
     this.mesh.material.uniforms.pointer.value = new THREE.Vector2(x, y);

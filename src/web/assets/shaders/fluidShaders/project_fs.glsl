@@ -3,8 +3,7 @@ precision highp float;
 
 uniform sampler2D inputTexture;
 uniform float N;
-uniform sampler2D velocY; 
-uniform sampler2D velocX; 
+uniform sampler2D projectVeloComputed; 
 uniform sampler2D p;
 uniform sampler2D div;
 
@@ -15,22 +14,23 @@ vec4 get(sampler2D tex,float x,float y){
 }
 
 void main() {
+    float divResult = texture2D(div, vUv).r;
+    float pResult = texture2D(p, vUv).r;
+    // for (let j = 1; j < N - 1; j++) {
+    //   for (let i = 1; i < N - 1; i++) {
+    //     velocX[IX(i, j)] -= 0.5 * (p[IX(i + 1, j)] - p[IX(i - 1, j)]) * N;
+    //     velocY[IX(i, j)] -= 0.5 * (p[IX(i, j + 1)] - p[IX(i, j - 1)]) * N;
+    //   }
+    // }
+    float  veloX;
+    float  veloY;
+    if(vUv.x>1./N && vUv.y>1./N) {
+        veloX = get(projectVeloComputed,0.,0.).r - 0.5 * (get(p,0.+1./N,0.).r - get(p,0.-1./N,0.).r);
+        veloY = get(projectVeloComputed,0.,0.).g - 0.5 * (get(p,0.,0.+1./N).r - get(p,0.,0.-1./N).r);
+    }else{
+        veloX = get(projectVeloComputed,0.,0.).r;
+        veloY = get(projectVeloComputed,0.,0.).g;
+    }
 
-    //   div[IX(i, j)] =
-    //     (-0.5 *
-    //       (velocX[IX(i + 1, j)] -
-    //         velocX[IX(i - 1, j)] +
-    //         velocY[IX(i, j + 1)] -
-    //         velocY[IX(i, j - 1)])) /
-    //     N;
-        float veloMerge = 
-            (-0.5 * 
-                (get(velocX,0.+1./N,0.).r -
-                 get(velocX,0.-1./N,0.).r +
-                 get(velocY,0.,0.+1./N).r -
-                 get(velocY,0.,0.-1./N).r)
-            )/N;
-    //   p[IX(i, j)] = 0; p = 0
-
-    gl_FragColor = vec4( veloMerge,0.,0.,1.0 );
+    gl_FragColor = vec4(veloX, veloY, pResult, divResult);
 }

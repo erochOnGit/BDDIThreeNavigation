@@ -44,6 +44,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
+        providedLetter: { type: "vec4", value: new THREE.Vector4(0, 0, 0, 0) },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
@@ -66,6 +67,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
+        providedLetter: { type: "vec4", value: new THREE.Vector4(0, 0, 0, 0) },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
@@ -91,6 +93,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
+        providedLetter: { type: "vec4", value: new THREE.Vector4(0, 0, 0, 0) },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
@@ -113,6 +116,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
+        providedLetter: { type: "vec4", value: new THREE.Vector4(0, 0, 0, 0) },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
@@ -131,7 +135,6 @@ export default class RorchachTile {
     this.vy0Sim.render();
     this.vy0.uniforms.initTexture.value = null;
 
-    // console.log(initTexture);
     // this.helper = new FBOHelper(renderer);
     this.densityShaderMaterial = new THREE.RawShaderMaterial({
       uniforms: {
@@ -148,7 +151,6 @@ export default class RorchachTile {
       depthTest: false,
       depthWrite: false
     });
-
     this.densitySim = new GPUSim(
       renderer,
       this.textureWidth,
@@ -190,7 +192,6 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
-
         diffuse: { type: "t", value: initTexture },
         inputTexture: { type: "t", value: null },
         x: { type: "t", value: null },
@@ -218,7 +219,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
-
+        useDiffuse: { type: "f", value: 0 },
         diffuse: { type: "t", value: initTexture },
         inputTexture: { type: "t", value: null },
         x: { type: "t", value: null },
@@ -276,6 +277,7 @@ export default class RorchachTile {
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
+        projectVeloComputed: { type: "t", value: initTexture },
         velocX: { type: "t", value: initTexture },
         velocY: { type: "t", value: initTexture },
         p: { type: "t", value: initTexture },
@@ -301,14 +303,12 @@ export default class RorchachTile {
     /**
      * project methode
      */
-    this.project22ShaderMaterial = new THREE.RawShaderMaterial({
+    this.project2ShaderMaterial = new THREE.RawShaderMaterial({
       uniforms: {
         N: { type: "f", value: this.textureWidth },
         initTexture: { type: "t", value: initTexture },
-        velocX: { type: "t", value: initTexture },
-        velocY: { type: "t", value: initTexture },
+        projectVeloComputed: { type: "t", value: initTexture },
         p: { type: "t", value: initTexture },
-        div: { type: "t", value: initTexture },
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null }
       },
@@ -352,7 +352,6 @@ export default class RorchachTile {
   updatePointer(pos) {
     let x = pos.x + 0.5;
     let y = pos.y + 0.5;
-    // console.log(x, y);
     this.densityShaderMaterial.uniforms.pointer.value = new THREE.Vector2(x, y);
     this.densitySim.render();
 
@@ -373,7 +372,6 @@ export default class RorchachTile {
     );
 
     this.previousMouse = new THREE.Vector2(x, y);
-    // console.log(this.densitySim.fbos[1]);
   }
   // addDensity(dataIndex, amount) {}
   update(time) {
@@ -389,27 +387,60 @@ export default class RorchachTile {
     let dt = this.dt;
     this.diffuse(1, this.vxSim, this.vx0Sim, visc, tex => {
       this.vx.uniforms.initTexture = tex;
+      this.vx.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
       this.vxSim.render();
     });
     this.diffuse(2, this.vxSim, this.vx0Sim, visc, tex => {
       this.vx.uniforms.initTexture = tex;
+      this.vx.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
       this.vxSim.render();
     });
     this.diffuse(1, this.vySim, this.vy0Sim, visc, tex => {
       this.vy.uniforms.initTexture = tex;
+      this.vy.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
       this.vySim.render();
     });
     this.diffuse(2, this.vySim, this.vy0Sim, visc, tex => {
       this.vy.uniforms.initTexture = tex;
+      this.vy.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
       this.vySim.render();
     });
     //vx0, vy0, vx, vy
-    this.project(this.vx0Sim, this.vy0Sim, this.vxSim, this.vySim);
+    this.project(this.vx0Sim, this.vy0Sim, this.vxSim, this.vySim, tex => {
+      this.vx0.uniforms.initTexture = tex;
+      this.vx0.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
+      this.vx0Sim.render();
+      this.vy0.uniforms.initTexture = tex;
+      this.vy0.uniforms.providedLetter.value = new THREE.Vector4(0, 1, 0, 0);
+      this.vy0Sim.render();
+      this.vx.uniforms.initTexture = tex;
+      this.vx.uniforms.providedLetter.value = new THREE.Vector4(0, 0, 1, 0);
+      this.vxSim.render();
+      this.vy.uniforms.initTexture = tex;
+      this.vy.uniforms.providedLetter.value = new THREE.Vector4(0, 0, 0, 1);
+      this.vySim.render();
+    });
+    //vx, vy, vx0, vy0
+    this.project(this.vxSim, this.vySim, this.vx0Sim, this.vy0Sim, tex => {
+      this.vx.uniforms.initTexture = tex;
+      this.vx.uniforms.providedLetter.value = new THREE.Vector4(1, 0, 0, 0);
+      this.vxSim.render();
+      this.vy.uniforms.initTexture = tex;
+      this.vy.uniforms.providedLetter.value = new THREE.Vector4(0, 1, 0, 0);
+      this.vySim.render();
+      this.vx0.uniforms.initTexture = tex;
+      this.vx0.uniforms.providedLetter.value = new THREE.Vector4(0, 0, 1, 0);
+      this.vx0Sim.render();
+      this.vy0.uniforms.initTexture = tex;
+      this.vy0.uniforms.providedLetter.value = new THREE.Vector4(0, 0, 0, 1);
+      this.vy0Sim.render();
+    });
     this.diffuse(0, this.densitySim, this.vx0Sim, diff, tex => {
       this.densityShaderMaterial.uniforms.initTexture = tex;
       this.densitySim.render();
     });
   }
+
   setBnd(b, x, success) {
     this.setBndShaderMaterial.uniforms.x.value = x;
     this.setBndShaderMaterial.uniforms.b.value = b;
@@ -417,17 +448,18 @@ export default class RorchachTile {
     success(this.setBndSim.fbos[1].texture);
   }
   // b, x, x0, a, c
-  linSolve(b, x, x0, success) {
-    this.linSolveShaderMaterial.uniforms.x.value = x.fbos[1].texture;
-    this.linSolveShaderMaterial.uniforms.x0.value = x0.fbos[1].texture;
-    this.linSolveShaderMaterial.uniforms.diffuse.value = this.diffuseSim.fbos[1].texture;
+  linSolve(b, x, x0, a, useDiffuse, success) {
+    this.linSolveShaderMaterial.uniforms.x.value = x;
+    this.linSolveShaderMaterial.uniforms.x0.value = x0;
+    this.linSolveShaderMaterial.uniforms.diffuse.value = a;
+    this.linSolveShaderMaterial.uniforms.useDiffuse.value = useDiffuse;
     this.linSolveSim.render();
 
     this.setBnd(b, this.linSolveSim.fbos[1].texture, tex => {
       for (let k = 0; k < 3; k++) {
         this.linSolveShaderMaterial.uniforms.x.value = tex;
-        this.linSolveShaderMaterial.uniforms.x0.value = x0.fbos[1].texture;
-        this.linSolveShaderMaterial.uniforms.diffuse.value = this.diffuseSim.fbos[1].texture;
+        this.linSolveShaderMaterial.uniforms.x0.value = x0;
+        this.linSolveShaderMaterial.uniforms.diffuse.value = a;
         this.linSolveSim.render();
 
         this.setBnd(b, this.linSolveSim.fbos[1].texture, tex => {
@@ -436,16 +468,25 @@ export default class RorchachTile {
       }
     });
   }
+
   diffuse(b, x, x0, diff, success) {
     // this.diffuseShaderMaterial.uniforms.time.value = time;
     this.diffuseShaderMaterial.uniforms.diff.value = diff;
     this.diffuseSim.render();
 
-    this.linSolve(b, x, x0, tex => {
-      success(tex);
-    });
+    this.linSolve(
+      b,
+      x.fbos[1].texture,
+      x0.fbos[1].texture,
+      this.diffuseSim.fbos[1].texture,
+      0,
+      tex => {
+        success(tex);
+      }
+    );
   }
-  project(velocX, velocY, p, div) {
+
+  project(velocX, velocY, p, div, success) {
     this.projectShaderMaterial.uniforms.velocX.value = velocX.fbos[1].texture;
     this.projectShaderMaterial.uniforms.velocY.value = velocY.fbos[1].texture;
     this.projectShaderMaterial.uniforms.p.value = p.fbos[1].texture;
@@ -457,13 +498,12 @@ export default class RorchachTile {
       this.setBnd(0, p, tex => {
         let editedP = tex;
         // lin_solve(0, p, div, 1, 6);
-        this.linSolve(0, editedP, editedDiv, tex => {
-          // for (let j = 1; j < N - 1; j++) {
-          //   for (let i = 1; i < N - 1; i++) {
-          //     velocX[IX(i, j)] -= 0.5 * (p[IX(i + 1, j)] - p[IX(i - 1, j)]) * N;
-          //     velocY[IX(i, j)] -= 0.5 * (p[IX(i, j + 1)] - p[IX(i, j - 1)]) * N;
-          //   }
-          // }
+        this.linSolve(0, editedP, editedDiv, null, 1, tex => {
+          this.projectShaderMaterial.uniforms.projectVeloComputed.value = this.projectSim.fbos[1].texture;
+          this.projectShaderMaterial.uniforms.div.value = editedDiv;
+          this.projectShaderMaterial.uniforms.p.value = tex;
+          this.project2Sim.render();
+          success(this.project2Sim.fbos[1].texture);
           // set_bnd(1, velocX);
           // set_bnd(2, velocY);
         });
