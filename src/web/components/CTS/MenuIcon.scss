@@ -1,0 +1,79 @@
+.menu-icon-cont {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  height: 30px;
+  width: 25px;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  .menu-icon1-cont {
+    position: absolute;
+    height: 30px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .hidari {
+      height: 17px;
+      width: 3px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.4);
+      margin-right: 3px;
+    }
+    .migi {
+      height: 10px;
+      width: 3px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: all .3s;
+    }
+  }
+  .menu-icon2-cont {
+    position: absolute;
+    height: 30px;
+    width: 25px;
+    .hidari {
+      position: absolute;
+      height: 23px;
+      width: 3px;
+      margin-left: 10px;
+      margin-top: 3px;
+      transform: rotate(45deg);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: all .5s;
+    }
+    .migi {
+      position: absolute;
+      height: 23px;
+      width: 3px;
+      margin-left: 11px;
+      margin-top: 3px;
+      transform: rotate(-45deg);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: all .5s;
+    }
+  }
+  &:hover {
+    .menu-icon1-cont {
+      .hidari, .migi {
+        transition: all .5s;
+        background: #fff;
+      }
+      .migi {
+        height: 17px;
+      }
+    }
+    .menu-icon2-cont {
+      .hidari, .migi {
+        transition: all .5s;
+        background: #fff;
+      }
+    }
+  }
+}

@@ -34,13 +34,16 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.3",
+    "json-loader": "^0.5.7",
     "lodash": "^4.17.11",
     "perlin-simplex": "0.0.3",
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.4",
+    "react-lottie": "^1.2.3",
     "react-transition-group": "^4.0.1",
     "recompose": "^0.30.0",
+    "svg-morpheus": "^0.3.0",
     "three": "^0.99.0",
     "three-orbit-controls": "^82.1.0",
     "three.fbo-helper": "^1.1.1"

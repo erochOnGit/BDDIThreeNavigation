@@ -1,18 +1,18 @@
-.sound-icon {
+.full-screen-icon {
   position: absolute;
   bottom: 20px;
-  left: 30px;
+  right: 30px;
   color: #fff;
-  width: 40px;
+  width: 25px;
   z-index: 30;
-  .sound-cont {
-    #sound-icon1, #sound-icon2 {
+  .full-screen-cont {
+    #screen-icon1, #screen-icon2 {
       transition: all .5s;
       fill: rgba(255,255,255,.4) !important;
     }
     &:hover {
       cursor: pointer;
-      #sound-icon1, #sound-icon2 {
+      #screen-icon1, #screen-icon2 {
         transition: all .5s;
         fill: #fff !important;
       }
