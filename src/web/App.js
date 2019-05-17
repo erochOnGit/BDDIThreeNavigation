@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useRef, useImperativeHandle } from "react";
 import ThreeContainer from "./components/ThreeContainer";
 import Home from "./components/Home/";
 import One from "./components/InteractionOne/One";
@@ -30,7 +30,19 @@ const App = props => {
               return <div>error</div>;
           }
         })()}
-        <ThreeContainer setStep={props.setStep} />;
+        <button
+          onClick={() => {
+            props.setSceneStep(props.step + 1);
+          }}
+        >
+          Click
+        </button>
+        <ThreeContainer
+          setStep={props.setStep}
+          setCanvas={props.setCanvas}
+          setSceneStep={props.setSceneStep}
+        />
+        ;
       </div>
     );
   } else {

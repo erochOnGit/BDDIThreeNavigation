@@ -29,7 +29,7 @@ export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 4;
+    this.interactionsIndex = 0;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -94,21 +94,16 @@ export default class Canvas3D {
     composer.addPass(copyPass);
 
     this.interactions = [];
-    // this.interactions.push(new InteractionOne({ camera: this.camera }));
-    // this.interactions.push(new InteractionTwo({ camera: this.camera }));
-    // this.interactions.push(new InteractionThree());
-    this.interactions.push(new Interaction());
-    this.interactions.push(new Interaction());
-    this.interactions.push(new Interaction());
-    this.interactions.push(new InteractionFour({ renderer: this.renderer }));
-    this.interactions.push(new InteractionFive());
-    this.setInteractionStep(this.interactionsIndex);
 
-    window.addEventListener("resize", this.onWindowResize.bind(this), false);
-    this.onWindowResize();
-    this.clock = new THREE.Clock();
-    this.clock.start();
-    this.renderer.setAnimationLoop(this.render.bind(this));
+    this.createInteraction(() => {
+      this.setInteractionStep(this.interactionsIndex);
+
+      window.addEventListener("resize", this.onWindowResize.bind(this), false);
+      this.onWindowResize();
+      this.clock = new THREE.Clock();
+      this.clock.start();
+      this.renderer.setAnimationLoop(this.render.bind(this));
+    });
   }
 
   render(t) {
@@ -116,6 +111,7 @@ export default class Canvas3D {
       this.clock.getElapsedTime(),
       t
     );
+    // console.log(this.scene);
     this.renderer.render(this.scene, this.camera);
     // composer.render(); //Bloom
   }
@@ -125,7 +121,34 @@ export default class Canvas3D {
   display() {
     this.container.style.display = "block";
   }
-
+  createInteraction(success) {
+    this.interactions.push(new InteractionOne({ camera: this.camera }));
+    this.interactions.push(new InteractionTwo({ camera: this.camera }));
+    this.interactions.push(new InteractionThree());
+    this.interactions.push(new InteractionFour({ renderer: this.renderer }));
+    this.interactions.push(
+      new InteractionFive({
+        camera: this.camera,
+        loadingCallback: () => {
+          success();
+        }
+      })
+    );
+    // let allMeshsLoaded = false;
+    // while (!allMeshsLoaded) {
+    //   allMeshsLoaded = true;
+    //   this.interactions.forEach(interaction => {
+    //     if (interaction.loading != undefined && interaction.loading < 100) {
+    //       allMeshsLoaded = false;
+    //       console.log("coucou");
+    //     }
+    //   });
+    //   // console.log(allMeshsLoaded);
+    //   if (allMeshsLoaded) {
+    //     success();
+    //   }
+    // }
+  }
   setInteractionStep(index) {
     this.removeAllMesh();
     this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
@@ -136,9 +159,18 @@ export default class Canvas3D {
     this.addInteractionEvent(this.interactions[index]);
   }
   removeAllMesh() {
+    console.log("REMOVING ALL MESHES");
+    console.log(this.scene.children);
     this.scene.children = this.scene.children.filter(child => {
-      return child.type != "Mesh" && child.type != "DirectionalLight";
+      return (
+        child.type != "Mesh" &&
+        child.type != "Group" &&
+        child.type != "DirectionalLight" &&
+        child.type != "PointLight" &&
+        child.type != "AmbientLight"
+      );
     });
+    console.log(this.scene.children);
   }
 
   addInteractionMesh(interaction) {

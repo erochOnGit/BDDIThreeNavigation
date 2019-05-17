@@ -1,10 +1,10 @@
 import React from "react";
-import { compose, lifecycle } from "recompose";
+import { compose, lifecycle, withHandlers, withState } from "recompose";
 import Canvas3D from "./Canvas3D";
 import * as THREE from "three";
 var OrbitControls = require("three-orbit-controls")(THREE);
 
-const ThreeContainer = () =>
+const ThreeContainer = props =>
   compose(
     lifecycle({
       componentDidMount() {
@@ -12,6 +12,7 @@ const ThreeContainer = () =>
           container: document.querySelector(".threeContainer"),
           setStep: this.props.setStep
         });
+        this.props.setCanvas(can3d);
       }
     })
   );
