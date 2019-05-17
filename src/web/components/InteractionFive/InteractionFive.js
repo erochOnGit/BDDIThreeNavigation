@@ -18,7 +18,8 @@ export default class InteractionFive extends Interaction {
     this.objects.push({ mesh });
 
     //LANDSCAPE ANIMATION
-    this.landscape.update();
+      this.landscape = new Landscape();
+      this.objects.push(this.landscape);
 
     let mixer;
     const loader = new GLTFLoader();
@@ -50,7 +51,8 @@ export default class InteractionFive extends Interaction {
      */
   }
   update(time) {
-    //do nothing
+      this.landscape.update();
+      //do nothing
     mixer.update(time);
   }
 }
