@@ -4,6 +4,9 @@ export default class Microphone {
     this.spectrum = [];
     this.volume = this.vol = 0;
     this.peak_volume = 0;
+    this.p = document.createElement("p");
+    this.p.id = "volume";
+    document.body.appendChild(this.p);
     var self = this;
     var audioContext = new AudioContext();
     var SAMPLE_RATE = audioContext.sampleRate;
@@ -35,9 +38,12 @@ export default class Microphone {
       var node = context.createScriptProcessor(this.FFT_SIZE * 2, 1, 1);
       node.onaudioprocess = this.audioProcess(analyser).bind(this);
       var input = context.createMediaStreamSource(stream);
+      var ouput = context.createMediaStreamDestination();
+
       input.connect(analyser);
       analyser.connect(node);
       node.connect(context.destination);
+      input.connect(context.destination);
     }
     function error() {
       console.log(arguments);
@@ -56,7 +62,7 @@ export default class Microphone {
       // get peak - a hack when our volumes are low
       if (this.vol > this.peak_volume) this.peak_volume = this.vol;
       this.volume = this.vol;
-      //   console.log(this.volume);
+      this.p.innerText = this.volume;
     };
   }
   //////// SOUND UTILITIES  ////////

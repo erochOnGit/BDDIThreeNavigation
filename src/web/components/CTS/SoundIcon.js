@@ -1,6 +1,7 @@
 import React from "react";
 import './SoundIcon.scss';
 import { TweenMax } from "gsap/TweenMax";
+import "./SoundIcon.scss"
 
 
 var divStyle1 = {
