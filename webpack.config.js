@@ -76,7 +76,7 @@ module.exports = {
       },
       //load fonts
       {
-        test: /\.(woff|woff2|eot|ttf|otf|obj|gltf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|obj|gltf|glb)$/,
         use: ["file-loader"]
       },
       //load datas like csv or xml

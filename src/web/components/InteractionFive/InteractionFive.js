@@ -3,10 +3,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 //OBJECT
 import Landscape from "./Landscape/Landscape";
-import fleur4 from "src/web/assets/meshs/fleur4.gltf";
+import fleur4 from "src/web/assets/meshs/flower4.glb";
 
 export default class InteractionFive extends Interaction {
-  constructor() {
+  constructor({ camera, loadingCallback }) {
     super();
 
     /**
@@ -17,24 +17,45 @@ export default class InteractionFive extends Interaction {
     var mesh = new THREE.Mesh(geometry, material);
     this.objects.push({ mesh });
 
-    //LANDSCAPE ANIMATION
-    this.landscape.update();
-
-    let mixer;
+    this.landscape = new Landscape();
+    this.loading = 0;
+    this.mixer;
     const loader = new GLTFLoader();
     loader.load(
       fleur4,
       gltf => {
         // called when the resource is loaded
         const model = gltf.scene;
-        mixer = new THREE.AnimationMixer(model);
-        gltf.animations.forEach(clip => {
-          mixer.clipAction(clip).play();
-        });
+        var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
+        for (let i = 0; i < gltf.scene.children.length; i++) {
+          gltf.scene.children[i].traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+              // apply custom material
+              child.material = material2;
+            }
+          });
+        }
+        // gltf.scene.children.foreach(child => {
+        //   // var material = new THREE.MeshFaceMaterial(materials);
+        //   child.traverse(function(child) {
+        //     if (child instanceof THREE.Mesh) {
+        //       // apply custom material
+        //       child.material = material2;
+        //     }
+        //   });
+
+        this.objects.push({ mesh: model });
+        loadingCallback();
+        // this.mixer = new THREE.AnimationMixer(model);
+        // gltf.animations.forEach(clip => {
+        //   this.mixer.clipAction(clip).play();
+        // });
+        // });
       },
       xhr => {
         // called while loading is progressing
         console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
+        this.loading = (xhr.loaded / xhr.total) * 100;
       },
       error => {
         // called when loading has errors
@@ -50,7 +71,8 @@ export default class InteractionFive extends Interaction {
      */
   }
   update(time) {
-    //do nothing
-    mixer.update(time);
+    //LANDSCAPE ANIMATION
+    this.landscape.update();
+    if (this.mixer != undefined) this.mixer.update(time);
   }
 }
