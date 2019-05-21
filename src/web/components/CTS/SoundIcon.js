@@ -1,13 +1,11 @@
 import React from "react";
 import './SoundIcon.scss';
 import { TweenMax } from "gsap/TweenMax";
-import "./SoundIcon.scss"
 
-
-var divStyle1 = {
+let divStyle1 = {
     opacity: '1',
 };
-var divStyle2 = {
+let divStyle2 = {
     opacity: '0',
 };
 const SoundSvg = props => (
