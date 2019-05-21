@@ -5,8 +5,9 @@ import MenuIcon from "src/web/components/CTS/MenuIcon";
 import MenuContent from "src/web/components/CTS/MenuContent";
 
 const One = props => {
-    return (<div className="main-one-container">
-                <SoundIcon/>
+  return (
+    <div className="main-one-container">
+      {/* <SoundIcon/>
                 <FullScreenIcon/>
                 <MenuIcon/>
                 <MenuContent/>
@@ -14,8 +15,9 @@ const One = props => {
                 <div className="title-container">
                     <h1>Naissance</h1>
                     <p>Chapitre 1</p>
-                </div>
-            </div>);
+                </div> */}
+    </div>
+  );
 };
 
 export default One;

@@ -29,7 +29,7 @@ export default class Canvas3D {
   constructor({ container, setStep }) {
     this.setStep = setStep;
     this.container = container || document.body;
-    this.interactionsIndex = 0;
+    this.interactionsIndex = -1;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -37,7 +37,7 @@ export default class Canvas3D {
       0.1,
       1000
     );
-    let initCamPos = stepSettings[this.interactionsIndex].camera.position;
+    let initCamPos = stepSettings[0].camera.position;
     this.camera.position.set(initCamPos[0], initCamPos[1], initCamPos[2]);
     this.camera.lookAt(0, 0, 0);
     this.controls = new OrbitControls(this.camera);
@@ -96,7 +96,7 @@ export default class Canvas3D {
     this.interactions = [];
 
     this.createInteraction(() => {
-      this.setInteractionStep(this.interactionsIndex);
+      this.setInteractionStep(0);
 
       window.addEventListener("resize", this.onWindowResize.bind(this), false);
       this.onWindowResize();
@@ -150,13 +150,17 @@ export default class Canvas3D {
     // }
   }
   setInteractionStep(index) {
-    this.removeAllMesh();
-    this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
-    //here we add one because the global step zero is linked to the home screen
+    if (this.interactionsIndex >= 0) {
+      this.removeAllMesh();
+      this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
+      this.removeInteractionTracking(this.interactions[this.interactionsIndex]);
+    }
 
     this.setStep(index);
     this.addInteractionMesh(this.interactions[index]);
     this.addInteractionEvent(this.interactions[index]);
+    this.startInteractionTracking(this.interactions[index]);
+    this.interactionsIndex = index;
   }
   removeAllMesh() {
     console.log("REMOVING ALL MESHES");
@@ -198,6 +202,16 @@ export default class Canvas3D {
         event.handler(this),
         event.option
       );
+    });
+  }
+  startInteractionTracking(interaction) {
+    interaction.trackings.forEach(tracking => {
+      tracking.start();
+    });
+  }
+  removeInteractionTracking(interaction) {
+    interaction.trackings.forEach(tracking => {
+      tracking.stop();
     });
   }
   onWindowResize() {

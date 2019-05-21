@@ -3,12 +3,12 @@ import ThreeContainer from "./components/ThreeContainer";
 import Home from "./components/Home/";
 import One from "./components/InteractionOne/One";
 import EnhanceApp from "./EnhanceApp";
-import Transition from "./components/Transition"
+import Transition from "./components/Transition";
 import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
 //<Transition/>
 
 const App = props => {
-  console.log(props.step)
+  console.log(props.step);
   if (props.step < 0) {
     return <Home setStep={props.setStep} />;
   } else if (props.step >= 0) {
@@ -31,6 +31,7 @@ const App = props => {
           }
         })()}
         <button
+          className="next-scene"
           onClick={() => {
             props.setSceneStep(props.step + 1);
           }}

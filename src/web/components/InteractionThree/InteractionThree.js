@@ -92,9 +92,18 @@ export default class InteractionThree extends Interaction {
     this.events.push();
 
     /**
-     * other
+     * Trackings
      */
-    // this.mic = new Microphone();
+    this.mic = new Microphone();
+    this.trackings.push({
+      tracker: { name: this.mic },
+      start: () => {
+        this.mic.init();
+      },
+      stop: () => {
+        this.mic.stop();
+      }
+    });
   }
 
   update(time) {

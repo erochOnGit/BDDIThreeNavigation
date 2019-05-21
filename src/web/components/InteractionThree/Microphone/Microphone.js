@@ -15,13 +15,14 @@ export default class Microphone {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     navigator.getUserMedia =
       navigator.getUserMedia || navigator.webkitGetUserMedia;
+    this.ctxAudio = {};
     // now just wait until the microphone is fired up
-    this.init();
   }
 
   init() {
     try {
-      this.startMic(new AudioContext());
+      this.ctxAudio = new AudioContext();
+      this.startMic(this.ctxAudio);
     } catch (e) {
       console.error(e);
       alert("Web Audio API is not supported in this browser", e);
@@ -49,7 +50,9 @@ export default class Microphone {
       console.log(arguments);
     }
   }
-
+  stop() {
+    this.ctxAudio.close();
+  }
   audioProcess(analyser) {
     return function() {
       // bitcount returns array which is half the FFT_SIZE

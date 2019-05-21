@@ -3,7 +3,7 @@ export default class Interaction {
     this.objects = [];
     this.lights = [];
     this.events = [];
+    this.trackings = [];
   }
-  removeFromScene() {}
-  addToScene() {}
+  update() {}
 }

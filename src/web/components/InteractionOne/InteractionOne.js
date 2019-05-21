@@ -95,33 +95,51 @@ export default class InteractionOne extends Interaction {
     /**
      * Events
      */
+
+    /**
+     * Tracking
+     */
     this.camCaptor = diffCamEngine();
-    let score = document.createElement("p");
-    score.id = "score";
+    this.trackings.push({
+      tracker: this.camCaptor,
+      start: () => {
+        
 
-    document.body.appendChild(score);
+        this.score = document.createElement("p");
+        this.score.id = "score";
 
-    function initSuccess() {
-      this.camCaptor.start();
-    }
+        document.body.appendChild(this.score);
 
-    function initError(e) {
-      console.warn("Something went wrong.");
-      console.log(e);
-    }
+        function initSuccess() {
+          this.camCaptor.start();
+        }
 
-    function capture(payload) {
-      score.textContent = payload.score;
-      //console.log(payload.score)
-      this.scoreInteractionOne = payload.score;
-    }
+        function initError(e) {
+          console.warn("Something went wrong.");
+          console.log(e);
+        }
 
-    this.camCaptor.init({
-      initSuccessCallback: initSuccess.bind(this),
-      initErrorCallback: initError,
-      captureCallback: capture.bind(this)
+        function capture(payload) {
+          this.score.textContent = payload.score;
+          //console.log(payload.score)
+          this.scoreInteractionOne = payload.score;
+        }
+
+        this.camCaptor.init({
+          initSuccessCallback: initSuccess.bind(this),
+          initErrorCallback: initError,
+          captureCallback: capture.bind(this)
+        });
+      },
+      stop: () => {
+        this.camCaptor.stop();
+        if (this.score) {
+          this.score.parentNode.removeChild(this.score);
+        }
+      }
     });
   }
+
   update(time, t) {
     let random = Math.floor(
       Math.random() * (this.groupPollen.children.length - 1)

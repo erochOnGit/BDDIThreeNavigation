@@ -22,19 +22,29 @@ body {
   font-family: Gibbs;
   background: black;
 }
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-weight: lighter;
 }
 
 /* TEXT APPEAR */
 @keyframes appear {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes remove {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /* LEAVE BLACK TRANSITION */
@@ -50,8 +60,12 @@ h1, h2, h3 {
   animation: transitionOut 1s ease-out forwards;
 }
 @keyframes transitionOut {
-  from { opacity: 0;}
-  to { opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* COME BLACK TRANSITION */
@@ -67,6 +81,14 @@ h1, h2, h3 {
   animation: transitionIn 1s ease-out forwards;
 }
 @keyframes transitionIn {
-  from { opacity: 1;}
-  to { opacity: 0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.next-scene {
+  position: relative;
 }
