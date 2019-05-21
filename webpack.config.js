@@ -71,7 +71,7 @@ module.exports = {
       },
       //load pictures
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|mp4|webm)$/,
         use: ["file-loader"]
       },
       //load fonts

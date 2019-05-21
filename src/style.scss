@@ -78,10 +78,13 @@ h3 {
   overflow: hidden;
   background: #000;
   z-index: 20;
-  animation: transitionIn 1s ease-out forwards;
+  animation: transitionIn 2s ease-out forwards;
 }
 @keyframes transitionIn {
   from {
+    opacity: 1;
+  }
+  90% {
     opacity: 1;
   }
   to {
@@ -89,6 +92,23 @@ h3 {
   }
 }
 
-.next-scene {
-  position: relative;
+/* VIDEO CONTAINER */
+.video-container {
+  position: absolute;
+  height: 100vh !important;
+  width: 100% !important;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .video-player {
+    height: 100vh !important;
+    //width: auto !important;
+    min-width: 100% !important;
+    video {
+      min-height: 102vh !important;
+      width: auto !important;
+    }
+  }
 }

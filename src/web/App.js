@@ -8,7 +8,6 @@ import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
 //<Transition/>
 
 const App = props => {
-  console.log(props.step);
   if (props.step < 0) {
     return <Home setStep={props.setStep} />;
   } else if (props.step >= 0) {
@@ -17,7 +16,7 @@ const App = props => {
         {(() => {
           switch (props.step) {
             case 0:
-              return <One />;
+              return <One step={props.step} />;
             case 1:
               return <div>Two</div>;
             case 2:

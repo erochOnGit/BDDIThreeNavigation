@@ -41,6 +41,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.4",
     "react-lottie": "^1.2.3",
+    "react-player": "^1.11.0",
     "react-transition-group": "^4.0.1",
     "recompose": "^0.30.0",
     "svg-morpheus": "^0.3.0",
