@@ -1,5 +1,5 @@
 import React from "react";
-import animationData from '../CTS/Json/data.json';
+import animationData from '../CTS/Json/Logo/data.json';
 import Lottie from 'react-lottie';
 import ReactPlayer from 'react-player';
 
@@ -8,10 +8,10 @@ import SoundIcon from "../CTS/SoundIcon";
 import FullScreenIcon from "../CTS/FullScreenIcon";
 
 //ELEMENT
-import img0 from '../CTS/Json/images/img_0.png';
-import img1 from '../CTS/Json/images/img_1.png';
-import img2 from '../CTS/Json/images/img_2.png';
-import img3 from '../CTS/Json/images/img_3.png';
+import img0 from '../CTS/Json/Logo/img_0.png';
+import img1 from '../CTS/Json/Logo/img_1.png';
+import img2 from '../CTS/Json/Logo/img_2.png';
+import img3 from '../CTS/Json/Logo/img_3.png';
 import introVid from '../../assets/Motion/motionintro_intro.mp4';
 
 

@@ -37,6 +37,13 @@
         .interaction {
           height: 200px;
           width: 350px;
+          div {
+            display: flex;
+            justify-content: center;
+            svg {
+              width: 70% !important;
+            }
+          }
         }
         p {
           color: #fff;

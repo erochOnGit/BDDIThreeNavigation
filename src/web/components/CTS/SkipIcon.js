@@ -7,11 +7,13 @@ const SkipIcon = props => {
     let transition = () => {
         let videoContainer = document.querySelector('.video-container');
         let skipIcon = document.querySelector('.skip-icon');
+        let transition = document.querySelector('.transition-in');
 
         console.log(videoContainer);
 
-        TweenMax.to(skipIcon, 1, {opacity:0, ease: Sine.easeOut}, 2);
-        TweenMax.to(videoContainer, 1, {opacity:0, ease: Sine.easeOut}, 2);
+        TweenMax.to(skipIcon, 1, {opacity:0, ease: Sine.easeOut});
+        TweenMax.to(videoContainer, 1, {opacity:0, ease: Sine.easeOut});
+
     }
 
     return (

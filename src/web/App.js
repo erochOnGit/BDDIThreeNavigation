@@ -33,6 +33,7 @@ const App = props => {
           className="next-scene"
           onClick={() => {
             props.setSceneStep(props.step + 1);
+            console.log(props.step+1)
           }}
         >
           Click
