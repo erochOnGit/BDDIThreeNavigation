@@ -6,7 +6,6 @@ import Lottie from 'react-lottie'
 
 const Content = props => {
 
-    console.log('step props',props)
 
     const defaultOptions = {
         loop: true,
@@ -57,7 +56,7 @@ const Content = props => {
 
 
 const hola = () => {
-    console.log('hola');
+        // console.log('hola');
 }
 const MenuContent = props => {
 

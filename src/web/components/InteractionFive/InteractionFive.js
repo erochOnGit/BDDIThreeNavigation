@@ -6,7 +6,7 @@ import Landscape from "./Landscape/Landscape";
 import fleur4 from "src/web/assets/meshs/flower4.glb";
 
 export default class InteractionFive extends Interaction {
-  constructor({ camera, loadingCallback }) {
+  constructor({ camera }) {
     super();
 
     /**
@@ -20,48 +20,47 @@ export default class InteractionFive extends Interaction {
     this.landscape = new Landscape();
     this.loading = 0;
     this.mixer;
-    const loader = new GLTFLoader();
-    loader.load(
-      fleur4,
-      gltf => {
-        // called when the resource is loaded
-        const model = gltf.scene;
-        var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
-        for (let i = 0; i < gltf.scene.children.length; i++) {
-          gltf.scene.children[i].traverse(function(child) {
-            if (child instanceof THREE.Mesh) {
-              // apply custom material
-              child.material = material2;
-            }
-          });
-        }
-        // gltf.scene.children.foreach(child => {
-        //   // var material = new THREE.MeshFaceMaterial(materials);
-        //   child.traverse(function(child) {
-        //     if (child instanceof THREE.Mesh) {
-        //       // apply custom material
-        //       child.material = material2;
-        //     }
-        //   });
+    this.loader = new GLTFLoader();
+    // loader.load(
+    //   fleur4,
+    //   gltf => {
+    //     // called when the resource is loaded
+    //     const model = gltf.scene;
+    //     var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
+    //     for (let i = 0; i < gltf.scene.children.length; i++) {
+    //       gltf.scene.children[i].traverse(function(child) {
+    //         if (child instanceof THREE.Mesh) {
+    //           // apply custom material
+    //           child.material = material2;
+    //         }
+    //       });
+    //     }
+    //     // gltf.scene.children.foreach(child => {
+    //     //   // var material = new THREE.MeshFaceMaterial(materials);
+    //     //   child.traverse(function(child) {
+    //     //     if (child instanceof THREE.Mesh) {
+    //     //       // apply custom material
+    //     //       child.material = material2;
+    //     //     }
+    //     //   });
 
-        this.objects.push({ mesh: model });
-        loadingCallback();
-        // this.mixer = new THREE.AnimationMixer(model);
-        // gltf.animations.forEach(clip => {
-        //   this.mixer.clipAction(clip).play();
-        // });
-        // });
-      },
-      xhr => {
-        // called while loading is progressing
-        console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
-        this.loading = (xhr.loaded / xhr.total) * 100;
-      },
-      error => {
-        // called when loading has errors
-        console.error("An error happened", error);
-      }
-    );
+    //     this.objects.push({ mesh: model });
+    //     // this.mixer = new THREE.AnimationMixer(model);
+    //     // gltf.animations.forEach(clip => {
+    //     //   this.mixer.clipAction(clip).play();
+    //     // });
+    //     // });
+    //   },
+    //   xhr => {
+    //     // called while loading is progressing
+    //     console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
+    //     this.loading = (xhr.loaded / xhr.total) * 100;
+    //   },
+    //   error => {
+    //     // called when loading has errors
+    //     console.error("An error happened", error);
+    //   }
+    // );
     /**
      * lights
      */
@@ -69,6 +68,36 @@ export default class InteractionFive extends Interaction {
     /**
      * events
      */
+
+    /**
+     * loadingGltf
+     */
+    this.loadingGltf.push({
+      loader: this.loader,
+      glb: fleur4,
+      success: success => gltf => {
+        // called when the resource is loaded
+        const model = gltf.scene;
+        var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
+        for (let i = 0; i < gltf.scene.children.length; i++) {
+          gltf.scene.children[i].traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material = material2;
+            }
+          });
+        }
+        this.objects.push({ mesh: model });
+        success();
+      },
+      pending: xhr => {
+        // called while loading is progressing
+        console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
+      },
+      error: error => {
+        // called when loading has errors
+        console.error("An error happened", error);
+      }
+    });
   }
   update(time) {
     //LANDSCAPE ANIMATION

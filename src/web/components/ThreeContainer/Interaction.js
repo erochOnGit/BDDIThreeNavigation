@@ -4,6 +4,7 @@ export default class Interaction {
     this.lights = [];
     this.events = [];
     this.trackings = [];
+    this.loadingGltf = [];
   }
   update() {}
 }

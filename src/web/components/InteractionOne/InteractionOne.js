@@ -53,7 +53,6 @@ export default class InteractionOne extends Interaction {
 
     //HEART
     this.heart = new Heart();
-    console.log(this.heart);
     this.objects.push(this.heart);
 
     //STEM

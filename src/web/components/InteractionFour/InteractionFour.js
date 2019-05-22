@@ -5,6 +5,9 @@ import Fluid from "./Rorchach/Fluid";
 import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.1.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.1.glsl";
 
+//OBJECT
+import Landscape from "./Landscape/Landscape";
+
 export default class InteractionFour extends Interaction {
   constructor({ renderer }) {
     super();
@@ -38,7 +41,9 @@ export default class InteractionFour extends Interaction {
       renderer
     });
     this.objects.push(rorchach2);
-
+    //LANDSCAPE
+    this.landscape = new Landscape();
+    this.objects.push(this.landscape);
     // let rorchach = new RorchachTile({
     //   renderer,
     //   dt: 8.2,
@@ -106,6 +111,8 @@ export default class InteractionFour extends Interaction {
   }
 
   update(time) {
+    //LANDSCAPE ANIMATION
+    this.landscape.update();
     this.objects.forEach(object => object.update(time));
   }
 }
