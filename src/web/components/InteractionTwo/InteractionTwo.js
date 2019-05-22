@@ -191,7 +191,7 @@ export default class InteractionTwo extends Interaction {
     //if(movemento > 0.08) {
     if (this.lastMovemento[this.lastMovemento.length - 1] > 0.05) {
       //console.log(movemento)
-      console.log(this.lastMovemento[this.lastMovemento.length - 1]);
+      //console.log(this.lastMovemento[this.lastMovemento.length - 1]);
       for (let i = 0; i < this.groupPollen.children.length; i++) {
         let tl = new TimelineLite();
         tl.to(this.groupPollen.children[i].position, 2, {
@@ -219,7 +219,7 @@ export default class InteractionTwo extends Interaction {
     //0.1463
 
     if (this.lastMovemento[this.lastMovemento.length - 1] == 0.1463) {
-      console.log("HOEHO");
+      //console.log("HOEHO");
     }
 
     //LIGHT MOVEMENT

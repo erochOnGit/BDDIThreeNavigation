@@ -53,6 +53,7 @@ export default class InteractionOne extends Interaction {
 
     //HEART
     this.heart = new Heart();
+    //console.log(this.heart);
     this.objects.push(this.heart);
 
     //STEM
@@ -102,8 +103,6 @@ export default class InteractionOne extends Interaction {
     this.trackings.push({
       tracker: this.camCaptor,
       start: () => {
-        
-
         this.score = document.createElement("p");
         this.score.id = "score";
 
