@@ -7,6 +7,14 @@ import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.1.glsl";
 
 import diffCamEngine from "./diffCamEngine/diffCamEngine";
 import fitCameraToObject from "./fitCameraToObject";
+
+require("src/tracking.js-master/tracking.js-master");
+require("src/tracking.js-master/tracking.js-master/build/data/face");
+
+let mapping = function(value, in_min, in_max, out_min, out_max) {
+  return ((value - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+};
+
 //OBJECT
 import Landscape from "./Landscape/Landscape";
 
@@ -17,7 +25,7 @@ export default class InteractionFour extends Interaction {
     /**
      * obj
      */
-    this.fluid = new Fluid(256, 8.2, 0, 0.00000005);
+    this.fluid = new Fluid(56, 8.2, 0, 0.00000005);
     this.rorchach = new RorchachTile({
       inversed: true,
       position: new THREE.Vector3(-0.5, 0, 0.1),
@@ -88,55 +96,53 @@ export default class InteractionFour extends Interaction {
     /**
      * tracking
      */
+    // this.trackings.push({
+    //   start: () => {
+    //     let dist = camera.position.z - this.rorchach.mesh.position.z;
+    //     let height = 1; // desired height to fit
+    //     camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+    //     camera.updateProjectionMatrix();
+    //     // fitCameraToObject(camera, this.rorchach.mesh, 0);
+    //   },
+    //   stop: () => {}
+    // });
+    this.video = document.createElement("video");
+    document.body.appendChild(this.video);
+    this.video.id = "video";
+    this.video.width = 320;
+    this.video.height = 240;
+    this.video.preload = true;
+    this.video.autoplay = true;
+    this.video.loop = true;
+    this.video.muted = true;
+    this.video.style.opacity = 0;
+    this.video.style.position = "fixed";
+    this.video.style.top = 0;
+
+    this.tracker = new window.tracking.ObjectTracker("face");
+    this.tracker.setInitialScale(4);
+    this.tracker.setStepSize(2);
+    this.tracker.setEdgesDensity(0.1);
+
     this.trackings.push({
+      tracker: this.tracker,
       start: () => {
-        let dist = camera.position.z - this.rorchach.mesh.position.z;
-        let height = 1; // desired height to fit
-        camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-        camera.updateProjectionMatrix();
-        // fitCameraToObject(camera, this.rorchach.mesh, 0);
-      },
-      stop: () => {}
-    });
-    this.camCaptor = diffCamEngine();
-    this.trackings.push({
-      tracker: this.camCaptor,
-      start: () => {
-        this.score = document.createElement("p");
-        this.score.id = "score";
-
-        document.body.appendChild(this.score);
-
-        function initSuccess() {
-          this.camCaptor.start();
-        }
-
-        function initError(e) {
-          console.warn("Something went wrong.");
-          console.log(e);
-        }
-
-        function capture(payload) {
-          this.score.textContent = payload.score;
-          // console.log(payload);
-          this.rorchach.updateMotion(payload);
-          this.scoreInteractionOne = payload.score;
-        }
-
-        this.camCaptor.init({
-          initSuccessCallback: initSuccess.bind(this),
-          initErrorCallback: initError,
-          captureCallback: capture.bind(this),
-          // 443
-          captureWidth: this.fluid.N,
-          captureHeight: this.fluid.N
+        window.tracking.track(this.video, this.tracker, {
+          camera: true
+        });
+        this.tracker.on("track", event => {
+          event.data.forEach(
+            function(rect) {
+              this.rorchach.updatePointer({
+                x: mapping(rect.x, 0, 230, 0.5, -0.5),
+                y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              });
+            }.bind(this)
+          );
         });
       },
       stop: () => {
-        this.camCaptor.stop();
-        if (this.score) {
-          this.score.parentNode.removeChild(this.score);
-        }
+        this.tracker.removeAllListeners();
       }
     });
   }

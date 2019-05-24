@@ -136,9 +136,6 @@ export default class Canvas3D {
     this.container.style.display = "block";
   }
   createInteraction(success) {
-    this.interactions.push(
-      new InteractionTest({ renderer: this.renderer, camera: this.camera })
-    );
     this.interactions.push(new InteractionOne({ camera: this.camera }));
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());

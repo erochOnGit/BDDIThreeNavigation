@@ -73,8 +73,6 @@ export default class InteractionTest extends Interaction {
     this.tracker.setStepSize(2);
     this.tracker.setEdgesDensity(0.1);
 
-    // this.context = this.canvas.getContext("2d");
-
     this.trackings.push({
       tracker: this.tracker,
       start: () => {
@@ -84,9 +82,6 @@ export default class InteractionTest extends Interaction {
         this.tracker.on("track", event => {
           event.data.forEach(
             function(rect) {
-              // console.log(rect.x, rect.y);
-              // console.log(mapping(rect.x, 0, 230, 1, 0), rect.y / 140);
-
               this.rorchach.updatePointer({
                 x: mapping(rect.x, 0, 230, 0.5, -0.5),
                 y: mapping(rect.y, 0, 140, 0.5, -0.5)
@@ -96,52 +91,11 @@ export default class InteractionTest extends Interaction {
         });
       },
       stop: () => {
-        this.tracker.stop();
+        this.tracker.removeAllListeners();
       }
     });
-
-    // this.camCaptor = diffCamEngine();
-    // this.trackings.push({
-    //   tracker: this.camCaptor,
-    //   start: () => {
-    //     this.score = document.createElement("p");
-    //     this.score.id = "score";
-
-    //     document.body.appendChild(this.score);
-
-    //     function initSuccess() {
-    //       this.camCaptor.start();
-    //     }
-
-    //     function initError(e) {
-    //       console.warn("Something went wrong.");
-    //       console.log(e);
-    //     }
-
-    //     function capture(payload) {
-    //       this.score.textContent = payload.score;
-    //       // console.log(payload);
-    //       //   this.rorchach.updateMotion(payload);
-    //       this.scoreInteractionOne = payload.score;
-    //     }
-
-    //     this.camCaptor.init({
-    //       initSuccessCallback: initSuccess.bind(this),
-    //       initErrorCallback: initError,
-    //       captureCallback: capture.bind(this)
-    //       // 443
-    //       // captureWidth: this.fluid.N,
-    //       // captureHeight: this.fluid.N
-    //     });
-    //   },
-    //   stop: () => {
-    //     this.camCaptor.stop();
-    //     if (this.score) {
-    //       this.score.parentNode.removeChild(this.score);
-    //     }
-    //   }
-    // });
   }
+
   onResize(camera) {}
   mouseClickHandler(canvasThis) {
     let onMouseClick = event => {
