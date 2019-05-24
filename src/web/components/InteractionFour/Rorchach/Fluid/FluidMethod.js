@@ -9,7 +9,7 @@
 // Fluid Simulation for Dummies by Mike Ash
 // https://mikeash.com/pyblog/fluid-simulation-for-dummies.html
 let iter = 4;
-let N = 128;
+let N = 56;
 
 function IX(x, y) {
   // x = Math.min(Math.max(parseInt(Math.trunc(x)), 0), N - 1);

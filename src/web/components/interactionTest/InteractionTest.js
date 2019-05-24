@@ -1,67 +1,26 @@
 import Interaction from "../ThreeContainer/Interaction";
-import RorchachTile from "./Rorchach/RorchachTile";
-// import RorchachTile from "./Rorchach/RorchachShaderRendering";
-import Fluid from "./Rorchach/Fluid";
+import RorchachTile from "./RorchachShaderRendering.1.js";
+// import Fluid from "./Rorchach/Fluid";
 import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.1.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.1.glsl";
-
 import diffCamEngine from "./diffCamEngine/diffCamEngine";
-import fitCameraToObject from "./fitCameraToObject";
 
+//TRACKING
 require("src/tracking.js-master/tracking.js-master");
 require("src/tracking.js-master/tracking.js-master/build/data/face");
-
 let mapping = function(value, in_min, in_max, out_min, out_max) {
   return ((value - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 };
-
-//OBJECT
-import Landscape from "./Landscape/Landscape";
-
-export default class InteractionFour extends Interaction {
+export default class InteractionTest extends Interaction {
   constructor({ renderer, camera }) {
+    console.log("test", tracking);
     super();
     this.camera = camera || null;
     /**
      * obj
      */
-    this.fluid = new Fluid(56, 8.2, 0, 0.00000005);
-    this.rorchach = new RorchachTile({
-      inversed: true,
-      position: new THREE.Vector3(-0.5, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid,
-      renderer
-    });
+    this.rorchach = new RorchachTile({ renderer });
     this.objects.push(this.rorchach);
-
-    // this.rorchach2 = new RorchachTile({
-    //   inversed: false,
-    //   position: new THREE.Vector3(0.5, 0, 0.1),
-    //   rotation: new THREE.Vector3(0, 0, 0),
-    //   width: 1,
-    //   height: 1,
-    //   rows: 20,
-    //   columns: 20,
-    //   fluid: this.fluid,
-    //   renderer
-    // });
-    // this.objects.push(this.rorchach2);
-    //LANDSCAPE
-    this.landscape = new Landscape();
-    this.objects.push(this.landscape);
-    // let rorchach = new RorchachTile({
-    //   renderer,
-    //   dt: 8.2,
-    //   diffusion: 0,
-    //   viscosity: 0.0000001
-    // });
-    // this.objects.push(rorchach);
-
     /**
      * lights
      */
@@ -96,16 +55,6 @@ export default class InteractionFour extends Interaction {
     /**
      * tracking
      */
-    // this.trackings.push({
-    //   start: () => {
-    //     let dist = camera.position.z - this.rorchach.mesh.position.z;
-    //     let height = 1; // desired height to fit
-    //     camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-    //     camera.updateProjectionMatrix();
-    //     // fitCameraToObject(camera, this.rorchach.mesh, 0);
-    //   },
-    //   stop: () => {}
-    // });
     this.video = document.createElement("video");
     document.body.appendChild(this.video);
     this.video.id = "video";
@@ -146,13 +95,8 @@ export default class InteractionFour extends Interaction {
       }
     });
   }
-  onResize(camera) {
-    let cam = this.camera || camera;
-    let dist = cam.position.z - this.rorchach.mesh.position.z;
-    let height = 1; // desired height to fit
-    cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-    cam.updateProjectionMatrix();
-  }
+
+  onResize(camera) {}
   mouseClickHandler(canvasThis) {
     let onMouseClick = event => {
       window.onmousemove = this.mouseClickHandler(canvasThis).bind(canvasThis);
@@ -181,8 +125,6 @@ export default class InteractionFour extends Interaction {
   }
 
   update(time) {
-    //LANDSCAPE ANIMATION
-    this.landscape.update();
     this.objects.forEach(object => object.update(time));
   }
 }

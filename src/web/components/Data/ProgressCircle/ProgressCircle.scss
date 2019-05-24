@@ -1,0 +1,23 @@
+.progress-circle {
+  position: relative;
+}
+.progress-ring-dot__circle {
+  stroke-dasharray: 1.34 15;
+  stroke-linecap: round;
+}
+.progress-ring__circle {
+  stroke-dasharray: 1.34 15;
+  stroke-linecap: round;
+  /* // axis compensation */
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+svg.progress-ring-dot {
+  position: absolute;
+}
+input {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+}

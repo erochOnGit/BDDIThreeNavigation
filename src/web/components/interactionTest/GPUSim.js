@@ -37,7 +37,6 @@ export default class GPUSim {
 
     return fbo;
   }
-
   render() {
     this.shader.uniforms.inputTexture.value = this.fbos[this.current].texture;
     this.input = this.fbos[this.current];
