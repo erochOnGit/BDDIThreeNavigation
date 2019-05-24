@@ -5,18 +5,20 @@ import Fluid from "./Rorchach/Fluid";
 import simulation_vs from "src/web/assets/shaders/basic/simulation_vs.1.glsl";
 import simulation_fs from "src/web/assets/shaders/basic/simulation_fs.1.glsl";
 
+import diffCamEngine from "./diffCamEngine/diffCamEngine";
+import fitCameraToObject from "./fitCameraToObject";
 //OBJECT
 import Landscape from "./Landscape/Landscape";
 
 export default class InteractionFour extends Interaction {
-  constructor({ renderer }) {
+  constructor({ renderer, camera }) {
     super();
-
+    this.camera = camera || null;
     /**
      * obj
      */
-    this.fluid = new Fluid(128, 8.2, 0, 0.00000005);
-    let rorchach = new RorchachTile({
+    this.fluid = new Fluid(256, 8.2, 0, 0.00000005);
+    this.rorchach = new RorchachTile({
       inversed: true,
       position: new THREE.Vector3(-0.5, 0, 0.1),
       rotation: new THREE.Vector3(0, 0, 0),
@@ -27,20 +29,20 @@ export default class InteractionFour extends Interaction {
       fluid: this.fluid,
       renderer
     });
-    this.objects.push(rorchach);
+    this.objects.push(this.rorchach);
 
-    let rorchach2 = new RorchachTile({
-      inversed: false,
-      position: new THREE.Vector3(0.5, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid,
-      renderer
-    });
-    this.objects.push(rorchach2);
+    // this.rorchach2 = new RorchachTile({
+    //   inversed: false,
+    //   position: new THREE.Vector3(0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(this.rorchach2);
     //LANDSCAPE
     this.landscape = new Landscape();
     this.objects.push(this.landscape);
@@ -82,6 +84,68 @@ export default class InteractionFour extends Interaction {
       },
       option: false
     });
+
+    /**
+     * tracking
+     */
+    this.trackings.push({
+      start: () => {
+        let dist = camera.position.z - this.rorchach.mesh.position.z;
+        let height = 1; // desired height to fit
+        camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+        camera.updateProjectionMatrix();
+        // fitCameraToObject(camera, this.rorchach.mesh, 0);
+      },
+      stop: () => {}
+    });
+    this.camCaptor = diffCamEngine();
+    this.trackings.push({
+      tracker: this.camCaptor,
+      start: () => {
+        this.score = document.createElement("p");
+        this.score.id = "score";
+
+        document.body.appendChild(this.score);
+
+        function initSuccess() {
+          this.camCaptor.start();
+        }
+
+        function initError(e) {
+          console.warn("Something went wrong.");
+          console.log(e);
+        }
+
+        function capture(payload) {
+          this.score.textContent = payload.score;
+          // console.log(payload);
+          this.rorchach.updateMotion(payload);
+          this.scoreInteractionOne = payload.score;
+        }
+
+        this.camCaptor.init({
+          initSuccessCallback: initSuccess.bind(this),
+          initErrorCallback: initError,
+          captureCallback: capture.bind(this),
+          // 443
+          captureWidth: this.fluid.N,
+          captureHeight: this.fluid.N
+        });
+      },
+      stop: () => {
+        this.camCaptor.stop();
+        if (this.score) {
+          this.score.parentNode.removeChild(this.score);
+        }
+      }
+    });
+  }
+  onResize(camera) {
+    let cam = this.camera || camera;
+    let dist = cam.position.z - this.rorchach.mesh.position.z;
+    let height = 1; // desired height to fit
+    cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+    cam.updateProjectionMatrix();
   }
   mouseClickHandler(canvasThis) {
     let onMouseClick = event => {

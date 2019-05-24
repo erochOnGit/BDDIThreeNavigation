@@ -6,5 +6,6 @@ export default class Interaction {
     this.trackings = [];
     this.loadingGltf = [];
   }
+  onResize() {}
   update() {}
 }

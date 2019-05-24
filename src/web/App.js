@@ -16,7 +16,8 @@ const App = props => {
         {(() => {
           switch (props.step) {
             case 0:
-              return <One step={props.step} />;
+              // return <One step={props.step} />;
+              <div>one</div>;
             case 1:
               return <div>Two</div>;
             case 2:
@@ -33,7 +34,7 @@ const App = props => {
           className="next-scene"
           onClick={() => {
             props.setSceneStep(props.step + 1);
-            console.log(props.step+1)
+            console.log(props.step + 1);
           }}
         >
           Click

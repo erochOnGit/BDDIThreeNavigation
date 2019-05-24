@@ -59,7 +59,9 @@ export default class Fluid {
     }
     this.density[dataIndex] += amount;
   }
-
+  densityLength() {
+    console.log(this.density.length);
+  }
   /**
    * @param {int} x
    * @param {int} y
