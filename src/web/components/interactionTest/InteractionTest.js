@@ -84,9 +84,12 @@ export default class InteractionTest extends Interaction {
         this.tracker.on("track", event => {
           event.data.forEach(
             function(rect) {
+              // console.log(rect.x, rect.y);
+              // console.log(mapping(rect.x, 0, 230, 1, 0), rect.y / 140);
+
               this.rorchach.updatePointer({
-                x: mapping(rect.x, 0, 230, 1, 0),
-                y: rect.y / 140
+                x: mapping(rect.x, 0, 230, 0.5, -0.5),
+                y: mapping(rect.y, 0, 140, 0.5, -0.5)
               });
             }.bind(this)
           );

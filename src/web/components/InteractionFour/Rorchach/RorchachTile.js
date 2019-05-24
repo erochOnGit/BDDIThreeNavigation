@@ -73,7 +73,6 @@ export default class RorchachTile {
   }
 
   updatePointer(pos) {
-    console.log(pos);
     let x = pos.x + 0.5;
     let y = pos.y + 0.5;
     this.mesh.material.uniforms.pointer.value = new THREE.Vector2(x, y);

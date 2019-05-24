@@ -89,6 +89,8 @@ export default class RorchachTile {
     return data;
   }
   updatePointer(pos) {
+    console.log("pos", pos);
+
     let x = pos.x + 0.5;
     let y = pos.y + 0.5;
 
