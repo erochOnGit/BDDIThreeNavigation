@@ -5,6 +5,8 @@ import One from "./components/InteractionOne/One";
 import EnhanceApp from "./EnhanceApp";
 import Transition from "./components/Transition";
 import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
+import ProgressCircle from "src/web/components/Data/ProgressCircle";
+
 //<Transition/>
 
 const App = props => {
@@ -16,8 +18,12 @@ const App = props => {
         {(() => {
           switch (props.step) {
             case 0:
-              // return <One step={props.step} />;
-              <div>one</div>;
+              return <One step={props.step} />;
+              // return (
+              //   <div>
+              //     <ProgressCircle />
+              //   </div>
+              // );
             case 1:
               return <div>Two</div>;
             case 2:
