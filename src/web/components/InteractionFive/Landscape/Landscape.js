@@ -4,7 +4,7 @@ import landscapeFragmentShader from "../../../assets/shaders/LandscapeShader/lan
 
 export default class Landscape {
   constructor() {
-    this.landscapeGeometry = new THREE.SphereBufferGeometry(5, 20, 20);
+    this.landscapeGeometry = new THREE.SphereBufferGeometry(8, 20, 20);
 
     this.uniforms = {
       uTime: { type: "f", value: 0 },

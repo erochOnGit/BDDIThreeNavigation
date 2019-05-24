@@ -28,7 +28,7 @@ const Home = props => {
             vidElem.currentTime = 13;
             vidElem.play();
         }, false);
-    },2000)
+    },2000);
 
     //TRANSITION
     let update = () => {

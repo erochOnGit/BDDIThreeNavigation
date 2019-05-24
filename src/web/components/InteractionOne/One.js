@@ -7,28 +7,33 @@ import FullScreenIcon from "../CTS/FullScreenIcon";
 import MenuIcon from "src/web/components/CTS/MenuIcon";
 import SkipIcon from "src/web/components/CTS/SkipIcon";
 import MenuContent from "src/web/components/CTS/MenuContent";
+import MotionDestruct from "src/web/components/MotionDestruct";
+import InteractSentence from "src/web/components/InteractSentence";
 
 //ELEMENT
 import oneVid from "../../assets/Motion/motionintro_intro.mp4";
 
 const One = props => {
-  return (
-    <div className="main-one-container">
-      <SkipIcon />
-      <SoundIcon />
-      <FullScreenIcon />
-      <MenuIcon />
-      <MenuContent step={props.step} />
-      <div className="video-container">
-        <ReactPlayer className="video-player" url={oneVid} playing />
-      </div>
-      <div className="transition-in" />
-      <div className="title-container">
-        <h1>Naissance</h1>
-        <p>Chapitre 1</p>
-      </div>
-    </div>
-  );
+    MotionDestruct('Blow on your microphone to spread pollen');
+
+    return (
+        <div className="main-one-container">
+            <SkipIcon instruct={'Blow on your microphone to spread pollen.'}/>
+            <SoundIcon />
+            <FullScreenIcon />
+            <MenuIcon />
+            <MenuContent step={props.step} />
+            <div className="video-container">
+                <ReactPlayer className="video-player" url={oneVid} playing />
+            </div>
+            <div className="transition-in" />
+            <div className="transition-out" />
+            <div className="title-container">
+                <h1>The birth</h1>
+                <p>Chapter I</p>
+            </div>
+        </div>
+    );
 };
 
 export default One;

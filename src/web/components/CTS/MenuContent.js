@@ -21,7 +21,7 @@ Reflet.assets[1].p = img1Reflet;
 
 const Content = props => {
 
-    console.log('Step: ',props.step)
+    //console.log('Step: ',props.step)
 
     let iconInteract;
     let sentence;
@@ -29,23 +29,23 @@ const Content = props => {
     switch (expr) {
         case 0:
             iconInteract = Naissance;
-            console.log('This is the scene 0');
+            //console.log('This is the scene 0');
             sentence = 'Blow on your microphone to spread pollen.';
             break;
         case 1:
             iconInteract = Desir;
-            console.log('This is the scene 1');
+            //console.log('This is the scene 1');
             sentence = 'Approach or move your hand away from the camera to attract or reject peoples.';
             break;
         case 2:
             iconInteract = Echo;
-            console.log('This is the scene 2');
+            //console.log('This is the scene 2');
             sentence = 'Talk to Echo to communicate with her.';
             break;
         case 3:
             iconInteract = Reflet;
-            console.log('This is the scene 3');
-            sentence = 'Make gestures in front of the camera to reveal your reflection';
+            //console.log('This is the scene 3');
+            sentence = 'Make gestures in front of the camera to reveal your reflection.';
             break;
         default:
     }

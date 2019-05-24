@@ -103,8 +103,6 @@ export default class InteractionOne extends Interaction {
     this.trackings.push({
       tracker: this.camCaptor,
       start: () => {
-        
-
         this.score = document.createElement("p");
         this.score.id = "score";
 

@@ -96,22 +96,22 @@ export default class InteractionTwo extends Interaction {
     this.pointLight = new THREE.PointLight(0x020202, 1, 100); //0xffeea1
     this.lights.push(this.pointLight);
 
-    let sphereSize = 0.1;
+    /*let sphereSize = 0.1;
     this.pointLightHelper = new THREE.PointLightHelper(
       this.pointLight,
       sphereSize
     );
-    this.objects.push({ mesh: this.pointLightHelper });
+    this.objects.push({ mesh: this.pointLightHelper });*/
 
     this.pointLightCircle = new THREE.PointLight(0xdddddd, 1, 100); //0xffeea1
     this.lights.push(this.pointLightCircle);
     this.pointLightCircle.position.z = 1;
 
-    this.pointLightCircleHelper = new THREE.PointLightHelper(
+    /*this.pointLightCircleHelper = new THREE.PointLightHelper(
       this.pointLightCircle,
       sphereSize
     );
-    this.objects.push({ mesh: this.pointLightCircleHelper });
+    this.objects.push({ mesh: this.pointLightCircleHelper });*/
 
     /**
      * Events

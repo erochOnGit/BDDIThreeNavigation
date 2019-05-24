@@ -7,11 +7,12 @@
   justify-content: center;
   align-items: center;
   .title-container {
-    width: 550px;
+    width: 700px;
     color: #fff;
     display: flex;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     animation: transitionIn 4s ease-out forwards;
     h1 {
       opacity: 0;
@@ -28,5 +29,17 @@
       animation: appear 1.5s ease-out forwards;
       animation-delay: 1.5s;
     }
+  }
+  .interact-sentence {
+    position: absolute;
+    top: 78vh;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-shadow: 1px 1px 12px #fff;
+    color: rgba(255, 255, 255, 0.65);
+    z-index: 100;
+    font-size: 1em;
+    opacity: 0;
+    text-align: center;
   }
 }

@@ -34,26 +34,16 @@ const MenuIcon = props => {
             //TweenMax.to(soundCont.style, .3, { transform: 'scaleY(1)', ease:Sine.easeOut});
             TweenMax.to(icon1.style, .3, { opacity:0, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:1, ease:Sine.easeOut});
-            console.log('MenuOn')
+            //console.log('MenuOn')
 
-            //Open Menu a déplacer
-            /*let menuElement = document.createElement("div");
-            menuElement.classList.add('menu-container');
-            document.querySelector('#app').appendChild(menuElement);*/
             document.querySelector('.menu-container').classList.remove('leave-menu');
             document.querySelector('.menu-container').style.display = 'block';
         } else {
             visible= true
-            //TweenMax.to(soundCont.style, .3, { transform: 'scaleY(0)', ease:Sine.easeOut});
             TweenMax.to(icon1.style, .3, { opacity:1, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:0, ease:Sine.easeOut});
-            console.log('MenudOf')
+            //console.log('MenudOf')
 
-            //Close Menu a déplacer
-            /*document.querySelector('.menu-container').classList.add('leave-menu');
-            setTimeout(()=>{
-                document.querySelector('.menu-container').remove();
-            },750);*/
             document.querySelector('.menu-container').classList.add('leave-menu');
             setTimeout(()=>{
                 document.querySelector('.menu-container').style.display = 'none';

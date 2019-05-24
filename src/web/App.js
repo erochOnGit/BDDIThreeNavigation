@@ -2,6 +2,10 @@ import React, { forwardRef, useRef, useImperativeHandle } from "react";
 import ThreeContainer from "./components/ThreeContainer";
 import Home from "./components/Home/";
 import One from "./components/InteractionOne/One";
+import Two from "./components/InteractionTwo/Two";
+import Three from "./components/InteractionThree/Three";
+import Four from "./components/InteractionFour/Four";
+import Five from "./components/InteractionFive/Five";
 import EnhanceApp from "./EnhanceApp";
 import Transition from "./components/Transition";
 import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
@@ -18,32 +22,37 @@ const App = props => {
             case 0:
               return <One step={props.step} />;
             case 1:
-              return <div>Two</div>;
+              return <Two step={props.step} />;
             case 2:
-              return <div>three</div>;
+              return <Three step={props.step} />;
             case 3:
-              return <div>four</div>;
+              return <Four step={props.step} />;
             case 4:
-              return <div>five</div>;
-            default:
+                return <Five step={props.step} />;
+              default:
               return <div>error</div>;
           }
         })()}
-        <button
-          className="next-scene"
-          onClick={() => {
-            props.setSceneStep(props.step + 1);
-            console.log(props.step+1)
-          }}
-        >
-          Click
-        </button>
+          <div className="next-icon" onClick={()=>{
+              let transitionOut = document.querySelector('.transition-out');
+              let nextIcon = document.querySelector('.next-icon');
+
+              TweenMax.to(transitionOut, 1, {opacity:1, visibility:'visible', ease: Sine.easeOut});
+              TweenMax.to(nextIcon, 1, {opacity:0, visibility:'hidden', ease: Sine.easeOut});
+
+              setTimeout(()=> {
+                props.setSceneStep(props.step + 1);
+              },1000)
+              //console.log(props.step+1)
+          }}>
+              <div className="bar"></div>
+              <p>NEXT</p>
+          </div>
+
         <ThreeContainer
           setStep={props.setStep}
           setCanvas={props.setCanvas}
-          setSceneStep={props.setSceneStep}
-        />
-        ;
+          setSceneStep={props.setSceneStep}/>;
       </div>
     );
   } else {

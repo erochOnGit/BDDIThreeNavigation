@@ -18,12 +18,18 @@ import "three/examples/js/shaders/DotScreenShader";
 import "three/examples/js/shaders/LuminosityHighPassShader";
 import "three/examples/js/postprocessing/UnrealBloomPass";
 let composer;
-let params = {
-  exposure: 1, //1
-  bloomStrength: 1.7, //2.3
-  bloomThreshold: 0.33, //0.3
-  bloomRadius: 0.01 //0.08
-};
+// let params = {
+//   exposure: 1,
+//   bloomStrength: 2.3,
+//   bloomThreshold: 0.3,
+//   bloomRadius: 0.08
+// };
+// let params = {
+//   exposure: 1, //1
+//   bloomStrength: 1.7, //2.3
+//   bloomThreshold: 0.33, //0.3
+//   bloomRadius: 0.01 //0.08
+// };
 
 export default class Canvas3D {
   constructor({ container, setStep }) {
@@ -40,7 +46,7 @@ export default class Canvas3D {
     let initCamPos = stepSettings[0].camera.position;
     this.camera.position.set(initCamPos[0], initCamPos[1], initCamPos[2]);
     this.camera.lookAt(0, 0, 0);
-    this.controls = new OrbitControls(this.camera);
+    this.controls = new OrbitControls(this.camera); //ORBIT CONTROLS
 
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
@@ -51,43 +57,50 @@ export default class Canvas3D {
     var divisions = 10;
 
     var gridHelper = new THREE.GridHelper(size, divisions);
-    this.scene.add(gridHelper);
+    // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
 
-    //Gui
-    const gui = new dat.GUI();
-    gui.add(params, "bloomThreshold", 0.0, 1.0).onChange(function(value) {
-      bloomPass.threshold = Number(value);
-    });
-    gui.add(params, "bloomStrength", 0.0, 3.0).onChange(function(value) {
-      bloomPass.strength = Number(value);
-    });
-    gui
-      .add(params, "bloomRadius", 0.0, 2.0)
-      .step(0.01)
-      .onChange(function(value) {
-        bloomPass.radius = Number(value);
-      });
+    this.bloom = {
+      exposure: 1,
+      bloomStrength: 2.3,
+      bloomThreshold: 0.3,
+      bloomRadius: 0.08
+    };
+
     //BLOOM RENDER
     let renderScene = new THREE.RenderPass(this.scene, this.camera);
-    let bloomPass = new THREE.UnrealBloomPass(
+    this.bloomPass = new THREE.UnrealBloomPass(
       new THREE.Vector2(window.innerWidth, window.innerHeight),
       1.5,
       0.4,
       0.85
     );
+    // //Gui
+    // const gui = new dat.GUI();
+    // gui.add(this.bloom, "bloomThreshold", 0.0, 1.0).onChange(function(value) {
+    //   this.bloomPass.threshold = Number(value);
+    // });
+    // gui.add(this.bloom, "bloomStrength", 0.0, 3.0).onChange(function(value) {
+    //   this.bloomPass.strength = Number(value);
+    // });
+    // gui
+    //   .add(this.bloom, "bloomRadius", 0.0, 2.0)
+    //   .step(0.01)
+    //   .onChange(function(value) {
+    //     this.bloomPass.radius = Number(value);
+    //   });
     //bloomPass.renderToScreen = true;
-    bloomPass.threshold = params.bloomThreshold;
-    bloomPass.strength = params.bloomStrength;
-    bloomPass.radius = params.bloomRadius;
+    this.bloomPass.threshold = this.bloom.bloomThreshold;
+    this.bloomPass.strength = this.bloom.bloomStrength;
+    this.bloomPass.radius = this.bloom.bloomRadius;
     composer = new THREE.EffectComposer(this.renderer);
     composer.setSize(window.innerWidth, window.innerHeight);
     composer.addPass(renderScene);
-    composer.addPass(bloomPass);
+    composer.addPass(this.bloomPass);
     //Add to fixe
     let copyPass = new THREE.ShaderPass(THREE.CopyShader);
     copyPass.renderToScreen = true;
@@ -112,8 +125,8 @@ export default class Canvas3D {
       t
     );
     // console.log(this.scene);
-    this.renderer.render(this.scene, this.camera);
-    // composer.render(); //Bloom
+    // this.renderer.render(this.scene, this.camera);
+    composer.render(); //Bloom
   }
   hide() {
     this.container.style.display = "none";
@@ -126,14 +139,8 @@ export default class Canvas3D {
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());
     this.interactions.push(new InteractionFour({ renderer: this.renderer }));
-    this.interactions.push(
-      new InteractionFive({
-        camera: this.camera,
-        loadingCallback: () => {
-          success();
-        }
-      })
-    );
+    this.interactions.push(new InteractionFive({camera: this.camera, scene: this.scene}));
+    success();
     // let allMeshsLoaded = false;
     // while (!allMeshsLoaded) {
     //   allMeshsLoaded = true;
@@ -155,16 +162,32 @@ export default class Canvas3D {
       this.removeInteractionEvent(this.interactions[this.interactionsIndex]);
       this.removeInteractionTracking(this.interactions[this.interactionsIndex]);
     }
+    this.camera.position.set(
+      stepSettings[index].camera.position[0],
+      stepSettings[index].camera.position[1],
+      stepSettings[index].camera.position[2]
+    );
+    this.camera.rotation.set(
+        stepSettings[index].camera.rotation[0],
+        stepSettings[index].camera.rotation[1],
+        stepSettings[index].camera.rotation[2]
+    );
+
+    this.bloomPass.threshold = stepSettings[index].bloom.bloomThreshold;
+    this.bloomPass.strength = stepSettings[index].bloom.bloomStrength;
+    this.bloomPass.radius = stepSettings[index].bloom.bloomRadius;
 
     this.setStep(index);
-    this.addInteractionMesh(this.interactions[index]);
-    this.addInteractionEvent(this.interactions[index]);
-    this.startInteractionTracking(this.interactions[index]);
-    this.interactionsIndex = index;
+    this.loadInteractionGltf(this.interactions[index], () => {
+      this.addInteractionMesh(this.interactions[index]);
+      this.addInteractionEvent(this.interactions[index]);
+      this.startInteractionTracking(this.interactions[index]);
+      this.interactionsIndex = index;
+    });
   }
   removeAllMesh() {
-    console.log("REMOVING ALL MESHES");
-    console.log(this.scene.children);
+    //console.log("REMOVING ALL MESHES");
+    //console.log(this.scene.children);
     this.scene.children = this.scene.children.filter(child => {
       return (
         child.type != "Mesh" &&
@@ -213,6 +236,20 @@ export default class Canvas3D {
     interaction.trackings.forEach(tracking => {
       tracking.stop();
     });
+  }
+  loadInteractionGltf(interaction, success) {
+    if (interaction.loadingGltf.length > 0) {
+      interaction.loadingGltf.forEach(gltfObj => {
+        gltfObj.loader.load(
+          gltfObj.glb,
+          gltfObj.success(success),
+          gltfObj.pending,
+          gltfObj.error
+        );
+      });
+    } else {
+      success();
+    }
   }
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;

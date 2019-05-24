@@ -44,7 +44,7 @@ export default class Microphone {
       input.connect(analyser);
       analyser.connect(node);
       node.connect(context.destination);
-      input.connect(context.destination);
+      // input.connect(context.destination);
     }
     function error() {
       console.log(arguments);
