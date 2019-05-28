@@ -39,18 +39,18 @@ export default class InteractionFour extends Interaction {
     });
     this.objects.push(this.rorchach);
 
-    // this.rorchach2 = new RorchachTile({
-    //   inversed: false,
-    //   position: new THREE.Vector3(0.5, 0, 0.1),
-    //   rotation: new THREE.Vector3(0, 0, 0),
-    //   width: 1,
-    //   height: 1,
-    //   rows: 20,
-    //   columns: 20,
-    //   fluid: this.fluid,
-    //   renderer
-    // });
-    // this.objects.push(this.rorchach2);
+    this.rorchach2 = new RorchachTile({
+      inversed: false,
+      position: new THREE.Vector3(0.5, 0, 0.1),
+      rotation: new THREE.Vector3(0, 0, 0),
+      width: 1,
+      height: 1,
+      rows: 20,
+      columns: 20,
+      fluid: this.fluid,
+      renderer
+    });
+    this.objects.push(this.rorchach2);
     //LANDSCAPE
     this.landscape = new Landscape();
     this.objects.push(this.landscape);
@@ -96,16 +96,16 @@ export default class InteractionFour extends Interaction {
     /**
      * tracking
      */
-    // this.trackings.push({
-    //   start: () => {
-    //     let dist = camera.position.z - this.rorchach.mesh.position.z;
-    //     let height = 1; // desired height to fit
-    //     camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-    //     camera.updateProjectionMatrix();
-    //     // fitCameraToObject(camera, this.rorchach.mesh, 0);
-    //   },
-    //   stop: () => {}
-    // });
+    this.trackings.push({
+      start: () => {
+        let dist = camera.position.z - this.rorchach.mesh.position.z;
+        let height = 1; // desired height to fit
+        camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+        camera.updateProjectionMatrix();
+        // fitCameraToObject(camera, this.rorchach.mesh, 0);
+      },
+      stop: () => {}
+    });
     this.video = document.createElement("video");
     document.body.appendChild(this.video);
     this.video.id = "video";

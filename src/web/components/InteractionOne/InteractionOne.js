@@ -152,7 +152,7 @@ export default class InteractionOne extends Interaction {
     });*/
   }
 
-  update(time, t) {
+  update(time, t, userData, updateUserData, interactionIndex) {
     let random = Math.floor(
       Math.random() * (this.groupPollen.children.length - 1)
     );
@@ -160,6 +160,15 @@ export default class InteractionOne extends Interaction {
     //let movemento = this.scoreInteractionOne / 10000;
       let movemento = document.querySelector('#volume').innerHTML /1000;
       //console.log(movemento)
+
+    // update the userdata state
+    let userDataUpdate = userData;
+    Object.assign(userDataUpdate[interactionIndex], {
+      movemento: userDataUpdate[interactionIndex].movemento
+        ? userDataUpdate[interactionIndex].movemento + movemento
+        : movemento
+    });
+    updateUserData(userDataUpdate);
 
     //DANDELION MOVEMENT
       if (movemento > 0.02) {

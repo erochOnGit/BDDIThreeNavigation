@@ -41,7 +41,7 @@
   {
     "name": "interaction4",
     "camera": {
-      "position": [0.3, 0.8, 3],
+      "position": [0, 0, 1],
       "rotation": [0, 0, 0]
     },
     "bloom": {

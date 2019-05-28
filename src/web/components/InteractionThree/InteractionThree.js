@@ -106,9 +106,19 @@ export default class InteractionThree extends Interaction {
     });
   }
 
-  update(time) {
+  update(time, t, userData, updateUserData, interactionIndex) {
     //do nothing forthe moment
     this.landscape.update();
+
+    // update the userdata state
+    let userDataUpdate = userData;
+    Object.assign(userDataUpdate[interactionIndex], {
+      movemento: userDataUpdate[interactionIndex].movemento
+        ? userDataUpdate[interactionIndex].movemento + this.mic.volume / 1000
+        : this.mic.volume / 1000
+    });
+    updateUserData(userDataUpdate);
+
     this.rings.forEach((ring, index) => {
       ring.update(
         time,
