@@ -4,6 +4,7 @@ import InteractionTwo from "../InteractionTwo";
 import InteractionThree from "../InteractionThree";
 import InteractionFour from "../InteractionFour/";
 import InteractionFive from "../InteractionFive/";
+import InteractionTest from "../InteractionTest/";
 import Interaction from "./Interaction.js";
 import dat from "dat.gui";
 var OrbitControls = require("three-orbit-controls")(THREE);
@@ -46,7 +47,7 @@ export default class Canvas3D {
     let initCamPos = stepSettings[0].camera.position;
     this.camera.position.set(initCamPos[0], initCamPos[1], initCamPos[2]);
     this.camera.lookAt(0, 0, 0);
-    this.controls = new OrbitControls(this.camera); //ORBIT CONTROLS
+    // this.controls = new OrbitControls(this.camera);
 
     this.scene = new THREE.Scene();
     this.raycaster = new THREE.Raycaster();
@@ -56,7 +57,7 @@ export default class Canvas3D {
     var size = 10;
     var divisions = 10;
 
-    var gridHelper = new THREE.GridHelper(size, divisions);
+    // var gridHelper = new THREE.GridHelper(size, divisions);
     // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -144,8 +145,12 @@ export default class Canvas3D {
     this.interactions.push(new InteractionOne({ camera: this.camera }));
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());
-    this.interactions.push(new InteractionFour({ renderer: this.renderer }));
-    this.interactions.push(new InteractionFive({camera: this.camera, scene: this.scene}));
+    this.interactions.push(
+      new InteractionFour({ renderer: this.renderer, camera: this.camera })
+    );
+    this.interactions.push(
+      new InteractionFive({ camera: this.camera, scene: this.scene })
+    );
     success();
     // let allMeshsLoaded = false;
     // while (!allMeshsLoaded) {
@@ -174,9 +179,9 @@ export default class Canvas3D {
       stepSettings[index].camera.position[2]
     );
     this.camera.rotation.set(
-        stepSettings[index].camera.rotation[0],
-        stepSettings[index].camera.rotation[1],
-        stepSettings[index].camera.rotation[2]
+      stepSettings[index].camera.rotation[0],
+      stepSettings[index].camera.rotation[1],
+      stepSettings[index].camera.rotation[2]
     );
 
     this.bloomPass.threshold = stepSettings[index].bloom.bloomThreshold;
@@ -261,5 +266,6 @@ export default class Canvas3D {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.interactions[this.interactionsIndex].onResize(this.camera);
   }
 }

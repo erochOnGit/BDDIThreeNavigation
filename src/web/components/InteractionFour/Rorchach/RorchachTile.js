@@ -86,12 +86,16 @@ export default class RorchachTile {
     this.fluid.addVelocity(dataIndex, this.velo, amtX, amtY);
     this.previousMouse = new THREE.Vector2(x, y);
   }
-
+  updateMotion(payload) {
+    // console.log(payload.imageData.data.length);
+    // console.log(this.data.length);
+    // for(let i; i<payload.imageData.data.length)
+  }
   update(time) {
-    //auto drag
-    let simplex = this.simplex.noise(time, 0) * 0.15;
-    let simpley = this.simplex.noise(-time, 0) * 0.15;
-    this.updatePointer(new THREE.Vector2(simplex, simpley));
+    // //auto drag
+    // let simplex = this.simplex.noise(time, 0) * 0.15;
+    // let simpley = this.simplex.noise(-time, 0) * 0.15;
+    // this.updatePointer(new THREE.Vector2(simplex, simpley));
 
     //apply fluid
     this.fluid.step({
