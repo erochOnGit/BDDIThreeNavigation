@@ -10,9 +10,10 @@ import Lottie from 'react-lottie'
 
 //ELEMENT
 import img0Desir from '../CTS/Json/Desir/img_0.png';
-import img0Echo from '../Cts/Json/Echo/img_0.png';
-import img0Reflet from '../Cts/Json/Reflet/img_0.png';
-import img1Reflet from '../Cts/Json/Reflet/img_1.png';
+import img0Echo from '../CTS/Json/Echo/img_0.png';
+import img0Reflet from '../CTS/Json/Reflet/img_0.png';
+import img1Reflet from '../CTS/Json/Reflet/img_1.png';
+import echoGif from '../CTS/Echos.gif';
 
 Desir.assets[0].p = img0Desir;
 Echo.assets[0].p = img0Echo;
@@ -38,14 +39,22 @@ const Content = props => {
             sentence = 'Approach or move your hand away from the camera to attract or reject peoples.';
             break;
         case 2:
-            iconInteract = Echo;
+            //iconInteract = Echo;
             //console.log('This is the scene 2');
             sentence = 'Talk to Echo to communicate with her.';
+            setTimeout(()=>{
+                document.querySelector('.interaction .echo-gif').style.display = 'flex';
+            },250);
             break;
         case 3:
             iconInteract = Reflet;
             //console.log('This is the scene 3');
             sentence = 'Make gestures in front of the camera to reveal your reflection.';
+            break;
+        case 4:
+            setTimeout(()=> {
+                document.querySelector('.center-cont .help-txt').innerHTML = '';
+            },250);
             break;
         default:
     }
@@ -65,6 +74,7 @@ const Content = props => {
             <p className="help-txt">Help</p>
             <div className="interaction-container">
                 <div className="interaction">
+                    <img className="echo-gif" src={echoGif}/>
                     <Lottie options={defaultOptions}/>
                 </div>
                 <p>{sentence}</p>
@@ -98,14 +108,8 @@ const Content = props => {
 }
 
 
-const hola = () => {
-}
 const MenuContent = props => {
 
-    hola()
-    let transition = () => {
-
-    }
     return (
         <div className="menu-container" onClick={()=>{}}>
             <Content step={props.step}/>

@@ -64,10 +64,16 @@ export default class Canvas3D {
     // var gridHelper = new THREE.GridHelper(size, divisions);
     // this.scene.add(gridHelper);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
+
+    /*document.querySelector('.screen').addEventListener('click', ()=>{
+      console.log('hola')
+        let img = window.open( renderer.domElement.toDataURL( 'image/png' ), 'download' );
+        console.log(img)
+    })*/
 
     this.bloom = {
       exposure: 1,

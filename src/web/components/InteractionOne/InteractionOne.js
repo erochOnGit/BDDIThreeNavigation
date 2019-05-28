@@ -1,5 +1,5 @@
 import Interaction from "../ThreeContainer/Interaction";
-import { TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
+import { TweenMax, TimelineLite } from "gsap/TweenMax";
 
 //POST PROC
 import "three/examples/js/postprocessing/EffectComposer";
@@ -21,6 +21,8 @@ import GlowSphere from "./GlowSphere/GlowSphere";
 
 //CAMERA
 import diffCamEngine from "./diffCamEngine/diffCamEngine";
+import Microphone from "./Microphone/Microphone";
+
 
 //VARIABLES
 let groupRotation = 2;
@@ -99,7 +101,19 @@ export default class InteractionOne extends Interaction {
     /**
      * Tracking
      */
-    this.camCaptor = diffCamEngine();
+
+    this.mic = new Microphone();
+    this.trackings.push({
+        tracker: { name: this.mic },
+        start: () => {
+            this.mic.init();
+        },
+        stop: () => {
+            this.mic.stop();
+        }
+    });
+
+    /*this.camCaptor = diffCamEngine();
     this.trackings.push({
       tracker: this.camCaptor,
       start: () => {
@@ -135,7 +149,7 @@ export default class InteractionOne extends Interaction {
           this.score.parentNode.removeChild(this.score);
         }
       }
-    });
+    });*/
   }
 
   update(time, t, userData, updateUserData, interactionIndex) {
@@ -143,7 +157,9 @@ export default class InteractionOne extends Interaction {
       Math.random() * (this.groupPollen.children.length - 1)
     );
     //console.log(this.scoreInteractionOne);
-    let movemento = this.scoreInteractionOne / 10000;
+    //let movemento = this.scoreInteractionOne / 10000;
+      let movemento = document.querySelector('#volume').innerHTML /1000;
+      //console.log(movemento)
 
     // update the userdata state
     let userDataUpdate = userData;
@@ -155,23 +171,26 @@ export default class InteractionOne extends Interaction {
     updateUserData(userDataUpdate);
 
     //DANDELION MOVEMENT
-    TweenMax.to(this.groupPollen.position, 0.3, {
-      z: -movemento * 3,
-      ease: Sine.easeOut
-    });
+      if (movemento > 0.02) {
 
-    TweenMax.to(this.groupPollen.rotation, 0.3, {
-      x:
-        (groupRotation +
-          movemento * (Math.random() * 3) -
-          this.groupPollen.rotation.x) *
-        0.5,
-      y:
-        (groupRotation / 0.5 +
-          movemento * (Math.random() * 2) -
-          this.groupPollen.rotation.y) *
-        0.5
-    });
+          TweenMax.to(this.groupPollen.position, 0.3, {
+              z: -movemento * 3,
+              ease: Sine.easeOut
+          });
+
+          TweenMax.to(this.groupPollen.rotation, 0.3, {
+              x:
+              (groupRotation +
+                  movemento * (Math.random() * 3) -
+                  this.groupPollen.rotation.x) *
+              0.5,
+              y:
+              (groupRotation / 0.5 +
+                  movemento * (Math.random() * 2) -
+                  this.groupPollen.rotation.y) *
+              0.5
+          });
+      }
 
     //LANDSCAPE ANIMATION
     this.landscape.update();

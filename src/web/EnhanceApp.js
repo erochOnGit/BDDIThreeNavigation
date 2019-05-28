@@ -14,16 +14,19 @@ const EnhanceApp = () =>
       { name: "interaction4" }
     ]),
     withState("step", "setStep", -1),
+    withState("muted", "setMuted", true),
     withState("canvas", "setCanvas", {}),
     withHandlers({
       setSceneStep: props => index => {
-        console.log(index);
         if (props.canvas && props.canvas.setInteractionStep) {
           props.canvas.setInteractionStep(index);
         }
       },
       getUserData: props => () => {
         return props.userData;
+      },
+      updateMuted: props => () => {
+        props.setMuted(!props.muted);
       }
     })
   );

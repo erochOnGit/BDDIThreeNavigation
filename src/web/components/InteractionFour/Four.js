@@ -18,7 +18,7 @@ const Four = props => {
     return (
         <div className="main-one-container">
             <SkipIcon instruct={'Make gestures in front of the camera to reveal your reflection.'}/>
-            <SoundIcon />
+            <SoundIcon muted={props.muted} updateMuted={props.updateMuted}/>
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />

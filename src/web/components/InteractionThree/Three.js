@@ -18,7 +18,7 @@ const Three = props => {
     return (
         <div className="main-one-container">
             <SkipIcon instruct={'Talk to Echo to communicate with her.'}/>
-            <SoundIcon />
+            <SoundIcon muted={props.muted} updateMuted={props.updateMuted}/>
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />

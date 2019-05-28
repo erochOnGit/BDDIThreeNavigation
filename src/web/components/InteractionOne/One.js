@@ -10,9 +10,8 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 import InteractSentence from "src/web/components/InteractSentence";
 
-
 //ELEMENT
-import oneVid from "../../assets/Motion/motionintro_intro.mp4";
+import oneVid from "../../assets/Motion/désir_v1.mp4";
 
 const One = props => {
   MotionDestruct("Blow on your microphone to spread pollen");
@@ -20,11 +19,10 @@ const One = props => {
   return (
     <div className="main-one-container">
       <SkipIcon instruct={"Blow on your microphone to spread pollen."} />
-      <SoundIcon />
+      <SoundIcon muted={props.muted} updateMuted={props.updateMuted} />
       <FullScreenIcon />
       <MenuIcon />
       <MenuContent step={props.step} />
-      
       <div className="video-container">
         <ReactPlayer className="video-player" url={oneVid} playing />
       </div>

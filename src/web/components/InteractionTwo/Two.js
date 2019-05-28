@@ -10,7 +10,7 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
-import secVid from "../../assets/Motion/motionintro_intro.mp4";
+import secVid from "../../assets/Motion/désir_v1.mp4";
 
 const Two = props => {
     MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.');
@@ -18,7 +18,7 @@ const Two = props => {
     return (
         <div className="main-one-container">
             <SkipIcon instruct={'Approach or move your hand away from the camera to attract or reject peoples.'}/>
-            <SoundIcon />
+            <SoundIcon muted={props.muted} updateMuted={props.updateMuted}/>
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />
