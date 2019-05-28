@@ -9,7 +9,7 @@ import Five from "./components/InteractionFive/Five";
 import EnhanceApp from "./EnhanceApp";
 import Transition from "./components/Transition";
 import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
-import ProgressCircle from "src/web/components/Data/ProgressCircle";
+import Data from "src/web/components/Data";
 
 //<Transition/>
 
@@ -40,6 +40,7 @@ const App = props => {
               return <div>error</div>;
           }
         })()}
+        <Data step={props.step} userData={props.userData} />
         <div
           className="next-icon"
           onClick={() => {
@@ -70,6 +71,8 @@ const App = props => {
           setStep={props.setStep}
           setCanvas={props.setCanvas}
           setSceneStep={props.setSceneStep}
+          getUserData={props.getUserData}
+          setUserData={props.setUserData}
         />
         ;
       </div>

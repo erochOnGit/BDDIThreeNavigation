@@ -1,33 +1,36 @@
 import React from "react";
+import EnhanceProgressCircle from "./EnhanceProgressCircle";
+import "./ProgressCircle.scss";
 
 let ProgressCircle = props => {
   return (
     <div className="progress-circle">
-      aaaaaaaaaaaaaaaaaaaaaaaaaaa
-      <svg className="progress-ring-dot" width="120" height="120">
+      <svg
+        className="progress-ring-dot"
+        width={props.width}
+        height={props.height}
+      >
         <circle
-          className="progress-ring-dot__circle"
+          className={`${
+            props.lineStyle == "dotted" ? "progress-ring-dot__circle" : ""
+          } ${
+            props.lineStyle == "transparent"
+              ? "progress-ring-transparent__circle"
+              : ""
+          }`}
           stroke="white"
-          stroke-width="4"
+          strokeWidth="4"
           fill="transparent"
-          r="52"
-          cx="60"
-          cy="60"
+          r={props.width / 2 - 8}
+          cx={props.width / 2}
+          cy={props.height / 2}
         />
       </svg>
-      <svg className="progress-ring" width="120" height="120">
-        <circle
-          className="progress-ring__circle"
-          stroke="white"
-          stroke-width="4"
-          fill="transparent"
-          r="52"
-          cx="60"
-          cy="60"
-        />
+      <svg className="progress-ring" width={props.width} height={props.height}>
+        {props.circle}
       </svg>
     </div>
   );
 };
 
-export default ProgressCircle;
+export default EnhanceProgressCircle()(ProgressCircle);

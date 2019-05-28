@@ -8,9 +8,12 @@ const ThreeContainer = props =>
   compose(
     lifecycle({
       componentDidMount() {
+        // console.log(this.props.getUserData);
         let can3d = new Canvas3D({
           container: document.querySelector(".threeContainer"),
-          setStep: this.props.setStep
+          setStep: this.props.setStep,
+          getUserData: this.props.getUserData,
+          setUserData: this.props.setUserData
         });
         this.props.setCanvas(can3d);
       }

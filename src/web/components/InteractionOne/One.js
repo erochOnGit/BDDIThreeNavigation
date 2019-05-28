@@ -10,30 +10,32 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 import InteractSentence from "src/web/components/InteractSentence";
 
+
 //ELEMENT
 import oneVid from "../../assets/Motion/motionintro_intro.mp4";
 
 const One = props => {
-    MotionDestruct('Blow on your microphone to spread pollen');
+  MotionDestruct("Blow on your microphone to spread pollen");
 
-    return (
-        <div className="main-one-container">
-            <SkipIcon instruct={'Blow on your microphone to spread pollen.'}/>
-            <SoundIcon />
-            <FullScreenIcon />
-            <MenuIcon />
-            <MenuContent step={props.step} />
-            <div className="video-container">
-                <ReactPlayer className="video-player" url={oneVid} playing />
-            </div>
-            <div className="transition-in" />
-            <div className="transition-out" />
-            <div className="title-container">
-                <h1>The birth</h1>
-                <p>Chapter I</p>
-            </div>
-        </div>
-    );
+  return (
+    <div className="main-one-container">
+      <SkipIcon instruct={"Blow on your microphone to spread pollen."} />
+      <SoundIcon />
+      <FullScreenIcon />
+      <MenuIcon />
+      <MenuContent step={props.step} />
+      
+      <div className="video-container">
+        <ReactPlayer className="video-player" url={oneVid} playing />
+      </div>
+      <div className="transition-in" />
+      <div className="transition-out" />
+      <div className="title-container">
+        <h1>The birth</h1>
+        <p>Chapter I</p>
+      </div>
+    </div>
+  );
 };
 
 export default One;

@@ -33,7 +33,11 @@ let composer;
 // };
 
 export default class Canvas3D {
-  constructor({ container, setStep }) {
+  constructor({ container, setStep, getUserData, setUserData }) {
+    this.getUserData =
+      getUserData || console.warning("can't get user data in canvas");
+    this.setUserData =
+      setUserData || console.warning("can't set user data in canvas");
     this.setStep = setStep;
     this.container = container || document.body;
     this.interactionsIndex = -1;
@@ -123,7 +127,10 @@ export default class Canvas3D {
   render(t) {
     this.interactions[this.interactionsIndex].update(
       this.clock.getElapsedTime(),
-      t
+      t,
+      this.getUserData(),
+      this.setUserData,
+      this.interactionsIndex
     );
     // console.log(this.scene);
     // this.renderer.render(this.scene, this.camera);

@@ -138,12 +138,21 @@ export default class InteractionOne extends Interaction {
     });
   }
 
-  update(time, t) {
+  update(time, t, userData, updateUserData, interactionIndex) {
     let random = Math.floor(
       Math.random() * (this.groupPollen.children.length - 1)
     );
     //console.log(this.scoreInteractionOne);
     let movemento = this.scoreInteractionOne / 10000;
+
+    // update the userdata state
+    let userDataUpdate = userData;
+    Object.assign(userDataUpdate[interactionIndex], {
+      movemento: userDataUpdate[interactionIndex].movemento
+        ? userDataUpdate[interactionIndex].movemento + movemento
+        : movemento
+    });
+    updateUserData(userDataUpdate);
 
     //DANDELION MOVEMENT
     TweenMax.to(this.groupPollen.position, 0.3, {
