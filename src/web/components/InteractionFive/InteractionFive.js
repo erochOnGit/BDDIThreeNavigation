@@ -2,7 +2,7 @@ import Interaction from "../ThreeContainer/Interaction";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as dat from 'dat.gui';
 import fontFile from '../../assets/Fonts/made_canvas/MADE Canvas_Regular.jsonn';
-import { TweenMax, TimelineLite } from "gsap/TweenMax";
+import { TweenMax } from "gsap/TweenMax";
 
 //OBJECT
 import Landscape from "./Landscape/Landscape";
@@ -23,9 +23,9 @@ import flower11 from "src/web/assets/meshs/flower11.glb";
 import flowerFast from "src/web/assets/meshs/flowerFast.glb";
 
 //TEXTURES
-import imgColor from "./Textures/paper_texture_10.png"
+import imgColor from "./Textures/paper_texture.png"
 import imgMap from "./Textures/paper_texture_10_noemal.png"
-import imgDisp from "./Textures/paper_texture_10_bump.png"
+//import imgDisp from "./Textures/paper_texture_10_bump.png"
 
 let smokeParticles = [];
 let clock = new THREE.Clock();
@@ -177,9 +177,9 @@ export default class InteractionFive extends Interaction {
                 this.model = gltf.scene;
                 //console.log('Animation', gltf.animations)
                 let textureLoader = new THREE.TextureLoader();
-                let texture = textureLoader.load(imgMap);
+                //let texture = textureLoader.load(imgMap);
                 let textureColor = textureLoader.load(imgColor);
-                let textureDisp = textureLoader.load(imgDisp);
+                //let textureDisp = textureLoader.load(imgDisp);
                 let material2 = new THREE.MeshPhongMaterial({
                     color: '#dc5aa4',
                     emissive:'0x6b45a0',
