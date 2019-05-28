@@ -53,26 +53,47 @@ const SoundSvg = props => (
 </svg>
 )
 
-let visible = true;
-
 const SoundIcon = props => {
 
+    //SOUND STATE
+    setTimeout(()=>{
+        document.querySelectorAll("video, audio").forEach( (audio) => {
+            audio.muted = !props.muted;
+        });
+    },2000);
+
+    //ICON STATE
+    setTimeout(()=>{
+        let icon1 = document.querySelector('#sound-icon1');
+        let icon2 = document.querySelector('#sound-icon2');
+        if(props.muted == false) { // SON
+            TweenMax.to(icon1.style, .01, { opacity:0, ease:Sine.easeOut});
+            TweenMax.to(icon2.style, .01, { opacity:1, ease:Sine.easeOut});
+        } else { // Mute
+            TweenMax.to(icon1.style, .01, { opacity:1, ease:Sine.easeOut});
+            TweenMax.to(icon2.style, .01, { opacity:0, ease:Sine.easeOut});
+        }
+    },150)
+
+    //CLICK TRANSITION
     let transition = () => {
         let icon1 = document.querySelector('#sound-icon1');
         let icon2 = document.querySelector('#sound-icon2');
 
-        if(visible == true) {
-            visible = false
-            //TweenMax.to(soundCont.style, .3, { transform: 'scaleY(1)', ease:Sine.easeOut});
+        if(props.muted == true) { // Mute
             TweenMax.to(icon1.style, .3, { opacity:0, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:1, ease:Sine.easeOut});
-            console.log('SoundOf')
-        } else {
-            visible= true
-            //TweenMax.to(soundCont.style, .3, { transform: 'scaleY(0)', ease:Sine.easeOut});
+            document.querySelectorAll("video, audio").forEach( (audio) => {
+                audio.muted = props.muted;
+                props.updateMuted()
+            });
+        } else { // sound
             TweenMax.to(icon1.style, .3, { opacity:1, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:0, ease:Sine.easeOut});
-            console.log('SoundOn')
+            document.querySelectorAll("video, audio").forEach( (audio) => {
+                audio.muted = props.muted;
+                props.updateMuted()
+            });
         }
     }
 

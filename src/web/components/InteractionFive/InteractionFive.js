@@ -2,11 +2,25 @@ import Interaction from "../ThreeContainer/Interaction";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as dat from 'dat.gui';
 import fontFile from '../../assets/Fonts/made_canvas/MADE Canvas_Regular.jsonn';
+import { TweenMax, TimelineLite } from "gsap/TweenMax";
 
 //OBJECT
 import Landscape from "./Landscape/Landscape";
-import fleur4 from "src/web/assets/meshs/flower4.glb";
+import fleur4 from "src/web/assets/meshs/flowerBasis.glb"; //BEGIN SCALE 0.6
 import GlowSphere from "./GlowSphere/GlowSphere";
+
+import flower1 from "src/web/assets/meshs/flower1.glb";
+import flower2 from "src/web/assets/meshs/flower2.glb";
+import flower3 from "src/web/assets/meshs/flower3.glb";
+import flower4 from "src/web/assets/meshs/flower4.glb";
+import flower5 from "src/web/assets/meshs/flower5.glb";
+import flower6 from "src/web/assets/meshs/flower6.glb";
+import flower7 from "src/web/assets/meshs/flower7.glb";
+import flower8 from "src/web/assets/meshs/flower8.glb";
+import flower9 from "src/web/assets/meshs/flower9.glb";
+import flower10 from "src/web/assets/meshs/flower10.glb";
+import flower11 from "src/web/assets/meshs/flower11.glb";
+import flowerFast from "src/web/assets/meshs/flowerFast.glb";
 
 //TEXTURES
 import imgColor from "./Textures/paper_texture_10.png"
@@ -47,11 +61,6 @@ export default class InteractionFive extends Interaction {
             this.fontMesh.position.set(-3.2,-1.5,-4.5);
             this.fontMesh.rotation.x = .4;
         });
-
-        /*    var geometry = new THREE.SphereBufferGeometry( 1, 32, 32 );
-            var material = new THREE.MeshBasicMaterial( {color: 0x0000ff, transparent: true, opacity: 0.5} );
-            this.sphere = new THREE.Mesh( geometry, material );
-            this.objects.push({ mesh: this.sphere });*/
 
         // loader.load(
         //   fleur4,
@@ -162,7 +171,7 @@ export default class InteractionFive extends Interaction {
          */
         this.loadingGltf.push({
             loader: this.loader,
-            glb: fleur4,
+            glb: flower4,
             success: success => gltf => {
                 // called when the resource is loaded
                 this.model = gltf.scene;
@@ -178,8 +187,8 @@ export default class InteractionFive extends Interaction {
                     shininess:'100',
                     //normalMap: textureDisp,
                     map: textureColor,
-                    displacementMap: texture,
-                    displacementScale: 1,
+                    //displacementMap: texture,
+                    //displacementScale: 1,
                     normalScale: new THREE.Vector2(1, 1)
                 }); // 0xa65e00 Yel
                 for (let i = 0; i < gltf.scene.children.length; i++) {
@@ -192,7 +201,7 @@ export default class InteractionFive extends Interaction {
                 this.model.rotation.x = .67;//.2
                 this.model.rotation.y = .3;
                 this.model.position.z = -2;
-                this.model.scale.set(.6,.6,.6)
+                //this.model.scale.set(.006,.006,.006)
                 this.objects.push({ mesh: this.model });
                 this.parameters(this.model);
                 this.registerEvents(this.model, this.fontMesh);
@@ -214,11 +223,16 @@ export default class InteractionFive extends Interaction {
         document.querySelector('body').addEventListener( "mousemove", function( event ) {
             const x = ((event.pageX - (window.innerWidth / 2)) / (window.innerWidth / 2)) * 10;
             const y = ((event.pageY - (window.innerHeight / 2)) / (window.innerHeight / 2)) * 5;
-            model.rotation.set((x/75)+0.75,(y/10)+0.3,0);
+            /*model.rotation.set((x/75)+0.75,(y/10)+0.3,0);
             model.position.set(x/100,.67,(-y/100)-1.8);
             console.log(this.fontMesh)
             flower.rotation.set((x/150),(y/150),0);
-            flower.position.set((x/100)-3.3,-1.5,-4.5);
+            flower.position.set((x/100)-3.3,-1.5,-4.5);*/
+
+            TweenMax.to(model.rotation, .2, {x:(x/75)+0.75, y:(y/10)+0.3, z:0, ease:Circ.easeInOut})
+            TweenMax.to(model.position, .2, {x:(x/100), y:0.67, z:(-y/100)-1.8, ease:Circ.easeInOut})
+            TweenMax.to(flower.rotation, .2, {x:(x/150), y:(y/150), z:0, ease:Circ.easeInOut})
+            TweenMax.to(flower.position, .2, {x:(x/100)-3.3, y:-1.5, z:-4.5, ease:Circ.easeInOut})
         });
     }
 
