@@ -31,8 +31,10 @@ let smokeParticles = [];
 let clock = new THREE.Clock();
 
 export default class InteractionFive extends Interaction {
-    constructor({ camera, scene }) {
+    constructor({ camera, scene, getUserData }) {
         super();
+
+        this.getUserData = getUserData;
 
         this.camera = camera;
         /**
@@ -165,6 +167,16 @@ export default class InteractionFive extends Interaction {
         /**
          * events
          */
+
+        /**
+         * tracking
+         */
+        this.trackings.push({
+            start: () => {
+                console.log('Scene 5',this.getUserData());
+            },
+            stop: () => {}
+        });
 
         /**
          * loadingGltf

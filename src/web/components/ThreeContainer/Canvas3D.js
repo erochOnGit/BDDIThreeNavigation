@@ -152,12 +152,8 @@ export default class Canvas3D {
     this.interactions.push(new InteractionOne({ camera: this.camera }));
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());
-    this.interactions.push(
-      new InteractionFour({ renderer: this.renderer, camera: this.camera })
-    );
-    this.interactions.push(
-      new InteractionFive({ camera: this.camera, scene: this.scene })
-    );
+    this.interactions.push(new InteractionFour({ renderer: this.renderer, camera: this.camera }));
+    this.interactions.push(new InteractionFive({ camera: this.camera, scene: this.scene, getUserData:this.getUserData }));
     success();
     // let allMeshsLoaded = false;
     // while (!allMeshsLoaded) {
