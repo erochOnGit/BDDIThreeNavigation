@@ -30,19 +30,24 @@ const MenuIcon = props => {
         let icon2 = document.querySelector('.menu-icon2-cont');
 
         if(visible == true) {
+            //Menu on
             visible = false
-            //TweenMax.to(soundCont.style, .3, { transform: 'scaleY(1)', ease:Sine.easeOut});
             TweenMax.to(icon1.style, .3, { opacity:0, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:1, ease:Sine.easeOut});
-            //console.log('MenuOn')
+            document.querySelectorAll("video, audio").forEach( (motion) => {
+                motion.pause();
+            });
 
             document.querySelector('.menu-container').classList.remove('leave-menu');
             document.querySelector('.menu-container').style.display = 'block';
         } else {
+            //Menu Of
             visible= true
             TweenMax.to(icon1.style, .3, { opacity:1, ease:Sine.easeOut});
             TweenMax.to(icon2.style, .3, { opacity:0, ease:Sine.easeOut});
-            //console.log('MenudOf')
+            document.querySelectorAll("video, audio").forEach( (motion) => {
+                motion.play();
+            });
 
             document.querySelector('.menu-container').classList.add('leave-menu');
             setTimeout(()=>{

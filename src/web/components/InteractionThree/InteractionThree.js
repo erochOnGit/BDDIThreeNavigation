@@ -4,6 +4,7 @@ import Ring from "./Ring/Ring";
 import dat from "dat.gui";
 import Microphone from "./Microphone/Microphone";
 import Landscape from "./Landscape/Landscape";
+import Stem from "./Stem/Stem";
 
 export default class InteractionThree extends Interaction {
   constructor() {
@@ -70,6 +71,10 @@ export default class InteractionThree extends Interaction {
     this.landscape = new Landscape();
     this.objects.push(this.landscape);
 
+    //STEM
+    this.stem = new Stem();
+    this.objects.push(this.stem);
+
     /**
      * lights
      */
@@ -109,6 +114,8 @@ export default class InteractionThree extends Interaction {
   update(time, t, userData, updateUserData, interactionIndex) {
     //do nothing forthe moment
     this.landscape.update();
+      //LIGHT MOVEMENT
+      this.stem.mesh.position.x = (Math.cos(time * 1.329) *.01) + .22;
 
     // update the userdata state
     let userDataUpdate = userData;

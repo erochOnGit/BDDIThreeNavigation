@@ -165,7 +165,11 @@ export default class Canvas3D {
       })
     );
     this.interactions.push(
-      new InteractionFive({ camera: this.camera, scene: this.scene })
+      new InteractionFive({
+        camera: this.camera,
+        scene: this.scene,
+        getUserData: this.getUserData
+      })
     );
     success();
     // let allMeshsLoaded = false;
