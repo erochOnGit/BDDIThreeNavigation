@@ -65,24 +65,26 @@ const EnhanceProgressCircle = props =>
         }
       },
       componentDidUpdate(prevProps) {
-        if (this.props.outer && this.props.step != prevProps.step) {
-          const offset = (this.props.step / stepTotal) * 1000;
-          this.props.setProgress(offset);
-        } else if (
-          this.props.finishState - 1 == this.props.step &&
-          this.props.userData &&
-          this.props.userData[this.props.finishState - 1] &&
-          this.props.userData[this.props.finishState - 1].movemento &&
-          this.props.lastMovemento !=
-            this.props.userData[this.props.finishState - 1].movemento
-        ) {
-          if (this.props.circle.props.strokeDashoffset > 0) {
-            this.props.setProgress(
-              this.props.userData[this.props.finishState - 1].movemento * 100
-            );
-            this.props.setLastMovemento(
+        if (document.querySelector(".video-container").style.opacity === "0") {
+          if (this.props.outer && this.props.step != prevProps.step) {
+            const offset = (this.props.step / stepTotal) * 1000;
+            this.props.setProgress(offset);
+          } else if (
+            this.props.finishState - 1 == this.props.step &&
+            this.props.userData &&
+            this.props.userData[this.props.finishState - 1] &&
+            this.props.userData[this.props.finishState - 1].movemento &&
+            this.props.lastMovemento !=
               this.props.userData[this.props.finishState - 1].movemento
-            );
+          ) {
+            if (this.props.circle.props.strokeDashoffset > 0) {
+              this.props.setProgress(
+                this.props.userData[this.props.finishState - 1].movemento * 100
+              );
+              this.props.setLastMovemento(
+                this.props.userData[this.props.finishState - 1].movemento
+              );
+            }
           }
         }
       }

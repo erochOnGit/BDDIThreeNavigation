@@ -19,9 +19,23 @@ let mapping = function(value, in_min, in_max, out_min, out_max) {
 import Landscape from "./Landscape/Landscape";
 
 export default class InteractionFour extends Interaction {
-  constructor({ renderer, camera }) {
+  constructor({
+    renderer,
+    camera,
+    getUserData,
+    updateUserData,
+    getInteractionIndex
+  }) {
     super();
     this.camera = camera || null;
+    this.getUserData =
+      getUserData || console.warning("can't get userdata in interaction 4");
+    this.updateUserData =
+      updateUserData ||
+      console.warning("can't update userdata in interaction 4");
+    this.getInteractionIndex =
+      getInteractionIndex ||
+      console.warning("can't find the current index in interaction 4");
     /**
      * obj
      */
@@ -133,6 +147,20 @@ export default class InteractionFour extends Interaction {
         this.tracker.on("track", event => {
           event.data.forEach(
             function(rect) {
+              if (
+                document.querySelector(".video-container").style.opacity === "0"
+              ) {
+                // update the userdata state
+                let userDataUpdate = this.getUserData();
+                let interactionIndex = this.getInteractionIndex();
+                Object.assign(userDataUpdate[interactionIndex], {
+                  movemento: userDataUpdate[interactionIndex].movemento
+                    ? userDataUpdate[interactionIndex].movemento + 0.025
+                    : 0.025
+                });
+                this.updateUserData(userDataUpdate);
+              }
+              //update pointer
               this.rorchach.updatePointer({
                 x: mapping(rect.x, 0, 230, 0.5, -0.5),
                 y: mapping(rect.y, 0, 140, 0.5, -0.5)
@@ -180,7 +208,7 @@ export default class InteractionFour extends Interaction {
     return onMouseClick;
   }
 
-  update(time) {
+  update(time, t) {
     //LANDSCAPE ANIMATION
     this.landscape.update();
     this.objects.forEach(object => object.update(time));

@@ -23,7 +23,6 @@ import GlowSphere from "./GlowSphere/GlowSphere";
 import diffCamEngine from "./diffCamEngine/diffCamEngine";
 import Microphone from "./Microphone/Microphone";
 
-
 //VARIABLES
 let groupRotation = 2;
 
@@ -104,13 +103,13 @@ export default class InteractionOne extends Interaction {
 
     this.mic = new Microphone();
     this.trackings.push({
-        tracker: { name: this.mic },
-        start: () => {
-            this.mic.init();
-        },
-        stop: () => {
-            this.mic.stop();
-        }
+      tracker: { name: this.mic },
+      start: () => {
+        this.mic.init();
+      },
+      stop: () => {
+        this.mic.stop();
+      }
     });
 
     /*this.camCaptor = diffCamEngine();
@@ -158,39 +157,38 @@ export default class InteractionOne extends Interaction {
     );
     //console.log(this.scoreInteractionOne);
     //let movemento = this.scoreInteractionOne / 10000;
-      let movemento = document.querySelector('#volume').innerHTML /1000;
-      //console.log(movemento)
+    let movemento = document.querySelector("#volume").innerHTML / 1000;
 
-    // update the userdata state
-    let userDataUpdate = userData;
-    Object.assign(userDataUpdate[interactionIndex], {
-      movemento: userDataUpdate[interactionIndex].movemento
-        ? userDataUpdate[interactionIndex].movemento + movemento
-        : movemento
-    });
-    updateUserData(userDataUpdate);
-
+    if (document.querySelector(".video-container").style.opacity === "0") {
+      // update the userdata state
+      let userDataUpdate = userData;
+      Object.assign(userDataUpdate[interactionIndex], {
+        movemento: userDataUpdate[interactionIndex].movemento
+          ? userDataUpdate[interactionIndex].movemento + movemento
+          : movemento
+      });
+      updateUserData(userDataUpdate);
+    }
     //DANDELION MOVEMENT
-      if (movemento > 0.02) {
+    if (movemento > 0.02) {
+      TweenMax.to(this.groupPollen.position, 0.3, {
+        z: -movemento * 3,
+        ease: Sine.easeOut
+      });
 
-          TweenMax.to(this.groupPollen.position, 0.3, {
-              z: -movemento * 3,
-              ease: Sine.easeOut
-          });
-
-          TweenMax.to(this.groupPollen.rotation, 0.3, {
-              x:
-              (groupRotation +
-                  movemento * (Math.random() * 3) -
-                  this.groupPollen.rotation.x) *
-              0.5,
-              y:
-              (groupRotation / 0.5 +
-                  movemento * (Math.random() * 2) -
-                  this.groupPollen.rotation.y) *
-              0.5
-          });
-      }
+      TweenMax.to(this.groupPollen.rotation, 0.3, {
+        x:
+          (groupRotation +
+            movemento * (Math.random() * 3) -
+            this.groupPollen.rotation.x) *
+          0.5,
+        y:
+          (groupRotation / 0.5 +
+            movemento * (Math.random() * 2) -
+            this.groupPollen.rotation.y) *
+          0.5
+      });
+    }
 
     //LANDSCAPE ANIMATION
     this.landscape.update();

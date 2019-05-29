@@ -52,18 +52,45 @@
       width: 100%;
       height: 100%;
       top: 0;
-      .up .progress-circle {
-        transform: rotate(-45deg);
+
+      .up {
+        .progress-ring-dot__circle {
+          stroke-dasharray: 0.1 7;
+        }
+        .progress-circle {
+          transform: rotate(-45deg);
+        }
       }
-      .down .progress-circle {
-        transform: rotate(-45deg);
+      .down {
+        .progress-ring-dot__circle {
+          stroke-dasharray: 0.1 7;
+        }
+        .progress-circle {
+          transform: rotate(-45deg);
+        }
       }
-      .left .progress-circle {
-        transform: rotate(-45deg);
+      .left {
+        .progress-ring-dot__circle {
+          stroke-dasharray: 0.1 7;
+        }
+        .progress-circle {
+          transform: rotate(-45deg);
+        }
       }
-      .right .progress-circle {
-        transform: rotate(-45deg);
+      .right {
+        .progress-ring-dot__circle {
+          stroke-dasharray: 0.1 7;
+        }
+        .progress-circle {
+          transform: rotate(-45deg);
+        }
       }
+    }
+    .contained {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
     }
   }
 }

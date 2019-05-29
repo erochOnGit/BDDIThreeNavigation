@@ -114,18 +114,19 @@ export default class InteractionThree extends Interaction {
   update(time, t, userData, updateUserData, interactionIndex) {
     //do nothing forthe moment
     this.landscape.update();
-      //LIGHT MOVEMENT
-      this.stem.mesh.position.x = (Math.cos(time * 1.329) *.01) + .22;
+    //LIGHT MOVEMENT
+    this.stem.mesh.position.x = Math.cos(time * 1.329) * 0.01 + 0.22;
 
     // update the userdata state
-    let userDataUpdate = userData;
-    Object.assign(userDataUpdate[interactionIndex], {
-      movemento: userDataUpdate[interactionIndex].movemento
-        ? userDataUpdate[interactionIndex].movemento + this.mic.volume / 1000
-        : this.mic.volume / 1000
-    });
-    updateUserData(userDataUpdate);
-
+    if (document.querySelector(".video-container").style.opacity === "0") {
+      let userDataUpdate = userData;
+      Object.assign(userDataUpdate[interactionIndex], {
+        movemento: userDataUpdate[interactionIndex].movemento
+          ? userDataUpdate[interactionIndex].movemento + this.mic.volume / 1000
+          : this.mic.volume / 1000
+      });
+      updateUserData(userDataUpdate);
+    }
     this.rings.forEach((ring, index) => {
       ring.update(
         time,
