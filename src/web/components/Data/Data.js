@@ -118,6 +118,56 @@ let Data = props => {
                   );
                 }
               })()}
+              {(() => {
+                if (props.step >= 3) {
+                  return (
+                    <div className="contained">
+                      <div className="container">
+                        <div className="up">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })()}
             </div>
           );
         }

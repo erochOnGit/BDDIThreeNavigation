@@ -64,7 +64,10 @@ export default class Canvas3D {
     // var gridHelper = new THREE.GridHelper(size, divisions);
     // this.scene.add(gridHelper);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      preserveDrawingBuffer: true
+    });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
@@ -153,7 +156,13 @@ export default class Canvas3D {
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());
     this.interactions.push(
-      new InteractionFour({ renderer: this.renderer, camera: this.camera })
+      new InteractionFour({
+        renderer: this.renderer,
+        camera: this.camera,
+        getUserData: this.getUserData,
+        updateUserData: this.setUserData,
+        getInteractionIndex: this.getInteractionIndex.bind(this)
+      })
     );
     this.interactions.push(
       new InteractionFive({ camera: this.camera, scene: this.scene })
@@ -268,6 +277,9 @@ export default class Canvas3D {
     } else {
       success();
     }
+  }
+  getInteractionIndex() {
+    return this.interactionsIndex;
   }
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
