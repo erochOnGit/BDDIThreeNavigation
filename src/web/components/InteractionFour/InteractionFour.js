@@ -147,15 +147,19 @@ export default class InteractionFour extends Interaction {
         this.tracker.on("track", event => {
           event.data.forEach(
             function(rect) {
-              // update the userdata state
-              let userDataUpdate = this.getUserData();
-              let interactionIndex = this.getInteractionIndex();
-              Object.assign(userDataUpdate[interactionIndex], {
-                movemento: userDataUpdate[interactionIndex].movemento
-                  ? userDataUpdate[interactionIndex].movemento + 0.025
-                  : 0.025
-              });
-              this.updateUserData(userDataUpdate);
+              if (
+                document.querySelector(".video-container").style.opacity === "0"
+              ) {
+                // update the userdata state
+                let userDataUpdate = this.getUserData();
+                let interactionIndex = this.getInteractionIndex();
+                Object.assign(userDataUpdate[interactionIndex], {
+                  movemento: userDataUpdate[interactionIndex].movemento
+                    ? userDataUpdate[interactionIndex].movemento + 0.025
+                    : 0.025
+                });
+                this.updateUserData(userDataUpdate);
+              }
               //update pointer
               this.rorchach.updatePointer({
                 x: mapping(rect.x, 0, 230, 0.5, -0.5),

@@ -160,15 +160,16 @@ export default class InteractionTwo extends Interaction {
   }
   update(time, t, userData, updateUserData, interactionIndex) {
     let movemento = this.scoreInteractionOne / 10000;
-
-    // update the userdata state
-    let userDataUpdate = userData;
-    Object.assign(userDataUpdate[interactionIndex], {
-      movemento: userDataUpdate[interactionIndex].movemento
-        ? userDataUpdate[interactionIndex].movemento + movemento
-        : movemento
-    });
-    updateUserData(userDataUpdate);
+    if (document.querySelector(".video-container").style.opacity === "0") {
+      // update the userdata state
+      let userDataUpdate = userData;
+      Object.assign(userDataUpdate[interactionIndex], {
+        movemento: userDataUpdate[interactionIndex].movemento
+          ? userDataUpdate[interactionIndex].movemento + movemento
+          : movemento
+      });
+      updateUserData(userDataUpdate);
+    }
 
     if (movemento > 0.05) {
       this.lastMovemento.push(movemento);
