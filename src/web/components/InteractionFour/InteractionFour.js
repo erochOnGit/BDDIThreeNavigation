@@ -39,7 +39,7 @@ export default class InteractionFour extends Interaction {
     /**
      * obj
      */
-    this.fluid = new Fluid(56, 8.2, 0, 0.00000005);
+    this.fluid = new Fluid(112, 8.2, 0, 0.00000005);
     this.rorchach = new RorchachTile({
       inversed: true,
       position: new THREE.Vector3(-0.5, 0, 0.1),
@@ -52,19 +52,18 @@ export default class InteractionFour extends Interaction {
       renderer
     });
     this.objects.push(this.rorchach);
-
-    this.rorchach2 = new RorchachTile({
-      inversed: false,
-      position: new THREE.Vector3(0.5, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid,
-      renderer
-    });
-    this.objects.push(this.rorchach2);
+    // this.rorchach2 = new RorchachTile({
+    //   inversed: false,
+    //   position: new THREE.Vector3(0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(this.rorchach2);
     //LANDSCAPE
     this.landscape = new Landscape();
     this.objects.push(this.landscape);

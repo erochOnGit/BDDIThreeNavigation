@@ -132,8 +132,16 @@ let Data = props => {
                             finishState={4} //in order to handle the color once the step is finish
                             userData={props.userData}
                           />
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={10}
+                            height={10}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
                         </div>
-                        <div className="up">
+                        <div className="up up-right-small">
                           <ProgressCircle
                             lineStyle="transparent"
                             width={20}
@@ -143,7 +151,7 @@ let Data = props => {
                             userData={props.userData}
                           />
                         </div>
-                        <div className="up">
+                        <div className="up right-small">
                           <ProgressCircle
                             lineStyle="transparent"
                             width={20}
@@ -153,7 +161,47 @@ let Data = props => {
                             userData={props.userData}
                           />
                         </div>
-                        <div className="up">
+                        <div className="up bottom-right-small">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up bottom-small">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up bottom-left-small">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up left-small">
+                          <ProgressCircle
+                            lineStyle="transparent"
+                            width={20}
+                            height={20}
+                            step={props.step} //in order to handle the color once the step is finish
+                            finishState={4} //in order to handle the color once the step is finish
+                            userData={props.userData}
+                          />
+                        </div>
+                        <div className="up up-left-small">
                           <ProgressCircle
                             lineStyle="transparent"
                             width={20}

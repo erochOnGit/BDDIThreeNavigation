@@ -79,7 +79,7 @@ export default class RorchachTile {
 
     let dataIndex = this.IX(x, y);
 
-    this.fluid.addDensity(dataIndex, 0.25);
+    this.fluid.addDensity(dataIndex, 1);
 
     let amtX = x - this.previousMouse.x;
     let amtY = y - this.previousMouse.y;

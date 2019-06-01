@@ -91,6 +91,34 @@
       width: 100%;
       height: 100%;
       top: 0;
+      .container {
+        top: 3.5%;
+        height: 90%;
+        .up {
+          transform: (rotate(0deg));
+          &.up-right-small {
+            transform: (rotate(45deg));
+          }
+          &.right-small {
+            transform: (rotate(90deg));
+          }
+          &.bottom-right-small {
+            transform: (rotate(135deg));
+          }
+          &.bottom-small {
+            transform: (rotate(180deg));
+          }
+          &.bottom-left-small {
+            transform: (rotate(-135deg));
+          }
+          &.left-small {
+            transform: (rotate(-90deg));
+          }
+          &.up-left-small {
+            transform: (rotate(-45deg));
+          }
+        }
+      }
     }
   }
 }
