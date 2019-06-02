@@ -1,4 +1,5 @@
 import { diffuse, advect, project } from "./FluidMethod";
+import worker from "./test.worker.js";
 
 export default class Fluid {
   constructor(N, dt, diffusion, viscosity) {
@@ -21,6 +22,12 @@ export default class Fluid {
       this.vx0[i] = 0;
       this.vy0[i] = 0;
     }
+    console.log(worker);
+    this.monWorker = new Worker(worker);
+    this.monWorker.onmessage = function(oEvent) {
+      console.log("Worker said : " + oEvent.data);
+    };
+    this.monWorker.postMessage("ali");
   }
 
   step({ success }) {
@@ -33,6 +40,22 @@ export default class Fluid {
     let vy0 = this.vy0;
     let s = this.s;
     let density = this.density;
+
+    // this.monWorker.postMessage([1, 2]);
+    // this.monWorker.postMessage([
+    //   this.visc,
+    //   this.diff,
+    //   this.dt,
+    //   this.vx,
+    //   this.vy,
+    //   this.vx0,
+    //   this.vy0,
+    //   this.s,
+    //   this.density
+    // ]);
+    // this.monWorker.onmessage = function(e) {
+    //   console.log(e);
+    // };
 
     diffuse(1, vx0, vx, visc, dt);
     diffuse(2, vx0, vx, visc, dt);
@@ -57,6 +80,7 @@ export default class Fluid {
     if (isNaN(amount)) {
       console.log("\n\n\n\naddDensity\n\n\n\n");
     }
+    // this.monWorker.postMessage()
     this.density[dataIndex] += amount;
   }
   densityLength() {

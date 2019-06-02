@@ -117,7 +117,9 @@ export default class InteractionFour extends Interaction {
         camera.updateProjectionMatrix();
         // fitCameraToObject(camera, this.rorchach.mesh, 0);
       },
-      stop: () => {}
+      stop: () => {
+        this.fluid.monWorker.terminate();
+      }
     });
     this.video = document.createElement("video");
     document.body.appendChild(this.video);
