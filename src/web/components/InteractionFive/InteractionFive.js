@@ -173,7 +173,28 @@ export default class InteractionFive extends Interaction {
          */
         this.trackings.push({
             start: () => {
-                console.log('Scene 5',this.getUserData());
+                //console.log('Scene 5',this.getUserData());
+                let score = 0;
+                for(let i=0; i<4; i++) {
+                    score += this.getUserData()[i].movemento;
+                    console.log('Your add: ', score)
+                }
+                console.log('Your score: ', score)
+
+                let score0 = this.getUserData()[0].movemento;
+                let score1 = this.getUserData()[1].movemento;
+                let score2 = this.getUserData()[2].movemento;
+                let score3 = this.getUserData()[3].movemento;
+
+                let globalScore = score0 + score1 + score2 + score3;
+
+                console.log('Global score: ', globalScore)
+
+                let numberScore = document.createElement("div");
+                numberScore.innerHTML = globalScore;
+                numberScore.classList.add('global-score');
+                document.querySelector('body').appendChild(numberScore);
+
             },
             stop: () => {}
         });
