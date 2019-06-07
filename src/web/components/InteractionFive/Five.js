@@ -19,7 +19,7 @@ const Five = props => {
     return (
         <div className="main-one-container">
             <SaveIcon step={props.step} />
-            <SkipIcon step={props.step} instruct={'Ceci est ta fleur prend conscience de ta beauté intérieur.'}/>
+            <SkipIcon step={props.step} instruct={'This generative flower is a reflection of your inner beauty\'s particularity.'}/>
             <SoundIcon muted={props.muted} updateMuted={props.updateMuted}/>
             <FullScreenIcon />
             <MenuIcon />

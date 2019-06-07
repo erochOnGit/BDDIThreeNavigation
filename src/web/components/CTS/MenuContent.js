@@ -5,6 +5,7 @@ import Naissance from '../CTS/Json/Naissance/data.json'; //wright
 import Desir from '../CTS/Json/Desir/data.json';
 import Echo from '../CTS/Json/Echo/data.json';
 import Reflet from '../CTS/Json/Reflet/data.json';
+import Flower from '../CTS/Json/Flower/data.json'
 import Lottie from 'react-lottie'
 
 
@@ -14,33 +15,30 @@ import img0Echo from '../CTS/Json/Echo/img_0.png';
 import img0Reflet from '../CTS/Json/Reflet/img_0.png';
 import img1Reflet from '../CTS/Json/Reflet/img_1.png';
 import echoGif from '../CTS/Echos.gif';
+import img1Flower from '../CTS/Json/Flower/img_0.png';
 
 Desir.assets[0].p = img0Desir;
 Echo.assets[0].p = img0Echo;
 Reflet.assets[0].p = img0Reflet;
 Reflet.assets[1].p = img1Reflet;
+Flower.assets[0].p = img1Flower;
 
 const Content = props => {
-
     //console.log('Step: ',props.step)
-
     let iconInteract;
     let sentence;
     let expr = props.step;
     switch (expr) {
         case 0:
             iconInteract = Naissance;
-            //console.log('This is the scene 0');
             sentence = 'Blow on your microphone to spread pollen.';
             break;
         case 1:
             iconInteract = Desir;
-            //console.log('This is the scene 1');
             sentence = 'Approach or move your hand away from the camera to attract or reject peoples.';
             break;
         case 2:
             //iconInteract = Echo;
-            //console.log('This is the scene 2');
             sentence = 'Talk to Echo to communicate with her.';
             setTimeout(()=>{
                 document.querySelector('.interaction .echo-gif').style.display = 'flex';
@@ -48,12 +46,17 @@ const Content = props => {
             break;
         case 3:
             iconInteract = Reflet;
-            //console.log('This is the scene 3');
             sentence = 'Make gestures in front of the camera to reveal your reflection.';
+            setTimeout(()=>{
+                document.querySelector('.interaction .echo-gif').style.display = 'none';
+            },250);
             break;
         case 4:
+            iconInteract = Flower;
+            sentence = 'This flower is the result of your actions during the experience, it represents your inner beauty.';
             setTimeout(()=> {
                 document.querySelector('.center-cont .help-txt').innerHTML = '';
+                document.querySelector('.interaction-container .interaction').classList.add('interact-five');
             },250);
             break;
         default:

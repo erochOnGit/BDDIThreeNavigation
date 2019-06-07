@@ -127,6 +127,7 @@ h3 {
     video {
       min-height: 102vh !important;
       width: auto !important;
+      min-width: 100%; //Added
     }
   }
 }
@@ -159,4 +160,13 @@ h3 {
     letter-spacing: 5px;
     margin: 23px 0 10px 5px;
   }
+}
+
+.global-score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #000;
+  color: #fff;
+  padding: 20px 40px;
 }
