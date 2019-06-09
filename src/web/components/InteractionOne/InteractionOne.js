@@ -158,9 +158,17 @@ export default class InteractionOne extends Interaction {
     //console.log(this.scoreInteractionOne);
     //let movemento = this.scoreInteractionOne / 10000;
     let movemento = document.querySelector("#volume").innerHTML / 1000;
-
-    if (document.querySelector(".video-container").style.opacity === "0") {
+    // console.log(
+    //   document.querySelector(".video-player").style.opacity,
+    //   document.querySelector(".video-container").style.opacity === "0" ||
+    //     document.querySelector(".video-player").style.opacity === "0"   
+    // );
+    if (
+      document.querySelector(".video-container").style.opacity === "0" ||
+      document.querySelector(".video-player").style.opacity === "0"
+    ) {
       // update the userdata state
+      // console.log(userData);
       let userDataUpdate = userData;
       Object.assign(userDataUpdate[interactionIndex], {
         movemento: userDataUpdate[interactionIndex].movemento

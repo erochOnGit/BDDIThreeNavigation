@@ -4,9 +4,26 @@ import EnhanceData from "./EnhanceData";
 import OuterCircle from "./OuterCircle";
 import "./data.scss";
 
+let openInteractionSix = props => {
+  return () => {
+    console.log(props);
+    props.setSceneStep(5);
+  };
+};
+
 let Data = props => {
   return (
-    <div className="data">
+    <div
+      className="data"
+      onClick={props.step < 2 ? openInteractionSix(props) : null}
+      // onClick={(() => {
+      //   if(true){
+      //     return () => {
+      //       console.log("nié?");
+      //     };
+      //   }
+      // })()}
+    >
       {(() => {
         if (props.step >= 0) {
           return (

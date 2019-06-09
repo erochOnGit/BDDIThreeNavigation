@@ -28,7 +28,7 @@ export default class RorchachTile {
     );
 
     positions.needsUpdate = true;
-    console.log(positions);
+    // console.log(positions);
     // this.helper = new FBOHelper(renderer);
     this.classicShaderMaterial = new THREE.RawShaderMaterial({
       uniforms: {

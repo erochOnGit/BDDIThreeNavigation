@@ -120,6 +120,8 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
+
   .video-player {
     height: 100vh !important;
     //width: auto !important;
@@ -146,16 +148,16 @@ h3 {
   transform: translate(-50%);
   .bar {
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       height: 17px;
       width: 1px;
-      background: rgba(255,255,255,.5);
+      background: rgba(255, 255, 255, 0.5);
     }
   }
   p {
     font-size: 11px;
-    color: rgba(255,255,255,.7);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: bold;
     letter-spacing: 5px;
     margin: 23px 0 10px 5px;

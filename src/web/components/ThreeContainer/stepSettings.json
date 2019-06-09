@@ -63,5 +63,18 @@
       "bloomThreshold": 0.3,
       "bloomRadius": 0.08
     }
+  },
+  {
+    "name": "interaction6",
+    "camera": {
+      "position": [0, 0, 3.5],
+      "rotation": [0, 0, 0]
+    },
+    "bloom": {
+      "exposure": 0,
+      "bloomStrength": 0,
+      "bloomThreshold": 0,
+      "bloomRadius": 0.0
+    }
   }
 ]

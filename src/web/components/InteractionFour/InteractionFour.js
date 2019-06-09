@@ -29,13 +29,12 @@ export default class InteractionFour extends Interaction {
     super();
     this.camera = camera || null;
     this.getUserData =
-      getUserData || console.warning("can't get userdata in interaction 4");
+      getUserData || console.error("can't get userdata in interaction 4");
     this.updateUserData =
-      updateUserData ||
-      console.warning("can't update userdata in interaction 4");
+      updateUserData || console.error("can't update userdata in interaction 4");
     this.getInteractionIndex =
       getInteractionIndex ||
-      console.warning("can't find the current index in interaction 4");
+      console.error("can't find the current index in interaction 4");
     /**
      * obj
      */
@@ -118,7 +117,7 @@ export default class InteractionFour extends Interaction {
         // fitCameraToObject(camera, this.rorchach.mesh, 0);
       },
       stop: () => {
-        this.fluid.monWorker.terminate();
+        // this.fluid.monWorker.terminate();
       }
     });
     this.video = document.createElement("video");
@@ -149,7 +148,9 @@ export default class InteractionFour extends Interaction {
           event.data.forEach(
             function(rect) {
               if (
-                document.querySelector(".video-container").style.opacity === "0"
+                document.querySelector(".video-container").style.opacity ===
+                  "0" ||
+                document.querySelector(".video-player").style.opacity === "0"
               ) {
                 // update the userdata state
                 let userDataUpdate = this.getUserData();

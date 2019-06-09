@@ -54,7 +54,7 @@ export default class InteractionFive extends Interaction {
 
         //TEXT
         let fontLoads = new THREE.FontLoader();
-        console.log(fontLoads, fontFile)
+        // console.log(fontLoads, fontFile)
         fontLoads.load( fontFile, ( font ) => {
             this.titleText = new THREE.TextGeometry( 'R E B O R N', {font: font, size: 1, height: .2,} );
             this.fontMat = new THREE.MeshBasicMaterial({ color: 0xffffff ,transparent:true});
@@ -175,6 +175,7 @@ export default class InteractionFive extends Interaction {
             start: () => {
                 //console.log('Scene 5',this.getUserData());
                 let score = 0;
+                console.log(getUserData());
                 for(let i=0; i<4; i++) {
                     score += this.getUserData()[i].movemento;
                     console.log('Your add: ', score)

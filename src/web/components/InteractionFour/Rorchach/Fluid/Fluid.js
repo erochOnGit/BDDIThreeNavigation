@@ -22,12 +22,12 @@ export default class Fluid {
       this.vx0[i] = 0;
       this.vy0[i] = 0;
     }
-    console.log(worker);
-    this.monWorker = new Worker(worker);
-    this.monWorker.onmessage = function(oEvent) {
-      console.log("Worker said : " + oEvent.data);
-    };
-    this.monWorker.postMessage("ali");
+    // console.log(worker);
+    // this.monWorker = new Worker(worker);
+    // this.monWorker.onmessage = function(oEvent) {
+    //   console.log("Worker said : " + oEvent.data);
+    // };
+    // this.monWorker.postMessage("ali");
   }
 
   step({ success }) {

@@ -5,7 +5,7 @@ const EnhanceProgressCircle = props =>
   compose(
     lifecycle({
       componentDidMount() {
-        console.log(this.props.step);
+        // console.log(this.props.step);
       }
     })
   );

@@ -11,7 +11,7 @@ require("src/tracking.js-master/tracking.js-master/build/data/face");
 
 export default class InteractionTest extends Interaction {
   constructor({ renderer, camera }) {
-    console.log("test", tracking);
+    // console.log("test", tracking);
     super();
     this.camera = camera || null;
     /**
