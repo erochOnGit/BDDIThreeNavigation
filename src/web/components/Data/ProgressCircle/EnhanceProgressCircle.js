@@ -65,7 +65,12 @@ const EnhanceProgressCircle = props =>
         }
       },
       componentDidUpdate(prevProps) {
-        if (document.querySelector(".video-container").style.opacity === "0") {
+        if (
+          (document.querySelector(".video-container") &&
+            document.querySelector(".video-container").style.opacity === "0") ||
+          (document.querySelector(".video-player") &&
+            document.querySelector(".video-player").style.opacity === "0")
+        ) {
           if (this.props.outer && this.props.step != prevProps.step) {
             const offset = (this.props.step / stepTotal) * 1000;
             this.props.setProgress(offset);

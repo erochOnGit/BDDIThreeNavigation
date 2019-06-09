@@ -21,7 +21,7 @@ let ProgressCircle = props => {
           stroke="white"
           strokeWidth="4"
           fill="transparent"
-          r={props.width / 2 - 8}
+          r={Math.abs(props.width / 2 - 8)}
           cx={props.width / 2}
           cy={props.height / 2}
         />

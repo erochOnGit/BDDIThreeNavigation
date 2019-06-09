@@ -14,34 +14,71 @@ import Data from "src/web/components/Data";
 //<Transition/>
 
 const App = props => {
-
-
   if (props.step < 0) {
-
-      return <div>
-           <Home setStep={props.setStep} muted={props.muted} updateMuted={props.updateMuted} />
-          {/*<div style={{color:"white"}} onClick={()=>{ props.updateMuted()} }>a ? {props.muted} aa?</div>*/}
+    return (
+      <div>
+        <Home
+          setStep={props.setStep}
+          muted={props.muted}
+          updateMuted={props.updateMuted}
+        />
+        {/*<div style={{color:"white"}} onClick={()=>{ props.updateMuted()} }>a ? {props.muted} aa?</div>*/}
       </div>
+    );
   } else if (props.step >= 0) {
     return (
       <div>
         {(() => {
           switch (props.step) {
             case 0:
-              return <One step={props.step} muted={props.muted} updateMuted={props.updateMuted} />;
+              return (
+                <One
+                  step={props.step}
+                  muted={props.muted}
+                  updateMuted={props.updateMuted}
+                />
+              );
             case 1:
-              return <Two step={props.step} muted={props.muted} updateMuted={props.updateMuted} />;
+              return (
+                <Two
+                  step={props.step}
+                  muted={props.muted}
+                  updateMuted={props.updateMuted}
+                />
+              );
             case 2:
-              return <Three step={props.step} muted={props.muted} updateMuted={props.updateMuted} />;
+              return (
+                <Three
+                  step={props.step}
+                  muted={props.muted}
+                  updateMuted={props.updateMuted}
+                />
+              );
             case 3:
-              return <Four step={props.step} muted={props.muted} updateMuted={props.updateMuted} />;
+              return (
+                <Four
+                  step={props.step}
+                  muted={props.muted}
+                  updateMuted={props.updateMuted}
+                />
+              );
             case 4:
-                return <Five step={props.step} muted={props.muted} updateMuted={props.updateMuted} />;
-              default:
+              return (
+                <Five
+                  step={props.step}
+                  muted={props.muted}
+                  updateMuted={props.updateMuted}
+                />
+              );
+            default:
               return <div>error</div>;
           }
         })()}
-        <Data step={props.step} userData={props.userData} />
+        <Data
+          step={props.step}
+          userData={props.userData}
+          setSceneStep={props.setSceneStep}
+        />
         <div
           className="next-icon"
           onClick={() => {

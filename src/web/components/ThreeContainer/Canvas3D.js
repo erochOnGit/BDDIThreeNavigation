@@ -4,6 +4,7 @@ import InteractionTwo from "../InteractionTwo";
 import InteractionThree from "../InteractionThree";
 import InteractionFour from "../InteractionFour/";
 import InteractionFive from "../InteractionFive/";
+import InteractionSix from "../InteractionSix/";
 import InteractionTest from "../InteractionTest/";
 import Interaction from "./Interaction.js";
 import dat from "dat.gui";
@@ -35,9 +36,9 @@ let composer;
 export default class Canvas3D {
   constructor({ container, setStep, getUserData, setUserData }) {
     this.getUserData =
-      getUserData || console.warning("can't get user data in canvas");
+      getUserData || console.error("can't get user data in canvas");
     this.setUserData =
-      setUserData || console.warning("can't set user data in canvas");
+      setUserData || console.error("can't set user data in canvas");
     this.setStep = setStep;
     this.container = container || document.body;
     this.interactionsIndex = -1;
@@ -171,6 +172,7 @@ export default class Canvas3D {
         getUserData: this.getUserData
       })
     );
+    this.interactions.push(new InteractionSix());
     success();
     // let allMeshsLoaded = false;
     // while (!allMeshsLoaded) {
@@ -228,7 +230,7 @@ export default class Canvas3D {
         child.type != "AmbientLight"
       );
     });
-    console.log(this.scene.children);
+    // console.log(this.scene.children);
   }
 
   addInteractionMesh(interaction) {

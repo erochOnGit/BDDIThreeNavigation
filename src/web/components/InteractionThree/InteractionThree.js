@@ -118,7 +118,10 @@ export default class InteractionThree extends Interaction {
     this.stem.mesh.position.x = Math.cos(time * 1.329) * 0.01 + 0.22;
 
     // update the userdata state
-    if (document.querySelector(".video-container").style.opacity === "0") {
+    if (
+      document.querySelector(".video-container").style.opacity === "0" ||
+      document.querySelector(".video-player").style.opacity === "0"
+    ) {
       let userDataUpdate = userData;
       Object.assign(userDataUpdate[interactionIndex], {
         movemento: userDataUpdate[interactionIndex].movemento

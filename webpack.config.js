@@ -36,6 +36,11 @@ module.exports = {
   ],
   module: {
     rules: [
+      //load worker files
+      {
+        test: /\.worker\.js$/,
+        use: { loader: "file-loader" }
+      },
       //load js files
       {
         test: /\.js$/,
@@ -47,6 +52,7 @@ module.exports = {
           }
         }
       },
+
       //load css
       {
         test: /\.scss$/,
