@@ -40,11 +40,13 @@ const SkipIcon = props => {
             TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
 
             //NEXT APPEAR
-            //To put on the file when 100%
             let nextIcon = document.querySelector('.next-icon');
             TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
 
+
+
             setTimeout(() => {
+                document.querySelector(".video-player video").remove();
                 let sentence = document.querySelector('.interact-sentence');
                 let tl = new TimelineLite();
                 tl.to(sentence, 1, {opacity: 1, ease: Sine.easeOut})

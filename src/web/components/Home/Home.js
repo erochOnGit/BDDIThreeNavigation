@@ -70,8 +70,7 @@ const Home = props => {
           <div className="video-container">
             <ReactPlayer className="video-player" url={introVid} playing />
           </div>
-          <audio src={introSound} autoPlay>
-          </audio>
+          <audio src={introSound} autoPlay></audio>
           <div className="black-attenuation"></div>
         <div className="center-container">
             <div>

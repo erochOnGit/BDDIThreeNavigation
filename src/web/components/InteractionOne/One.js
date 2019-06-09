@@ -12,6 +12,7 @@ import InteractSentence from "src/web/components/InteractSentence";
 
 //ELEMENT
 import oneVid from "../../assets/Motion/désir_v1.mp4";
+import interactSound from '../../assets/Sound/Interaction.wav';
 
 const One = props => {
   MotionDestruct("Blow on your microphone to spread pollen");
@@ -23,7 +24,8 @@ const One = props => {
       <FullScreenIcon />
       <MenuIcon />
       <MenuContent step={props.step} />
-      <div className="video-container">
+        <audio src={interactSound} ></audio>
+        <div className="video-container">
         <ReactPlayer className="video-player" url={oneVid} playing />
       </div>
       <div className="transition-in" />
