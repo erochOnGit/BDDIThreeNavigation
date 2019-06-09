@@ -11,6 +11,7 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
 import fourthVid from "../../assets/Motion/motionintro_intro.mp4";
+import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Four = props => {
     MotionDestruct('Make gestures in front of the camera to reveal your reflection.');
@@ -22,6 +23,7 @@ const Four = props => {
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />
+            <audio className="interact-sound" src={interactSound} ></audio>
             <div className="video-container">
                 <ReactPlayer className="video-player" url={fourthVid} playing />
             </div>

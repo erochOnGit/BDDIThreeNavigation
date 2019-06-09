@@ -24,7 +24,7 @@ const One = props => {
       <FullScreenIcon />
       <MenuIcon />
       <MenuContent step={props.step} />
-        <audio src={interactSound} ></audio>
+        <audio className="interact-sound" src={interactSound} ></audio>
         <div className="video-container">
         <ReactPlayer className="video-player" url={oneVid} playing />
       </div>

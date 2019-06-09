@@ -11,6 +11,7 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
 import thirdVid from "../../assets/Motion/motionintro_intro.mp4";
+import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Three = props => {
     MotionDestruct('Talk to Echo to communicate with her.');
@@ -22,6 +23,7 @@ const Three = props => {
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />
+            <audio className="interact-sound" src={interactSound} ></audio>
             <div className="video-container">
                 <ReactPlayer className="video-player" url={thirdVid} playing />
             </div>

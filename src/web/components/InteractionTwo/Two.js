@@ -11,6 +11,7 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
 import secVid from "../../assets/Motion/désir_v1.mp4";
+import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Two = props => {
     MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.');
@@ -22,6 +23,7 @@ const Two = props => {
             <FullScreenIcon />
             <MenuIcon />
             <MenuContent step={props.step} />
+            <audio className="interact-sound" src={interactSound} ></audio>
             <div className="video-container">
                 <ReactPlayer className="video-player" url={secVid} playing />
             </div>
