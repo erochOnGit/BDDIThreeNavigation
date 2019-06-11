@@ -3,6 +3,7 @@
   bottom: 80px;
   right: 30px;
   z-index: 30;
+  transition: transform 0.3s ease-in-out;
 
   .container {
     position: relative;

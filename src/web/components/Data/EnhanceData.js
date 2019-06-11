@@ -1,7 +1,7 @@
 import React from "react";
 import { compose, lifecycle } from "recompose";
 
-const EnhanceProgressCircle = props =>
+const EnhanceData = props =>
   compose(
     lifecycle({
       componentDidMount() {
@@ -10,4 +10,4 @@ const EnhanceProgressCircle = props =>
     })
   );
 
-export default EnhanceProgressCircle;
+export default EnhanceData;

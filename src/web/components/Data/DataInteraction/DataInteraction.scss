@@ -1,0 +1,87 @@
+.data {
+  &-interaction {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    color: white;
+
+    h3 {
+      font-family: MadeCanvas;
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+    .titre {
+      flex: 1;
+      text-align: center;
+      opacity: 0.55;
+      transition: opacity 0.2s ease-in-out;
+
+      span {
+        opacity: 0;
+        font-size: 13px;
+        transition: opacity 0.3s ease-in-out;
+      }
+      &:hover {
+        color: white;
+        opacity: 1;
+        span {
+          opacity: 1;
+        }
+      }
+    }
+    .naissance {
+      position: absolute;
+      width: 100%;
+      margin: -30vh 0px 0px 0px;
+    }
+    .desir {
+      width: 50%;
+      margin: 0vh 0px 0px 0px;
+      background: blue;
+    }
+    .reflet {
+      width: 50%;
+      margin: 0vh 0px 0px 0px;
+      background: blue;
+    }
+    .echo {
+      position: absolute;
+      width: 100%;
+      margin: 30vh 0px 0px 0px;
+      background: green;
+    }
+  }
+  &.scale {
+    color: white;
+    transform: scale(3);
+    position: absolute;
+    // top: 50vh;
+    // left: 50vw;
+    right: unset;
+    bottom: unset;
+    z-index: 30;
+    transition: transform 0.3s ease-in-out;
+
+    .outer {
+      position: absolute;
+      top: 5.8%;
+      left: 5.8%;
+    }
+    .step-progress {
+      position: relative;
+      top: 0;
+      left: 0;
+      .progress-ring-transparent__circle {
+        stroke-width: 0.5px;
+      }
+    }
+    .progress-ring-dot__circle {
+      stroke-dasharray: 0.1 2.2;
+      stroke-linecap: round;
+      stroke-width: 0.5px;
+    }
+  }
+}

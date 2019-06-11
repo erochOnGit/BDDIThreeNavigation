@@ -15,13 +15,30 @@ const EnhanceProgressCircle = props =>
       width: props.width || 120,
       height: props.height || 120
     })),
+    withState("baseCircle", "setBaseCircle", props => (
+      <circle
+        className={`${
+          props.lineStyle == "dotted" ? "progress-ring-dot__circle" : ""
+        } ${
+          props.lineStyle == "transparent"
+            ? "progress-ring-transparent__circle"
+            : ""
+        }`}
+        stroke="white"
+        strokeWidth="4"
+        fill="transparent"
+        r={Math.abs(props.width / 2 - 8)}
+        cx={props.width / 2}
+        cy={props.height / 2}
+      />
+    )),
     withState("circle", "setCircle", props => (
       <circle
         className="progress-ring__circle"
         stroke="white"
         strokeWidth="4"
         fill="transparent"
-        r={props.width / 2 - 8}
+        r={Math.abs(props.width / 2 - 8)}
         cx={props.width / 2}
         cy={props.height / 2}
       />
@@ -45,6 +62,19 @@ const EnhanceProgressCircle = props =>
             strokeDashoffset: offset
           }
         });
+      },
+      setBaseProgress: props => percent => {
+        console.log(props.baseCircle);
+        const offset =
+          props.circumference - (percent / 1000) * props.circumference;
+        props.setBaseCircle({
+          ...props.baseCircle,
+          props: {
+            ...props.baseCircle.props,
+            strokeDasharray: `${props.circumference} ${props.circumference}`,
+            strokeDashoffset: offset
+          }
+        });
       }
     }),
     lifecycle({
@@ -61,10 +91,18 @@ const EnhanceProgressCircle = props =>
                 strokeDashoffset: `${this.props.circumference}`
               }
             });
+            if (this.props.baseStep) {
+              const offset = ((this.props.baseStep + 1) / stepTotal) * 1000;
+              this.props.setBaseProgress(offset);
+            }
           }
         }
       },
       componentDidUpdate(prevProps) {
+        if (this.props.outer && this.props.baseStep != prevProps.baseStep) {
+          const offset = ((this.props.baseStep + 1) / stepTotal) * 1000;
+          this.props.setBaseProgress(offset);
+        }
         if (
           (document.querySelector(".video-container") &&
             document.querySelector(".video-container").style.opacity === "0") ||
@@ -72,6 +110,7 @@ const EnhanceProgressCircle = props =>
             document.querySelector(".video-player").style.opacity === "0")
         ) {
           if (this.props.outer && this.props.step != prevProps.step) {
+            console.log(this.props.step);
             const offset = (this.props.step / stepTotal) * 1000;
             this.props.setProgress(offset);
           } else if (
