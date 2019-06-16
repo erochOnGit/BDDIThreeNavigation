@@ -10,21 +10,7 @@ let ProgressCircle = props => {
         width={props.width}
         height={props.height}
       >
-        <circle
-          className={`${
-            props.lineStyle == "dotted" ? "progress-ring-dot__circle" : ""
-          } ${
-            props.lineStyle == "transparent"
-              ? "progress-ring-transparent__circle"
-              : ""
-          }`}
-          stroke="white"
-          strokeWidth="4"
-          fill="transparent"
-          r={Math.abs(props.width / 2 - 8)}
-          cx={props.width / 2}
-          cy={props.height / 2}
-        />
+        {props.baseCircle}
       </svg>
       <svg className="progress-ring" width={props.width} height={props.height}>
         {props.circle}

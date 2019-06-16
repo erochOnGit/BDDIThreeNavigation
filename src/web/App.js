@@ -79,6 +79,7 @@ const App = props => {
           userData={props.userData}
           setSceneStep={props.setSceneStep}
         />
+        <div />
         <div
           className="next-icon"
           onClick={() => {
