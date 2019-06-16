@@ -10,11 +10,11 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
-import secVid from "../../assets/Motion/désir_v1.mp4";
+import secVid from "../../assets/Motion/Chap2_Desir.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Two = props => {
-    MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.');
+    MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.', props.step);
 
     return (
         <div className="main-one-container">

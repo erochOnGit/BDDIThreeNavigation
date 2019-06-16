@@ -37,6 +37,7 @@ export default class InteractionFive extends Interaction {
         this.getUserData = getUserData;
         this.float = false;
         this.camera = camera;
+        this.tweening = false;
         /**
          * objects
          */
@@ -239,9 +240,13 @@ export default class InteractionFive extends Interaction {
                 this.model.position.y = 0;
 
                 //this.model.scale.set(.006,.006,.006)
+                //this.objects.push({ mesh: this.model });
                 this.objects.push({ mesh: this.model });
                 //this.parameters(this.model);
                 this.registerEvents(this.model, this.fontMesh);
+
+                this.videoCont = document.querySelector('.video-container');
+                this.videoPlayer = document.querySelector('.video-player');
                 success();
             },
             pending: xhr => {
@@ -257,7 +262,7 @@ export default class InteractionFive extends Interaction {
     }
 
     registerEvents(model, fontMesh) {
-        document.querySelector('.skip-icon').addEventListener("click", ()=> {
+        /*document.querySelector('.skip-icon').addEventListener("click", ()=> {
             console.log('Model',model)
 
             //Apparition flower
@@ -269,7 +274,7 @@ export default class InteractionFive extends Interaction {
             setTimeout(()=> {
                 this.float = true;
             },4000)
-        })
+        })*/
 
         document.querySelector('body').addEventListener( "mousemove", ( event ) => {
             const x = ((event.pageX - (window.innerWidth / 2)) / (window.innerWidth / 2)) * 10;
@@ -305,6 +310,23 @@ export default class InteractionFive extends Interaction {
         this.pointLight.position.z = Math.sin(time * 0.474) * 0.1;
         this.pointLightCircle.position.x = Math.cos(time * -0.474) * 1.6;
         this.pointLightCircle.position.y = Math.sin(time * -0.474) * 1.6;*/
+
+        //APARITION FLOWER AFTER MOTION REMOVE
+        if(!this.tweening && (this.videoPlayer && this.videoPlayer.style.opacity > '.2' || this.videoCont && this.videoCont.style.opacity > '.2')) {
+
+            //Apparition flower
+            TweenMax.from(this.model.rotation,4,{y:-5,ease:Circ.easeInOut})
+            TweenMax.from(this.model.position,4,{y:5,ease:Circ.easeInOut})
+            for(let i=0; i<28;i++) {
+                TweenMax.from(this.model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+            }
+            setTimeout(()=> {
+                this.float = true;
+            },4000)
+
+            this.tweening = true;
+        }
+
 
         if(this.float == true) {
             this.model.position.y -= Math.sin(time * -0.674) * .0085;

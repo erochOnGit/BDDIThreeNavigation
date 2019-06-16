@@ -10,11 +10,11 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
-import thirdVid from "../../assets/Motion/motionintro_intro.mp4";
+import thirdVid from "../../assets/Motion/Chap3_Echo.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Three = props => {
-    MotionDestruct('Talk to Echo to communicate with her.');
+    MotionDestruct('Talk to Echo to communicate with her.', props.step);
 
     return (
         <div className="main-one-container">

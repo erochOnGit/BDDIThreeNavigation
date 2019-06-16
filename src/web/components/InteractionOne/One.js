@@ -11,11 +11,11 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 import InteractSentence from "src/web/components/InteractSentence";
 
 //ELEMENT
-import oneVid from "../../assets/Motion/désir_v1.mp4";
+import oneVid from "../../assets/Motion/Chap1_Naissance.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const One = props => {
-  MotionDestruct("Blow on your microphone to spread pollen");
+  MotionDestruct("Blow on your microphone to spread pollen.", props.step);
 
   return (
     <div className="main-one-container">

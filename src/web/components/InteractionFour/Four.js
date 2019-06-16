@@ -10,11 +10,11 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
-import fourthVid from "../../assets/Motion/motionintro_intro.mp4";
+import fourthVid from "../../assets/Motion/Chap4_Reflet.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Four = props => {
-    MotionDestruct('Make gestures in front of the camera to reveal your reflection.');
+    MotionDestruct('Make gestures in front of the camera to reveal your reflection.', props.step);
 
     return (
         <div className="main-one-container">

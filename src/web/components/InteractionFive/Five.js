@@ -10,12 +10,12 @@ import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 
 //ELEMENT
-import secVid from "../../assets/Motion/motionintro_intro.mp4";
+import secVid from "../../assets/Motion/Chap5_Generation.mp4";
 import SaveIcon from "src/web/components/CTS/SaveIcon";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const Five = props => {
-    MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.');
+    MotionDestruct('This generative flower is a reflection of your inner beauty\'s particularity.', props.step);
 
     return (
         <div className="main-one-container">
