@@ -13,7 +13,7 @@ import img0 from '../CTS/Json/Logos/img_0.png';
 import img1 from '../CTS/Json/Logos/img_1.png';
 import img2 from '../CTS/Json/Logos/img_2.png';
 import img3 from '../CTS/Json/Logos/img_3.png';
-import introVid from '../../assets/Motion/motionintro_intro.mp4';
+import introVid from '../../assets/Motion/0_Intro.mp4';
 import introSound from '../../assets/Sound/Chap1.wav';
 
 
@@ -70,8 +70,7 @@ const Home = props => {
           <div className="video-container">
             <ReactPlayer className="video-player" url={introVid} playing />
           </div>
-          <audio src={introSound} autoPlay>
-          </audio>
+          <audio src={introSound} autoPlay></audio>
           <div className="black-attenuation"></div>
         <div className="center-container">
             <div>

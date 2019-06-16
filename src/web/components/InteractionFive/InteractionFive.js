@@ -35,8 +35,9 @@ export default class InteractionFive extends Interaction {
         super();
 
         this.getUserData = getUserData;
-
+        this.float = false;
         this.camera = camera;
+        this.tweening = false;
         /**
          * objects
          */
@@ -232,13 +233,20 @@ export default class InteractionFive extends Interaction {
                         }
                     });
                 }
+
                 this.model.rotation.x = .67;//.2
                 this.model.rotation.y = .3;
                 this.model.position.z = -2;
+                this.model.position.y = 0;
+
                 //this.model.scale.set(.006,.006,.006)
+                //this.objects.push({ mesh: this.model });
                 this.objects.push({ mesh: this.model });
-                this.parameters(this.model);
+                //this.parameters(this.model);
                 this.registerEvents(this.model, this.fontMesh);
+
+                this.videoCont = document.querySelector('.video-container');
+                this.videoPlayer = document.querySelector('.video-player');
                 success();
             },
             pending: xhr => {
@@ -253,20 +261,31 @@ export default class InteractionFive extends Interaction {
 
     }
 
-    registerEvents(model, flower) {
-        document.querySelector('body').addEventListener( "mousemove", function( event ) {
+    registerEvents(model, fontMesh) {
+        /*document.querySelector('.skip-icon').addEventListener("click", ()=> {
+            console.log('Model',model)
+
+            //Apparition flower
+            TweenMax.from(model.rotation,4,{y:-5,ease:Circ.easeInOut})
+            TweenMax.from(model.position,4,{y:5,ease:Circ.easeInOut})
+            for(let i=0; i<28;i++) {
+                TweenMax.from(model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+            }
+            setTimeout(()=> {
+                this.float = true;
+            },4000)
+        })*/
+
+        document.querySelector('body').addEventListener( "mousemove", ( event ) => {
             const x = ((event.pageX - (window.innerWidth / 2)) / (window.innerWidth / 2)) * 10;
             const y = ((event.pageY - (window.innerHeight / 2)) / (window.innerHeight / 2)) * 5;
-            /*model.rotation.set((x/75)+0.75,(y/10)+0.3,0);
-            model.position.set(x/100,.67,(-y/100)-1.8);
-            console.log(this.fontMesh)
-            flower.rotation.set((x/150),(y/150),0);
-            flower.position.set((x/100)-3.3,-1.5,-4.5);*/
 
-            TweenMax.to(model.rotation, .2, {x:(x/75)+0.75, y:(y/10)+0.3, z:0, ease:Circ.easeInOut})
-            TweenMax.to(model.position, .2, {x:(x/100), y:0.67, z:(-y/100)-1.8, ease:Circ.easeInOut})
-            TweenMax.to(flower.rotation, .2, {x:(x/150), y:(y/150), z:0, ease:Circ.easeInOut})
-            TweenMax.to(flower.position, .2, {x:(x/100)-3.3, y:-1.5, z:-4.5, ease:Circ.easeInOut})
+            if(this.float == true) {
+                TweenMax.to(model.rotation, .2, {x: (x / 75) + 0.75, y: (y / 10) + 0.3, z: 0, ease: Circ.easeInOut})
+                TweenMax.to(model.position, .2, {x: (x / 100), y: 0, z: (-y / 100) - 1.8, ease: Circ.easeInOut})
+                TweenMax.to(fontMesh.rotation, .2, {x: (x / 150), y: (y / 150), z: 0, ease: Circ.easeInOut})
+                TweenMax.to(fontMesh.position, .2, {x: (x / 100) - 3.3, y: -1.5, z: -4.5, ease: Circ.easeInOut})
+            }
         });
     }
 
@@ -292,7 +311,26 @@ export default class InteractionFive extends Interaction {
         this.pointLightCircle.position.x = Math.cos(time * -0.474) * 1.6;
         this.pointLightCircle.position.y = Math.sin(time * -0.474) * 1.6;*/
 
-        this.model.position.y = Math.sin(time * -0.674) * .1;
+        //APARITION FLOWER AFTER MOTION REMOVE
+        if(!this.tweening && (this.videoPlayer && this.videoPlayer.style.opacity > '.2' || this.videoCont && this.videoCont.style.opacity > '.2')) {
+
+            //Apparition flower
+            TweenMax.from(this.model.rotation,4,{y:-5,ease:Circ.easeInOut})
+            TweenMax.from(this.model.position,4,{y:5,ease:Circ.easeInOut})
+            for(let i=0; i<28;i++) {
+                TweenMax.from(this.model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+            }
+            setTimeout(()=> {
+                this.float = true;
+            },4000)
+
+            this.tweening = true;
+        }
+
+
+        if(this.float == true) {
+            this.model.position.y -= Math.sin(time * -0.674) * .0085;
+        }
 
     }
 
@@ -345,7 +383,7 @@ export default class InteractionFive extends Interaction {
         scalModel.add(model.scale, 'x', 0, 2).listen();
         scalModel.add(model.scale, 'y', 0, 2).listen();
         scalModel.add(model.scale, 'z', 0, 2).listen();
-        let colModel = Model.addFolder('Color');
+        /*let colModel = Model.addFolder('Color');
         let conf = { color : '#ff9fd6' };
         colModel.addColor(conf, 'color').onChange( function(colorValue) {
             for (let i = 0; i < model.children.length; i++) {
@@ -358,7 +396,7 @@ export default class InteractionFive extends Interaction {
         });
         colModel.addColor(conf, 'color').onChange( (value) => {
             this.ambientLight.color.set(value)
-        });
+        });*/
 
         //poslight3.add(this.pointLight.position, 'x', -10, 10).listen();
         //poslight3.add(this.pointLight.position, 'y', -10, 10).listen();
