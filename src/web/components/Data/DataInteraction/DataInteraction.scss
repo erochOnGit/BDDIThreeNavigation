@@ -11,15 +11,60 @@
     h3 {
       font-family: MadeCanvas;
       font-size: 24px;
+      font-weight: bold;
       margin-bottom: 0;
+    }
+    .circle {
+      border: 0.1px solid white;
+      width: 4px;
+      height: 4px;
+      border-radius: 100%;
+      transition: background-color 0.2s ease-in-out;
+
+      &-active {
+        background-color: rgba(255, 255, 255, 0.55);
+      }
+      &_container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        position: absolute;
+
+        &-up {
+          top: 5.7px;
+          left: 72px;
+        }
+        &-down {
+          bottom: 10px;
+          left: 72px;
+        }
+        &-left {
+          top: 84px;
+          left: -4.5px;
+        }
+        &-right {
+          top: 84px;
+          right: -4.5px;
+        }
+      }
     }
     .titre {
       flex: 1;
       text-align: center;
       opacity: 0.55;
       transition: opacity 0.2s ease-in-out;
+      z-index: 31;
+      cursor: pointer;
 
+      &.active {
+        opacity: 1;
+        span {
+          opacity: 1;
+        }
+      }
       span {
+        width: 100%;
         opacity: 0;
         font-size: 13px;
         transition: opacity 0.3s ease-in-out;
@@ -35,23 +80,49 @@
     .naissance {
       position: absolute;
       width: 100%;
-      margin: -30vh 0px 0px 0px;
+      margin: -285px 0px 0px 0px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .desir {
-      width: 50%;
-      margin: 0vh 0px 0px 0px;
-      background: blue;
+      flex: unset;
+      // width: 110px;
+      margin: 0vh 0px 0px 270px;
+      display: flex;
+      flex-wrap: wrap-reverse;
+      flex-direction: column;
+      height: 70px;
+      span {
+        width: unset;
+      }
+      & > * {
+        flex: 1 1 10px;
+      }
     }
-    .reflet {
-      width: 50%;
-      margin: 0vh 0px 0px 0px;
-      background: blue;
+    .reflect {
+      flex: unset;
+      // width: 110px;
+      margin: 0vh 270px 0px 0px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      height: 70px;
+
+      span {
+        width: unset;
+      }
+      & > * {
+        flex: 1 1 10px;
+      }
     }
     .echo {
       position: absolute;
       width: 100%;
-      margin: 30vh 0px 0px 0px;
-      background: green;
+      margin: 265px 0px 0px 0px;
+      h3 {
+        margin: 0;
+      }
     }
   }
   &.scale {
@@ -64,7 +135,38 @@
     bottom: unset;
     z-index: 30;
     transition: transform 0.3s ease-in-out;
-
+    .container {
+      .pending-direction {
+        height: 80%;
+        top: 10%;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .up {
+        height: 80%;
+        top: 10%;
+      }
+      .down {
+        height: 80%;
+        top: 10%;
+      }
+      .right {
+        width: 80%;
+        left: 10%;
+      }
+      .left {
+        width: 80%;
+        left: 10%;
+      }
+      .rotated {
+        .progress-ring-dot__circle {
+          stroke-dasharray: 0.2 2.2;
+        }
+      }
+    }
     .outer {
       position: absolute;
       top: 5.8%;
@@ -78,9 +180,15 @@
         stroke-width: 0.5px;
       }
     }
+    .progress-ring__circle {
+      stroke-width: 0.5px;
+    }
     .progress-ring-dot__circle {
       stroke-dasharray: 0.1 2.2;
       stroke-linecap: round;
+      stroke-width: 0.5px;
+    }
+    .progress-ring-transparent__circle {
       stroke-width: 0.5px;
     }
   }

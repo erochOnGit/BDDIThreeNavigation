@@ -1,9 +1,9 @@
 import React from "react";
 let DataTitle = props => {
+  let spanClass = `${props.active ? "active" : ""}`;
   return (
     <div
-      onClick={props.onClick}
-      className={`titre ${(() => {
+      className={`titre ${spanClass} ${(() => {
         if (props.up) {
           return "naissance";
         } else if (props.right) {
@@ -15,8 +15,17 @@ let DataTitle = props => {
         }
       })()}`}
     >
-      <h3>{props.main}</h3>
-      <span>{props.sub}</span>
+      {props.down ? (
+        <React.Fragment>
+          <span className={spanClass}>{props.sub}</span>
+          <h3 onClick={props.onClick}>{props.main}</h3>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <h3 onClick={props.onClick}>{props.main}</h3>
+          <span className={spanClass}>{props.sub}</span>
+        </React.Fragment>
+      )}
     </div>
   );
 };

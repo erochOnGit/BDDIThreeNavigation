@@ -7,6 +7,7 @@ let DataScheme = props => {
       <React.Fragment>
         <div className="up">
           <ProgressCircle
+            noVideo={props.noVideo ? true : false}
             lineStyle="transparent"
             width={80}
             height={80}
@@ -17,6 +18,7 @@ let DataScheme = props => {
         </div>
         <div className="down">
           <ProgressCircle
+            noVideo={props.noVideo ? true : false}
             lineStyle="transparent"
             width={80}
             height={80}
@@ -31,6 +33,7 @@ let DataScheme = props => {
               <div>
                 <div className="left">
                   <ProgressCircle
+                    noVideo={props.noVideo ? true : false}
                     lineStyle="transparent"
                     width={80}
                     height={80}
@@ -41,6 +44,7 @@ let DataScheme = props => {
                 </div>
                 <div className="right">
                   <ProgressCircle
+                    noVideo={props.noVideo ? true : false}
                     lineStyle="transparent"
                     width={80}
                     height={80}
@@ -60,6 +64,7 @@ let DataScheme = props => {
                 <div className="container">
                   <div className="up">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="dotted"
                       width={80}
                       height={80}
@@ -70,6 +75,7 @@ let DataScheme = props => {
                   </div>
                   <div className="down">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="dotted"
                       width={80}
                       height={80}
@@ -80,6 +86,7 @@ let DataScheme = props => {
                   </div>
                   <div className="left">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="dotted"
                       width={80}
                       height={80}
@@ -90,6 +97,7 @@ let DataScheme = props => {
                   </div>
                   <div className="right">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="dotted"
                       width={80}
                       height={80}
@@ -110,6 +118,7 @@ let DataScheme = props => {
                 <div className="container">
                   <div className="up">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -117,17 +126,19 @@ let DataScheme = props => {
                       finishState={4} //in order to handle the color once the step is finish
                       userData={props.userData}
                     />
-                    <ProgressCircle
+                    {/* <ProgressCircle
+                    noVideo={props.noVideo?true:false}
                       lineStyle="transparent"
                       width={10}
                       height={10}
                       step={props.step} //in order to handle the color once the step is finish
                       finishState={4} //in order to handle the color once the step is finish
                       userData={props.userData}
-                    />
+                    /> */}
                   </div>
                   <div className="up up-right-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -138,6 +149,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up right-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -148,6 +160,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up bottom-right-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -158,6 +171,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up bottom-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -168,6 +182,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up bottom-left-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -178,6 +193,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up left-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -188,6 +204,7 @@ let DataScheme = props => {
                   </div>
                   <div className="up up-left-small">
                     <ProgressCircle
+                      noVideo={props.noVideo ? true : false}
                       lineStyle="transparent"
                       width={20}
                       height={20}
@@ -204,7 +221,7 @@ let DataScheme = props => {
       </React.Fragment>
     );
   } else {
-    return <div>no step ? {props.step}</div>;
+    return <div className="pending-direction" />;
   }
 };
 

@@ -6,7 +6,7 @@ import {
   withHandlers,
   withState
 } from "recompose";
-
+import { MorphSVGPlugin, TweenMax, Power2, TimelineLite } from "gsap/TweenMax";
 let stepTotal = 4; // get this globally
 
 const EnhanceProgressCircle = props =>
@@ -43,6 +43,8 @@ const EnhanceProgressCircle = props =>
         cy={props.height / 2}
       />
     )),
+    withState("baseTweeningOffset", "setBaseTweeningOffset", 0),
+    withState("tweeningOffset", "setTweeningOffset", 0),
     withState("lastMovemento", "setLastMovemento", 0),
     withState("radius", "setRadius", props => props.circle.props.r),
     withState(
@@ -64,9 +66,9 @@ const EnhanceProgressCircle = props =>
         });
       },
       setBaseProgress: props => percent => {
-        console.log(props.baseCircle);
         const offset =
           props.circumference - (percent / 1000) * props.circumference;
+
         props.setBaseCircle({
           ...props.baseCircle,
           props: {
@@ -93,7 +95,20 @@ const EnhanceProgressCircle = props =>
             });
             if (this.props.baseStep) {
               const offset = ((this.props.baseStep + 1) / stepTotal) * 1000;
-              this.props.setBaseProgress(offset);
+
+              let tweener = {
+                value: this.props.baseTweeningOffset
+              };
+              TweenMax.to(tweener, 1, {
+                value: offset,
+                ease: Sine.easeOut,
+                onUpdate: () => {
+                  this.props.setBaseProgress(tweener.value);
+                },
+                onComplete: () => {
+                  this.props.setBaseTweeningOffset(tweener.value);
+                }
+              });
             }
           }
         }
@@ -101,18 +116,43 @@ const EnhanceProgressCircle = props =>
       componentDidUpdate(prevProps) {
         if (this.props.outer && this.props.baseStep != prevProps.baseStep) {
           const offset = ((this.props.baseStep + 1) / stepTotal) * 1000;
-          this.props.setBaseProgress(offset);
+
+          let tweener = {
+            value: this.props.baseTweeningOffset
+          };
+          TweenMax.to(tweener, 1, {
+            value: offset,
+            ease: Sine.easeOut,
+            onUpdate: () => {
+              this.props.setBaseProgress(tweener.value);
+            },
+            onComplete: () => {
+              this.props.setBaseTweeningOffset(tweener.value);
+            }
+          });
         }
         if (
           (document.querySelector(".video-container") &&
             document.querySelector(".video-container").style.opacity === "0") ||
           (document.querySelector(".video-player") &&
-            document.querySelector(".video-player").style.opacity === "0")
+            document.querySelector(".video-player").style.opacity === "0") ||
+          this.props.noVideo
         ) {
           if (this.props.outer && this.props.step != prevProps.step) {
-            console.log(this.props.step);
             const offset = (this.props.step / stepTotal) * 1000;
-            this.props.setProgress(offset);
+            let tweener = {
+              value: this.props.tweeningOffset
+            };
+            TweenMax.to(tweener, 1, {
+              value: offset,
+              ease: Sine.easeOut,
+              onUpdate: () => {
+                this.props.setProgress(offset);
+              },
+              onComplete: () => {
+                this.props.setTweeningOffset(tweener.value);
+              }
+            });
           } else if (
             this.props.finishState - 1 == this.props.step &&
             this.props.userData &&

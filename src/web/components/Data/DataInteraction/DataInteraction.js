@@ -8,51 +8,74 @@ import "./DataInteraction.scss";
 
 let interactionsNames = [
   {
-    main: "Naissance",
+    main: "Birth",
     sub: "heart of the flower",
     dataStep: 0,
     direction: "up"
   },
   {
-    main: "Reflet",
-    sub: "heart of the flower",
+    main: "Reflect",
+    sub: "petals",
     dataStep: 3,
     direction: "left"
   },
   {
     main: "Desir",
-    sub: "heart of the flower",
+    sub: "layers",
     dataStep: 1,
     direction: "right"
   },
   {
     main: "Echo",
-    sub: "heart of the flower",
+    sub: "bending",
     dataStep: 2,
     direction: "down"
   }
 ];
 
 let DataInteraction = props => {
-  console.log(props);
   return (
     <div className="data-interaction">
       {interactionsNames.map(interactionName => (
         <DataTitle
           key={interactionName.main}
+          active={interactionName.dataStep === props.dataStep ? true : false}
           up={interactionName.direction === "up" ? true : false}
           left={interactionName.direction === "left" ? true : false}
           right={interactionName.direction === "right" ? true : false}
           down={interactionName.direction === "down" ? true : false}
           onClick={() => {
-            props.setDataStep(interactionName.dataStep);
+            if (interactionName.dataStep != props.dataStep) {
+              props.setDataStep(interactionName.dataStep);
+            } else {
+              props.setDataStep(-1);
+            }
           }}
           main={interactionName.main}
           sub={interactionName.sub}
         />
       ))}
-
       <div className="data scale">
+        {interactionsNames.map(interactionName => (
+          <div
+            key={`circle-${interactionName.direction}`}
+            className={`circle_container 
+            ${
+              interactionName.direction
+                ? "circle_container-" + interactionName.direction
+                : ""
+            } 
+            `}
+          >
+            <div
+              className={`circle ${
+                interactionName.dataStep === props.dataStep
+                  ? "circle-active"
+                  : ""
+              }`}
+            />
+          </div>
+        ))}
         {(() => {
           if (props.dataStep >= -1) {
             return (
@@ -77,7 +100,11 @@ let DataInteraction = props => {
                     step={props.step}
                   />
                 </div>
-                <DataScheme step={props.dataStep} dataUser={props.dataUser} />
+                <DataScheme
+                  step={props.dataStep}
+                  userData={props.userData}
+                  noVideo={true}
+                />
               </div>
             );
           }

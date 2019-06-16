@@ -130,6 +130,8 @@ export default class Canvas3D {
       this.onWindowResize();
       this.clock = new THREE.Clock();
       this.clock.start();
+      let gl = this.renderer.context;
+      console.log(gl.min_capability_mode);
       this.renderer.setAnimationLoop(this.render.bind(this));
     });
   }
