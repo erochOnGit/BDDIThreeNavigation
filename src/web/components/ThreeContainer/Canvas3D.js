@@ -199,10 +199,10 @@ export default class Canvas3D {
     this.bloomPass.radius = stepSettings[index].bloom.bloomRadius;
 
     this.setStep(index);
+    this.startInteractionTracking(this.interactions[index]);
     this.loadInteractionGltf(this.interactions[index], () => {
       this.addInteractionMesh(this.interactions[index]);
       this.addInteractionEvent(this.interactions[index]);
-      this.startInteractionTracking(this.interactions[index]);
       this.interactionsIndex = index;
     });
   }

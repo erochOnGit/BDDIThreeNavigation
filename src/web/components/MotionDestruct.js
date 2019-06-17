@@ -41,6 +41,11 @@ const MotionDestruct = (sentence, step) => {
                         TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
                     }
+                }else {
+                    //Remove Motion at end
+                    TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
+                    TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                    TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
                 }
 
                 setTimeout(() => {
@@ -51,7 +56,7 @@ const MotionDestruct = (sentence, step) => {
                         let sentence = document.querySelector('.interact-sentence');
                         let tl = new TimelineLite();
                         tl.to(sentence, 1, {opacity: 1, ease: Sine.easeOut})
-                            .to(sentence, 1, {opacity: 0, ease: Sine.easeOut}, "+=2")
+                            .to(sentence, 1, {opacity: 0, ease: Sine.easeOut}, "+=4")
                     }, 1000);
                 }, 1000)
             }, false);

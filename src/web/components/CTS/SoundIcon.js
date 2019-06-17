@@ -2,6 +2,9 @@ import React from "react";
 import './SoundIcon.scss';
 import { TweenMax } from "gsap/TweenMax";
 
+//ELEMENT
+import soundIcon from './../../assets/Icon/soundIcon.gif';
+
 let divStyle1 = {
     opacity: '1',
 };
@@ -9,28 +12,11 @@ let divStyle2 = {
     opacity: '0',
 };
 const SoundSvg = props => (
-    <svg version="1.1" className="sound-cont" viewBox="0 0 73.7 31.1">
-        <g id="sound-icon1" style={divStyle1}>
-        <path d="M10.7,7.2C9.6,7.2,8.7,8,8.6,9.1L8.5,21.7c0.1,1.1,1,2,2.1,1.9c1.1,0.1,2.1-0.8,2.2-1.9l0.1-12.5
-                C12.8,8.1,11.9,7.2,10.7,7.2z
-                                            M28.2,7.3C27.1,7.2,26.1,8,26,9.1c0,0,0,0.1,0,0.1v12.5c0.1,1.2,1.2,2,2.4,1.9c1-0.1,1.8-0.9,1.9-1.9l0.1-12.5
-                c0-1.1-1-2-2.1-1.9C28.3,7.3,28.2,7.3,28.2,7.3z
-                                            M63,7.5c-1.1-0.1-2.1,0.7-2.2,1.8c0,0,0,0.1,0,0.1l-0.1,12.5c0.1,1.2,1.2,2,2.4,1.9c1-0.1,1.8-0.9,1.9-1.9
-                l0.1-12.5C65.1,8.3,64.1,7.4,63,7.5z
-                                             M45.6,7.4c-1.1-0.1-2.1,0.7-2.2,1.8c0,0,0,0.1,0,0.1l-0.1,12.5c0.1,1.2,1.2,2,2.4,1.9c1-0.1,1.8-0.9,1.9-1.9
-                l0.1-12.5C47.7,8.2,46.7,7.3,45.6,7.4z
+    <div className="sound-cont">
+        <img id="sound-icon1" style={divStyle1} src={soundIcon}/>
 
-                M35.5,14.1c-0.8,0.8-0.8,2,0,2.8c0.8,0.8,2,0.8,2.8,0s0.8-2,0-2.8c0,0,0,0,0,0C37.5,13.4,36.2,13.4,35.5,14.1z
+        <svg version="1.1" viewBox="0 0 73.7 31.1">
 
-                M0.6,14c-0.8,0.8-0.8,2,0,2.8s2,0.8,2.8,0c0.8-0.8,0.8-2,0-2.8c0,0,0,0,0,0C2.6,13.2,1.4,13.2,0.6,14z
-                                             M54.3,0.2c-1.2,0-2.1,1-2.1,2.1c0,0,0,0,0,0L52.1,29c-0.1,1.2,0.8,2.2,2,2.2s2.2-0.8,2.2-2c0-0.1,0-0.2,0-0.3
-                l0.1-26.6C56.5,1.2,55.6,0.2,54.3,0.2C54.4,0.2,54.4,0.2,54.3,0.2z
-                                             M19.5,0c-1.2,0-2.1,0.9-2.1,2.1c0,0,0,0,0,0l-0.1,26.6c0,1.2,0.9,2.1,2.1,2.1s2.1-0.9,2.1-2.1l0.1-26.6
-                C21.6,1,20.7,0,19.5,0C19.5,0,19.5,0,19.5,0z
-
-              M73.1,14.3c-0.8-0.8-2-0.8-2.8,0s-0.8,2,0,2.8c0.8,0.8,2,0.8,2.8,0c0,0,0,0,0,0C73.9,16.4,73.9,15.1,73.1,14.3z
-                "/>
-        </g>
         <g id="sound-icon2" style={divStyle2}>
         <path d="M35.5,14.7c-0.8,0.8-0.8,2,0,2.8c0.8,0.8,2,0.8,2.8,0c0.8-0.8,0.8-2,0-2.8c0,0,0,0,0,0
                 C37.5,14,36.2,14,35.5,14.7z
@@ -51,6 +37,7 @@ const SoundSvg = props => (
                 C12.3,15.1,12.2,15,12.1,14.9z"/>
         </g>
 </svg>
+    </div>
 )
 
 const SoundIcon = props => {
@@ -67,11 +54,11 @@ const SoundIcon = props => {
         let icon1 = document.querySelector('#sound-icon1');
         let icon2 = document.querySelector('#sound-icon2');
         if(props.muted == false) { // SON
-            TweenMax.to(icon1.style, .01, { opacity:0, ease:Sine.easeOut});
-            TweenMax.to(icon2.style, .01, { opacity:1, ease:Sine.easeOut});
+            TweenMax.to(icon1.style, .01, { opacity:0,visibility:'hidden', ease:Sine.easeOut});
+            TweenMax.to(icon2.style, .01, { opacity:.5,visibility:'visible', ease:Sine.easeOut});
         } else { // Mute
-            TweenMax.to(icon1.style, .01, { opacity:1, ease:Sine.easeOut});
-            TweenMax.to(icon2.style, .01, { opacity:0, ease:Sine.easeOut});
+            TweenMax.to(icon1.style, .01, { opacity:.5,visibility:'visible', ease:Sine.easeOut});
+            TweenMax.to(icon2.style, .01, { opacity:0,visibility:'hidden', ease:Sine.easeOut});
         }
     },150)
 

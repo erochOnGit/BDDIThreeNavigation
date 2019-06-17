@@ -36,6 +36,7 @@ export default class InteractionFive extends Interaction {
 
         this.getUserData = getUserData;
         this.float = false;
+        this.rescale = false;
         this.camera = camera;
         this.tweening = false;
         /**
@@ -169,6 +170,8 @@ export default class InteractionFive extends Interaction {
          * events
          */
 
+
+
         /**
          * tracking
          */
@@ -197,6 +200,18 @@ export default class InteractionFive extends Interaction {
                 numberScore.classList.add('global-score');
                 document.querySelector('body').appendChild(numberScore);
 
+
+
+                //FLOWER CHOICE
+                let arrayFlower = [flower1,flower2,flower3,flower4,flower5,flower6,flower7,flower8,flower9,flower10,flower11];
+                this.modelFlower;
+
+                if(this.getUserData()[0].movemento < 10) {
+                    this.modelFlower = flowerFast;
+                } else {
+                    this.modelFlower = arrayFlower[Math.floor(Math.random()*arrayFlower.length)];
+                }
+                this.loadingGltf[0].glb = this.modelFlower
             },
             stop: () => {}
         });
@@ -204,9 +219,10 @@ export default class InteractionFive extends Interaction {
         /**
          * loadingGltf
          */
+
         this.loadingGltf.push({
             loader: this.loader,
-            glb: flower4,
+            glb: this.modelFlower,
             success: success => gltf => {
                 // called when the resource is loaded
                 this.model = gltf.scene;
@@ -243,7 +259,7 @@ export default class InteractionFive extends Interaction {
                 //this.objects.push({ mesh: this.model });
                 this.objects.push({ mesh: this.model });
                 //this.parameters(this.model);
-                this.registerEvents(this.model, this.fontMesh);
+                this.registerEvents(this.model, this.fontMesh, getUserData);
 
                 this.videoCont = document.querySelector('.video-container');
                 this.videoPlayer = document.querySelector('.video-player');
@@ -261,7 +277,7 @@ export default class InteractionFive extends Interaction {
 
     }
 
-    registerEvents(model, fontMesh) {
+    registerEvents(model, fontMesh, data) {
         /*document.querySelector('.skip-icon').addEventListener("click", ()=> {
             console.log('Model',model)
 
@@ -317,9 +333,24 @@ export default class InteractionFive extends Interaction {
             //Apparition flower
             TweenMax.from(this.model.rotation,4,{y:-5,ease:Circ.easeInOut})
             TweenMax.from(this.model.position,4,{y:5,ease:Circ.easeInOut})
-            for(let i=0; i<28;i++) {
-                TweenMax.from(this.model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+
+            if(this.model.children.length < 16) { //FAST FLOWER
+                for(let i=0; i<13;i++) {
+                    TweenMax.from(this.model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+                }
+            } else { //CHOICE FLOWER
+                for(let i=0; i<28;i++) {
+                    TweenMax.from(this.model.children[i].scale, 4, {x: 0.2, y: 0.2, y: 0.2, ease: Back.easeInOut.config(1.4)});
+                }
             }
+
+
+            //RESCALE FLOWER WITH DATA
+            setTimeout(()=> {
+                this.rescale = true;
+            },2000)
+
+            //ACTIVE FLOATING FLOWER
             setTimeout(()=> {
                 this.float = true;
             },4000)
@@ -327,11 +358,62 @@ export default class InteractionFive extends Interaction {
             this.tweening = true;
         }
 
+        //RESCALE FLOWER WITH DATA
+        if(this.rescale == true) {
 
-        if(this.float == true) {
-            this.model.position.y -= Math.sin(time * -0.674) * .0085;
+            let scoreInt1 = this.getUserData()[0].movemento
+            let scaleScore;
+            let scaleScoreSec;
+
+
+            //SCORE IMPACT SCALE
+            if(scoreInt1 < 5) {
+                console.log('inf a 5');
+                scaleScore = 1
+            }
+            else if (scoreInt1 < 15){
+                console.log('sup a 5');
+                scaleScore = 1.15
+                scaleScoreSec = 1.05
+            }
+            else if (scoreInt1 < 30){
+                console.log('sup a 5');
+                scaleScore = 1.05
+                scaleScoreSec = 1.15
+            }
+            else if (scoreInt1 < 50){
+                console.log('sup a 5');
+                scaleScore = 1.1
+                scaleScoreSec = 1.1
+            }
+
+            console.log('score',scoreInt1)
+            console.log('scale',scaleScore)
+
+            //FAST FLOWER
+            if(this.model.children.length < 16) {
+                for(let i=0; i<13;i++) {
+                    TweenMax.to(this.model.children[i].scale, 3, {x: scaleScore, y: scaleScore, y: scaleScore, ease: Back.easeInOut.config(1.4)});
+                }
+            }
+            //CHOICE FLOWER
+            else {
+                for(let i=0; i<13;i++) {
+                    TweenMax.to(this.model.children[i].scale, 3, {x: scaleScore, y: scaleScore, y: scaleScore, ease: Back.easeInOut.config(1.4)});
+                }
+                for(let i=14; i<25;i++) {
+                    TweenMax.to(this.model.children[i].scale, 3, {x: scaleScoreSec, y: scaleScoreSec, y: scaleScoreSec, ease: Back.easeInOut.config(1.4)});
+                }
+            }
+
+            this.rescale = false
         }
 
+        //ACTIVE FLOATING FLOWER
+        if(this.float == true) {
+            //this.model.position.y -= Math.sin(time * -0.674) * .0085;
+            this.model.position.y -= Math.sin(time * -0.374) * .0065;
+        }
     }
 
     parameters(model) {

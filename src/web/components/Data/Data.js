@@ -4,7 +4,6 @@ import DataInteraction from "./DataInteraction";
 import EnhanceData from "./EnhanceData";
 
 let Data = props => {
-  //console.log(props.setSceneStep);
   if (props.step < 4) {
     return (
       <DataSmall

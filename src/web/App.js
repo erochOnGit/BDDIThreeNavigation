@@ -14,6 +14,33 @@ import Data from "src/web/components/Data";
 //<Transition/>
 
 const App = props => {
+
+    setTimeout(()=>{
+        let video = document.querySelector('video');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        if(width/height < 1.8) {
+            video.style.width = 'auto';
+            video.style.height = '100%';
+        } else {
+            video.style.width = '100%';
+            video.style.height = 'auto';
+        }
+        window.addEventListener('resize',()=> {
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+
+            if(width/height < 1.8) {
+                video.style.width = 'auto';
+                video.style.height = '100%';
+            } else {
+                video.style.width = '100%';
+                video.style.height = 'auto';
+            }
+        })
+    },250)
+
   if (props.step < 0) {
     return (
       <div>
@@ -71,7 +98,7 @@ const App = props => {
                 />
               );
             default:
-              return <div>error</div>;
+              return null;
           }
         })()}
         <Data

@@ -55,8 +55,10 @@ const Content = props => {
             iconInteract = Flower;
             sentence = 'This flower is the result of your actions during the experience, it represents your inner beauty.';
             setTimeout(()=> {
-                document.querySelector('.center-cont .help-txt').innerHTML = '';
-                document.querySelector('.interaction-container .interaction').classList.add('interact-five');
+                //document.querySelector('.center-cont .help-txt').innerHTML = '';
+                //After center-cont <p className="help-txt">Help</p>
+                //After bottom-cont <p className="credits-txt">Credits</p>
+            document.querySelector('.interaction-container .interaction').classList.add('interact-five');
             },250);
             break;
         default:
@@ -74,7 +76,6 @@ const Content = props => {
     return (
     <div className="menu-cont">
         <div className="center-cont">
-            <p className="help-txt">Help</p>
             <div className="interaction-container">
                 <div className="interaction">
                     <img className="echo-gif" src={echoGif}/>
@@ -84,12 +85,11 @@ const Content = props => {
             </div>
         </div>
         <div className="bottom-cont">
-            <p className="credits-txt">Credits</p>
             <div className="credits-container">
                 <div className="category">
                     <p className="title">Development</p>
-                    <p>Emile Roch</p>
-                    <p>Loïc Belaïd Remesal</p>
+                    <p>Émile Roch</p>
+                    <p>Loïc Belaïd-Remesal</p>
                 </div>
                 <div className="category">
                     <p className="title">Artistic direction</p>
@@ -98,12 +98,11 @@ const Content = props => {
                 </div>
                 <div className="category">
                     <p className="title">Sound</p>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <p>Consect</p>
+                    <p>Sydney Dyens</p>
                 </div>
                 <div className="category">
                     <p className="title">Voice</p>
-                    <p>Name of girl</p>
+                    <p>Zohra Mrad</p>
                 </div>
             </div>
         </div>
