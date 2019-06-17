@@ -6,15 +6,26 @@
   width: 40px;
   z-index: 30;
   .sound-cont {
-    #sound-icon1, #sound-icon2 {
+    cursor: pointer;
+    #sound-icon1 {
       transition: all .5s;
       fill: rgba(255,255,255,.4) !important;
-    }
-    &:hover {
-      cursor: pointer;
-      #sound-icon1, #sound-icon2 {
+      width: 42px;
+      margin-left: -1px;
+      position: absolute;
+      &:hover {
         transition: all .5s;
         fill: #fff !important;
+        opacity: 1 !important;
+      }
+    }
+    svg {
+      transition: all .5s;
+      fill: rgba(255,255,255,.4) !important;
+      &:hover {
+        transition: all .5s;
+        fill: #fff !important;
+        opacity: 1 !important;
       }
     }
   }

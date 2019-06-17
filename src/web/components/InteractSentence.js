@@ -10,8 +10,10 @@ const InteractSentence = (instruction) => {
             sentence.appendChild(content);
 
             let container = document.querySelector('.main-one-container');
-
-            container.appendChild(sentence)
+            let element = document.querySelector('.interact-sentence')
+            if(!element) {
+                container.appendChild(sentence)
+            }
 
         },1000)
 

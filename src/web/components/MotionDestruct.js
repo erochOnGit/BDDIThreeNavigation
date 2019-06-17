@@ -56,7 +56,7 @@ const MotionDestruct = (sentence, step) => {
                         let sentence = document.querySelector('.interact-sentence');
                         let tl = new TimelineLite();
                         tl.to(sentence, 1, {opacity: 1, ease: Sine.easeOut})
-                            .to(sentence, 1, {opacity: 0, ease: Sine.easeOut}, "+=2")
+                            .to(sentence, 1, {opacity: 0, ease: Sine.easeOut}, "+=4")
                     }, 1000);
                 }, 1000)
             }, false);
