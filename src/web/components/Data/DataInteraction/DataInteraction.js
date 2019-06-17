@@ -33,10 +33,21 @@ let interactionsNames = [
   }
 ];
 
+let toggleSizeState = () =>{
+  console.log("yolo")
+
+} 
+
 let DataInteraction = props => {
+  
   return (
-    <div className="data-interaction">
-      {interactionsNames.map(interactionName => (
+    <div className="data-interaction" 
+         onClick={()=>{
+           console.log("tolo")
+         }}
+    >
+      {props.sizeState === "big" &&
+        interactionsNames.map(interactionName => (
         <DataTitle
           key={interactionName.main}
           active={interactionName.dataStep === props.dataStep ? true : false}
@@ -55,8 +66,14 @@ let DataInteraction = props => {
           sub={interactionName.sub}
         />
       ))}
-      <div className="data scale">
-        {interactionsNames.map(interactionName => (
+      <div className={`data scale ${props.sizeState === "big" ? "" : "unscale" }`} 
+         onClick={()=>{
+          console.log("yolo")
+
+           props.toggleCamera()
+         }}> 
+        {props.sizeState === "big" &&
+          interactionsNames.map(interactionName => (
           <div
             key={`circle-${interactionName.direction}`}
             className={`circle_container 
@@ -101,7 +118,7 @@ let DataInteraction = props => {
                   />
                 </div>
                 <DataScheme
-                  step={props.dataStep}
+                  step={props.sizeState === "big" ? props.dataStep: 4}
                   userData={props.userData}
                   noVideo={true}
                 />

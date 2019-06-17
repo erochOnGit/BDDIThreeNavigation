@@ -78,8 +78,13 @@ export default class RorchachTile {
     this.mesh.material.uniforms.pointer.value = new THREE.Vector2(x, y);
 
     let dataIndex = this.IX(x, y);
-
     this.fluid.addDensity(dataIndex, 1);
+
+    let dataIndex2 = this.IX(x+1, y);
+    this.fluid.addDensity(dataIndex2, 1);
+
+    let dataIndex3 = this.IX(x-1, y);
+    this.fluid.addDensity(dataIndex3, 1);
 
     let amtX = x - this.previousMouse.x;
     let amtY = y - this.previousMouse.y;

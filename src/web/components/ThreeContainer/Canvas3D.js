@@ -156,7 +156,6 @@ export default class Canvas3D {
   }
   createInteraction(success) {
     this.interactions.push(new InteractionOne({ camera: this.camera }));
-    //this.interactions.push(new InteractionFive({camera: this.camera, scene: this.scene,getUserData: this.getUserData}));
     this.interactions.push(new InteractionTwo({ camera: this.camera }));
     this.interactions.push(new InteractionThree());
     this.interactions.push(
@@ -177,20 +176,6 @@ export default class Canvas3D {
     );
     this.interactions.push(new InteractionSix());
     success();
-    // let allMeshsLoaded = false;
-    // while (!allMeshsLoaded) {
-    //   allMeshsLoaded = true;
-    //   this.interactions.forEach(interaction => {
-    //     if (interaction.loading != undefined && interaction.loading < 100) {
-    //       allMeshsLoaded = false;
-    //       console.log("coucou");
-    //     }
-    //   });
-    //   // console.log(allMeshsLoaded);
-    //   if (allMeshsLoaded) {
-    //     success();
-    //   }
-    // }
   }
   setInteractionStep(index) {
     if (this.interactionsIndex >= 0) {

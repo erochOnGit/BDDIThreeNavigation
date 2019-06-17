@@ -78,6 +78,7 @@ const App = props => {
           step={props.step}
           userData={props.userData}
           setSceneStep={props.setSceneStep}
+          toggleCamera={props.toggleCamera}
         />
         <div />
         <div
@@ -100,7 +101,6 @@ const App = props => {
             setTimeout(() => {
               props.setSceneStep(props.step + 1);
             }, 1000);
-            //console.log(props.step+1)
           }}
         >
           <div className="bar" />

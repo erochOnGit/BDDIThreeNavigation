@@ -45,10 +45,10 @@
       "rotation": [0, 0, 0]
     },
     "bloom": {
-      "exposure": 0,
-      "bloomStrength": 0,
-      "bloomThreshold": 0,
-      "bloomRadius": 0
+      "exposure": 1,
+      "bloomStrength": 0.5,
+      "bloomThreshold": 0.2,
+      "bloomRadius": 0.01
     }
   },
   {

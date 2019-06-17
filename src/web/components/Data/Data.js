@@ -4,7 +4,7 @@ import DataInteraction from "./DataInteraction";
 import EnhanceData from "./EnhanceData";
 
 let Data = props => {
-  console.log(props.step);
+  //console.log(props.setSceneStep);
   if (props.step < 4) {
     return (
       <DataSmall
@@ -14,9 +14,9 @@ let Data = props => {
       />
     );
   } else if (props.step === 4) {
-    return <div>datasupersmall</div>;
+    return <DataInteraction toggleCamera={props.toggleCamera} userData={props.userData} />;
   } else if (props.step === 5) {
-    return <DataInteraction userData={props.userData} />;
+    return <DataInteraction toggleCamera={props.toggleCamera} userData={props.userData} />;
   } else if (props.step > 5) {
     return <div> you should not be here </div>;
   }
