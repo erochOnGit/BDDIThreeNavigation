@@ -1,5 +1,18 @@
 [
   {
+    "name": "interaction4",
+    "camera": {
+      "position": [0, 0, 1],
+      "rotation": [0, 0, 0]
+    },
+    "bloom": {
+      "exposure": 1,
+      "bloomStrength": 0.5,
+      "bloomThreshold": 0.2,
+      "bloomRadius": 0.01
+    }
+  },
+  {
     "name": "interaction1",
     "camera": {
       "position": [0, 0, 3.5],

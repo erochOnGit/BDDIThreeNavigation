@@ -38,7 +38,7 @@ export default class InteractionFour extends Interaction {
     /**
      * obj
      */
-    this.fluid = new Fluid(200, 8.2, 0, 0.00000005);
+    this.fluid = new Fluid(200, 8.2, 0, 0.00000002);
     this.rorchach = new RorchachTile({
       inversed: true,
       position: new THREE.Vector3(-0.5, 0, 0.1),
@@ -129,7 +129,7 @@ export default class InteractionFour extends Interaction {
     this.video.autoplay = true;
     this.video.loop = true;
     this.video.muted = true;
-    this.video.style.opacity = 0;
+    this.video.style.opacity = 1;
     this.video.style.position = "fixed";
     this.video.style.top = 0;
 

@@ -41,6 +41,8 @@ const SkipIcon = props => {
                     .to(sentence, 1, {opacity: 0, ease: Sine.easeOut}, "+=4")
             }, 1000);
         } else {
+            let data = document.querySelector('.data');
+            TweenMax.to(data,1,{opacity: 1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
             InteractSentence(props.instruct);
 
             let videoContainer = document.querySelector('.video-container');

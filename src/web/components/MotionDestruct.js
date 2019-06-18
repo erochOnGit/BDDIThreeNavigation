@@ -6,14 +6,16 @@ const MotionDestruct = (sentence, step) => {
 
     setTimeout(()=> {
         let vidElem = document.querySelector('.video-player video');
-        let videoContainer = document.querySelector('.video-player');
+        let videoPlayer = document.querySelector('.video-player');
+        let videoContainer = document.querySelector('.video-container');
         let skipIcon = document.querySelector('.skip-icon');
         let nextIcon = document.querySelector('.next-icon');
         let container = document.querySelector('.main-one-container');
         let saveIcon = document.querySelector('.save-icon');
+        let data = document.querySelector('.data');
 
 
-        if(vidElem) {
+        if(vidElem && videoContainer.getElementsByClassName.opacity !== "0") {
             vidElem.addEventListener("ended", () => {
 
                 //SIMULATE CLICK
@@ -33,18 +35,19 @@ const MotionDestruct = (sentence, step) => {
                 if(step) {
                     if(step == 4) {
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                        TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                        TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(saveIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
                     }else {
                         //Remove Motion at end
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                        TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                        TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+                        TweenMax.to(data,1,{opacity: 1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
                     }
                 }else {
                     //Remove Motion at end
                     TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                    TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                    TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                     TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
                 }
 
