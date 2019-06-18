@@ -146,7 +146,7 @@
       case 'video':
         if (opt_options) {
           if (opt_options.camera) {
-            console.log("init whut")
+            
             this.initUserMedia_(element, opt_options);
           }
         }
@@ -233,9 +233,6 @@
    * @private
    */
   tracking.trackVideo_ = function(element, tracker) {
-
-    console.log("trackvideo", element)
-    console.dir(element)
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
     var width;

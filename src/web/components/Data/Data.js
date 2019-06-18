@@ -13,9 +13,21 @@ let Data = props => {
       />
     );
   } else if (props.step === 4) {
-    return <div>datasupersmall</div>;
+    return (
+      <DataInteraction
+        rotated={props.rotated}
+        toggleCamera={props.toggleCamera}
+        userData={props.userData}
+      />
+    );
   } else if (props.step === 5) {
-    return <DataInteraction userData={props.userData} />;
+    return (
+      <DataInteraction
+        rotated={props.rotated}
+        toggleCamera={props.toggleCamera}
+        userData={props.userData}
+      />
+    );
   } else if (props.step > 5) {
     return <div> you should not be here </div>;
   }

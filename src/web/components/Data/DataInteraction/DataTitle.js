@@ -3,7 +3,7 @@ let DataTitle = props => {
   let spanClass = `${props.active ? "active" : ""}`;
   return (
     <div
-      className={`titre ${spanClass} ${(() => {
+      className={`data-title ${spanClass} ${(() => {
         if (props.up) {
           return "naissance";
         } else if (props.right) {

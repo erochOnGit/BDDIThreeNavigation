@@ -14,32 +14,31 @@ import Data from "src/web/components/Data";
 //<Transition/>
 
 const App = props => {
+  setTimeout(() => {
+    let video = document.querySelector(".video-container video");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
-    setTimeout(()=>{
-        let video = document.querySelector('video');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
+    if (width / height < 1.8) {
+      video.style.width = "auto";
+      video.style.height = "100%";
+    } else {
+      video.style.width = "100%";
+      video.style.height = "auto";
+    }
+    window.addEventListener("resize", () => {
+      let width = window.innerWidth;
+      let height = window.innerHeight;
 
-        if(width/height < 1.8) {
-            video.style.width = 'auto';
-            video.style.height = '100%';
-        } else {
-            video.style.width = '100%';
-            video.style.height = 'auto';
-        }
-        window.addEventListener('resize',()=> {
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-
-            if(width/height < 1.8) {
-                video.style.width = 'auto';
-                video.style.height = '100%';
-            } else {
-                video.style.width = '100%';
-                video.style.height = 'auto';
-            }
-        })
-    },250)
+      if (width / height < 1.8) {
+        video.style.width = "auto";
+        video.style.height = "100%";
+      } else {
+        video.style.width = "100%";
+        video.style.height = "auto";
+      }
+    });
+  }, 250);
 
   if (props.step < 0) {
     return (
@@ -92,6 +91,8 @@ const App = props => {
             case 4:
               return (
                 <Five
+                  toggleCamera={props.toggleCamera}
+                  rotated={props.rotated}
                   step={props.step}
                   muted={props.muted}
                   updateMuted={props.updateMuted}
@@ -105,6 +106,8 @@ const App = props => {
           step={props.step}
           userData={props.userData}
           setSceneStep={props.setSceneStep}
+          toggleCamera={props.toggleCamera}
+          rotated={props.rotated}
         />
         <div />
         <div
@@ -127,7 +130,6 @@ const App = props => {
             setTimeout(() => {
               props.setSceneStep(props.step + 1);
             }, 1000);
-            //console.log(props.step+1)
           }}
         >
           <div className="bar" />

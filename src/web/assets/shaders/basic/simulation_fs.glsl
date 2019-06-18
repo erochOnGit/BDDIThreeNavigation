@@ -8,8 +8,8 @@ void main() {
     vec3 col = texture2D( color, vUv ).rgb;
     col = col * vec3(10.,10,10);
 
-       gl_FragColor = vec4( abs(cos(col.r*0.1))*col.r*0.07,
-                         abs(cos(col.g*0.1))*col.g*0.03,
-                         abs(sin(col.b*0.1))*col.b*0.05,
-                         abs(sin((col.r + col.g + col.b)*0.15)));
+       gl_FragColor = vec4( abs(sin(col.r)),
+                         abs(col.g),
+                         abs(col.b),
+                         abs(sin((col.r + col.g + col.b)*0.05)));
 }

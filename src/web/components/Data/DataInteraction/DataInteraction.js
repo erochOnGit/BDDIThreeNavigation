@@ -35,47 +35,55 @@ let interactionsNames = [
 
 let DataInteraction = props => {
   return (
-    <div className="data-interaction">
-      {interactionsNames.map(interactionName => (
-        <DataTitle
-          key={interactionName.main}
-          active={interactionName.dataStep === props.dataStep ? true : false}
-          up={interactionName.direction === "up" ? true : false}
-          left={interactionName.direction === "left" ? true : false}
-          right={interactionName.direction === "right" ? true : false}
-          down={interactionName.direction === "down" ? true : false}
-          onClick={() => {
-            if (interactionName.dataStep != props.dataStep) {
-              props.setDataStep(interactionName.dataStep);
-            } else {
-              props.setDataStep(-1);
-            }
-          }}
-          main={interactionName.main}
-          sub={interactionName.sub}
-        />
-      ))}
-      <div className="data scale">
-        {interactionsNames.map(interactionName => (
-          <div
-            key={`circle-${interactionName.direction}`}
-            className={`circle_container 
+    <React.Fragment>
+      {props.sizeState === "big" &&
+        interactionsNames.map(interactionName => (
+          <DataTitle
+            key={interactionName.main}
+            active={interactionName.dataStep === props.dataStep ? true : false}
+            up={interactionName.direction === "up" ? true : false}
+            left={interactionName.direction === "left" ? true : false}
+            right={interactionName.direction === "right" ? true : false}
+            down={interactionName.direction === "down" ? true : false}
+            onClick={() => {
+              if (interactionName.dataStep != props.dataStep) {
+                props.setDataStep(interactionName.dataStep);
+              } else {
+                props.setDataStep(-1);
+              }
+            }}
+            main={interactionName.main}
+            sub={interactionName.sub}
+          />
+        ))}
+      <div
+        className={`data scale ${props.sizeState === "big" ? "" : "unscale"}`}
+        onClick={() => {
+          props.toggleCamera();
+          props.setSizeState(props.sizeState === "big" ? "small" : "big");
+        }}
+      >
+        {props.sizeState === "big" &&
+          interactionsNames.map(interactionName => (
+            <div
+              key={`circle-${interactionName.direction}`}
+              className={`circle_container 
             ${
               interactionName.direction
                 ? "circle_container-" + interactionName.direction
                 : ""
             } 
             `}
-          >
-            <div
-              className={`circle ${
-                interactionName.dataStep === props.dataStep
-                  ? "circle-active"
-                  : ""
-              }`}
-            />
-          </div>
-        ))}
+            >
+              <div
+                className={`circle ${
+                  interactionName.dataStep === props.dataStep
+                    ? "circle-active"
+                    : ""
+                }`}
+              />
+            </div>
+          ))}
         {(() => {
           if (props.dataStep >= -1) {
             return (
@@ -101,7 +109,7 @@ let DataInteraction = props => {
                   />
                 </div>
                 <DataScheme
-                  step={props.dataStep}
+                  step={props.sizeState === "big" ? props.dataStep : 4}
                   userData={props.userData}
                   noVideo={true}
                 />
@@ -110,7 +118,7 @@ let DataInteraction = props => {
           }
         })()}
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
