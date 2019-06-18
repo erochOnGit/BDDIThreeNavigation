@@ -13,8 +13,10 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 import thirdVid from "../../assets/Motion/Chap3_Echo.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
+//motion Destruct
+import EnhanceThree from "./EnhanceThree"
+
 const Three = props => {
-    MotionDestruct('Talk to Echo to communicate with her.', props.step);
 
     return (
         <div className="main-one-container">
@@ -37,4 +39,4 @@ const Three = props => {
     );
 };
 
-export default Three;
+export default EnhanceThree()(Three);

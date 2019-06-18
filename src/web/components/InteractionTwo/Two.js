@@ -13,8 +13,11 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 import secVid from "../../assets/Motion/Chap2_Desir.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
+//MIMILE
+import EnhanceTwo from "./EnhanceTwo"
+
 const Two = props => {
-    MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.', props.step);
+    //MotionDestruct('Approach or move your hand away from the camera to attract or reject peoples.', props.step);
 
     return (
         <div className="main-one-container">
@@ -37,4 +40,4 @@ const Two = props => {
     );
 };
 
-export default Two;
+export default EnhanceTwo()(Two);

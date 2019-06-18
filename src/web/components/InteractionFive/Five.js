@@ -12,7 +12,13 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 //ELEMENT
 import secVid from "../../assets/Motion/Chap5_Generation.mp4";
 import SaveIcon from "src/web/components/CTS/SaveIcon";
+import dataSound from '../../assets/Sound/Voix_Fin.mp3';
 import interactSound from "../../assets/Sound/Interaction.wav";
+
+//MOTION DESTRUCT
+import EnhanceFive from "./EnhanceFive"
+
+
 const MenuSvg = props => (
   <div className="menu-icon-cont" onClick={props.onClick}>
     <div className="menu-icon2-cont" style={{ opacity: "1" }}>
@@ -50,7 +56,8 @@ const Five = props => {
       )}
       <MenuContent step={props.step} />
       <audio className="interact-sound" src={interactSound} />
-      <div className="video-container">
+    <audio className="data-sound" src={dataSound} ></audio>
+    <div className="video-container">
         <ReactPlayer className="video-player" url={secVid} playing />
       </div>
       <div className="transition-in" />
@@ -63,4 +70,4 @@ const Five = props => {
   );
 };
 
-export default Five;
+export default EnhanceFive()(Five);

@@ -13,8 +13,10 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 import fourthVid from "../../assets/Motion/Chap4_Reflet.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
+//MOITION DESTRUCT
+import EnhanceFour from "./EnhanceFour"
+
 const Four = props => {
-    MotionDestruct('Make gestures in front of the camera to reveal your reflection.', props.step);
 
     return (
         <div className="main-one-container">
@@ -37,4 +39,4 @@ const Four = props => {
     );
 };
 
-export default Four;
+export default EnhanceFour()(Four);

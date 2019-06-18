@@ -26,14 +26,25 @@ const SkipIcon = props => {
 
             setTimeout(() => {
                 //Baisse volume motion
-                TweenMax.to(document.querySelector(".video-player video"),8,{volume:0})
+                TweenMax.to(document.querySelector(".video-player video"),4,{volume:0})
                 //document.querySelector(".video-player video").remove();
 
                 //Transition with Interact sound
                 let sound = document.querySelector(".interact-sound")
-                sound.play();
+                let dataSound = document.querySelector(".data-sound")
+                //WAIT 2sec TO BEGIN DATA SOUND
+                setTimeout(()=>{
+                    dataSound.play();
+                },2000)
                 sound.loop = true;
-                TweenMax.from(sound,8,{volume:0})
+
+                //SOUND INTERACT AT ZERO
+                sound.play();
+                sound.volume = 0;
+                // WAIT 14sec TO BEGIN INTERACT SOUND
+                setTimeout(()=> {
+                    TweenMax.to(sound,8,{volume:1})
+                },14000)
 
                 let sentence = document.querySelector('.interact-sentence');
                 let tl = new TimelineLite();

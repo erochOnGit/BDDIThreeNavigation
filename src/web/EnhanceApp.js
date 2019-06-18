@@ -8,10 +8,10 @@ import { TweenMax, TimelineLite } from "gsap/TweenMax";
 const EnhanceApp = () =>
   compose(
     withState("userData", "setUserData", [
-      { name: "interaction1" },
-      { name: "interaction2" },
-      { name: "interaction3" },
-      { name: "interaction4" }
+      { name: "interaction1" ,movemento:0},
+      { name: "interaction2" ,movemento:0},
+      { name: "interaction3" ,movemento:0},
+      { name: "interaction4" ,movemento:0}
     ]),
     withState("step", "setStep", -1),
     withState("muted", "setMuted", true),
