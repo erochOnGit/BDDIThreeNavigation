@@ -14,7 +14,6 @@ const InteractSentence = (instruction) => {
             if(!element) {
                 container.appendChild(sentence)
             }
-
         },1000)
 
 };

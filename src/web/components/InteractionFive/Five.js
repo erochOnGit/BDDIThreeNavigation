@@ -13,9 +13,12 @@ import MotionDestruct from "src/web/components/MotionDestruct";
 import secVid from "../../assets/Motion/Chap5_Generation.mp4";
 import SaveIcon from "src/web/components/CTS/SaveIcon";
 import interactSound from '../../assets/Sound/Interaction.wav';
+import dataSound from '../../assets/Sound/Voix_Fin.mp3';
+
+//MOTION DESTRUCT
+import EnhanceFive from "./EnhanceFive"
 
 const Five = props => {
-    MotionDestruct('This generative flower is a reflection of your inner beauty\'s particularity.', props.step);
 
     return (
         <div className="main-one-container">
@@ -26,17 +29,18 @@ const Five = props => {
             <MenuIcon />
             <MenuContent step={props.step} />
             <audio className="interact-sound" src={interactSound} ></audio>
+            <audio className="data-sound" src={dataSound} ></audio>
             <div className="video-container">
                 <ReactPlayer className="video-player" url={secVid} playing />
             </div>
             <div className="transition-in" />
             <div className="transition-out" />
             <div className="title-container">
-                <h1>Desire</h1>
-                <p>Chapter II</p>
+                <h1></h1>
+                <p></p>
             </div>
         </div>
     );
 };
 
-export default Five;
+export default EnhanceFive()(Five);

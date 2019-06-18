@@ -9,13 +9,13 @@ import SkipIcon from "src/web/components/CTS/SkipIcon";
 import MenuContent from "src/web/components/CTS/MenuContent";
 import MotionDestruct from "src/web/components/MotionDestruct";
 import InteractSentence from "src/web/components/InteractSentence";
-
+import EnhanceOne from "./EnhanceOne"
 //ELEMENT
 import oneVid from "../../assets/Motion/Chap1_Naissance.mp4";
 import interactSound from '../../assets/Sound/Interaction.wav';
 
 const One = props => {
-  MotionDestruct("Blow on your microphone to spread pollen.", props.step);
+ // MotionDestruct("Blow on your microphone to spread pollen.", props.step);
 
   return (
     <div className="main-one-container">
@@ -38,4 +38,4 @@ const One = props => {
   );
 };
 
-export default One;
+export default EnhanceOne()(One);

@@ -203,7 +203,7 @@ export default class InteractionFive extends Interaction {
 
 
                 //FLOWER CHOICE
-                let arrayFlower = [flower1,flower2,flower3,flower4,flower5,flower6,flower7,flower8,flower9,flower10,flower11];
+                let arrayFlower = [flower1,flower2,flower4,flower5,flower6,flower7,flower8,flower9,flower10,flower11];
                 this.modelFlower;
 
                 if(this.getUserData()[0].movemento < 10) {
@@ -387,8 +387,8 @@ export default class InteractionFive extends Interaction {
                 scaleScoreSec = 1.1
             }
 
-            console.log('score',scoreInt1)
-            console.log('scale',scaleScore)
+            //console.log('score',scoreInt1)
+            //console.log('scale',scaleScore)
 
             //FAST FLOWER
             if(this.model.children.length < 16) {
@@ -402,7 +402,7 @@ export default class InteractionFive extends Interaction {
                     TweenMax.to(this.model.children[i].scale, 3, {x: scaleScore, y: scaleScore, y: scaleScore, ease: Back.easeInOut.config(1.4)});
                 }
                 for(let i=14; i<25;i++) {
-                    TweenMax.to(this.model.children[i].scale, 3, {x: scaleScoreSec, y: scaleScoreSec, y: scaleScoreSec, ease: Back.easeInOut.config(1.4)});
+                    //TweenMax.to(this.model.children[i].scale, 3, {x: scaleScoreSec, y: scaleScoreSec, y: scaleScoreSec, ease: Back.easeInOut.config(1.4)});
                 }
             }
 
