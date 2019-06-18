@@ -74,6 +74,23 @@ let MotionDestruct = (sentence, step) => {
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(saveIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+
+                        setTimeout(()=> {
+                            TweenMax.to(data,2,{opacity:1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
+                        },3000)
+                        
+                        data.classList.remove("unscale")
+                        data.classList.add("megarescale")
+                        
+                        //TIME SPEAK DATA
+                        setTimeout(()=>{
+                            data.classList.remove("megarescale")
+                            data.classList.add("end")
+                            setTimeout(()=>{
+                                data.classList.add("unscale")
+                            },1000)
+                        },17000)
+
                     } else {
                         //Remove Motion at end
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
@@ -86,6 +103,7 @@ let MotionDestruct = (sentence, step) => {
                     TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
                     TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                     TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+                    TweenMax.to(data,1,{opacity: 1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
                 }
 
                 //console.log('FIRST:', this.step)

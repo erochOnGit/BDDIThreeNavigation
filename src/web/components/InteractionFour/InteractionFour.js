@@ -129,7 +129,7 @@ export default class InteractionFour extends Interaction {
     this.video.autoplay = true;
     this.video.loop = true;
     this.video.muted = true;
-    this.video.style.opacity = 1;
+    this.video.style.opacity = 0;
     this.video.style.position = "fixed";
     this.video.style.top = 0;
 

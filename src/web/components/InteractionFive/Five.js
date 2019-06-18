@@ -47,7 +47,6 @@ const Five = props => {
       {props.rotated ? (
         <MenuSvg
           onClick={() => {
-            console.log("iTOBGLE tnaezf");
             props.toggleCamera();
           }}
         />
@@ -63,8 +62,8 @@ const Five = props => {
       <div className="transition-in" />
       <div className="transition-out" />
       <div className="title-container">
-        <h1>Desire</h1>
-        <p>Chapter II</p>
+        <h1></h1>
+        <p></p>
       </div>
     </div>
   );

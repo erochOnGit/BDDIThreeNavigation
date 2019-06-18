@@ -10,7 +10,7 @@ const EnhanceFour = () =>
   compose(
       lifecycle({
           componentDidMount(){
-              MotionDestruct('Make gestures in front of the camera to reveal your reflection.', this.props.step);
+              MotionDestruct('Move your face in front of the camera to reveal your reflection.', this.props.step);
           }
       })
   );

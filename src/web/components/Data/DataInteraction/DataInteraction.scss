@@ -110,7 +110,9 @@
     margin-left: 50vw;
     margin-top: 50vh;
     transform: translate(-50%, -50%) scale(3);
-
+  &.megarescale{
+    transform: translate(-50%, -50%) scale(8);
+  }
     .circle {
       border: 0.1px solid white;
       width: 4px;
@@ -131,6 +133,7 @@
         &-up {
           top: 5.7px;
           left: 72px;
+
         }
         &-down {
           bottom: 10px;
@@ -209,5 +212,8 @@
     transform: scale(0.8) translate(-50%);
     bottom: -20px;
     cursor: pointer;
+  }
+  &.end{
+    animation: fadeInFadeOut 2s ease-in-out forwards;
   }
 }
