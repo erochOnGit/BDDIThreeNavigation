@@ -54,9 +54,10 @@
       height: 70px;
       position: absolute;
       width: 100%;
-      margin-left: 300px;
+      width: 300px;
+      margin-left: 50%;
       margin-top: 50vh;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(200px);
 
       span {
         width: unset;
@@ -74,10 +75,11 @@
       flex-direction: column;
       height: 70px;
       position: absolute;
-      width: 100%;
-      margin-left: -300px;
+      width: 300px;
+      margin-left: 50%;
       margin-top: 50vh;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(-500px);
+      
       span {
         width: unset;
       }
@@ -108,7 +110,9 @@
     margin-left: 50vw;
     margin-top: 50vh;
     transform: translate(-50%, -50%) scale(3);
-
+  &.megarescale{
+    transform: translate(-50%, -50%) scale(8);
+  }
     .circle {
       border: 0.1px solid white;
       width: 4px;
@@ -129,6 +133,7 @@
         &-up {
           top: 5.7px;
           left: 72px;
+
         }
         &-down {
           bottom: 10px;
@@ -207,5 +212,8 @@
     transform: scale(0.8) translate(-50%);
     bottom: -20px;
     cursor: pointer;
+  }
+  &.end{
+    animation: fadeInFadeOut 2s ease-in-out forwards;
   }
 }

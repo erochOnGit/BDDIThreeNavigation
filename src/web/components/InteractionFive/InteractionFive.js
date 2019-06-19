@@ -195,12 +195,10 @@ export default class InteractionFive extends Interaction {
 
                 console.log('Global score: ', globalScore)
 
-                let numberScore = document.createElement("div");
+                /*let numberScore = document.createElement("div");
                 numberScore.innerHTML = globalScore;
                 numberScore.classList.add('global-score');
-                document.querySelector('body').appendChild(numberScore);
-
-
+                document.querySelector('body').appendChild(numberScore);*/
 
                 //FLOWER CHOICE
                 let arrayFlower = [flower1,flower2,flower4,flower5,flower6,flower7,flower8,flower9,flower10,flower11];

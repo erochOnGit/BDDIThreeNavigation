@@ -10,17 +10,16 @@ let MotionDestruct = (sentence, step) => {
     }
     setTimeout(function() {
         let vidElem = document.querySelector('.video-player video');
-        let videoContainer = document.querySelector('.video-player');
+        let videoPlayer = document.querySelector('.video-player');
+        let videoContainer = document.querySelector('.video-container');
         let skipIcon = document.querySelector('.skip-icon');
         let nextIcon = document.querySelector('.next-icon');
         let container = document.querySelector('.main-one-container');
         let saveIcon = document.querySelector('.save-icon');
+        let data = document.querySelector('.data');
 
         InteractSentence(object.sentence);
-
-        //console.log('AAAHAHAHAHAHAHA', this.step)
-        //console.log('AAAHAHAHAHAHAHA', this, object, object.step)
-
+        
         if (vidElem) {
             vidElem.addEventListener("ended", () => {
                 if(videoContainer.style.opacity == 0) {
@@ -73,19 +72,38 @@ let MotionDestruct = (sentence, step) => {
                 if (this.step) {
                     if (this.step == 4) {
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                        TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                        TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(saveIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+
+                        setTimeout(()=> {
+                            TweenMax.to(data,2,{opacity:1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
+                        },3000)
+                        
+                        data.classList.remove("unscale")
+                        data.classList.add("megarescale")
+                        
+                        //TIME SPEAK DATA
+                        setTimeout(()=>{
+                            data.classList.remove("megarescale")
+                            data.classList.add("end")
+                            setTimeout(()=>{
+                                data.classList.add("unscale")
+                            },1000)
+                        },17000)
+
                     } else {
                         //Remove Motion at end
                         TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                        TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                        TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                         TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+                        TweenMax.to(data,1,{opacity: 1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
                     }
                 } else {
                     //Remove Motion at end
                     TweenMax.to(skipIcon, 1, {opacity: 0, ease: Sine.easeOut});
-                    TweenMax.to(videoContainer, 1, {opacity: 0, ease: Sine.easeOut});
+                    TweenMax.to(videoPlayer, 1, {opacity: 0, ease: Sine.easeOut});
                     TweenMax.to(nextIcon, 1, {opacity: 1, visibility: 'visible', ease: Sine.easeOut});
+                    TweenMax.to(data,1,{opacity: 1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
                 }
 
                 //console.log('FIRST:', this.step)

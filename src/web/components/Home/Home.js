@@ -49,6 +49,11 @@ const Home = props => {
         setTimeout(function() {
             props.setStep(0)
         },500);
+        setTimeout(function() {
+            console.log("nié?")
+            let data = document.querySelector('.data');
+            TweenMax.to(data,1,{opacity: 0,zIndex:0,visibility: 'hidden', ease: Sine.easeOut})
+        },600)
 
         //Sound Transition
         let audioElem = document.querySelector('audio');

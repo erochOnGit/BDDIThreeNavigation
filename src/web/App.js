@@ -18,14 +18,15 @@ const App = props => {
     let video = document.querySelector(".video-container video");
     let width = window.innerWidth;
     let height = window.innerHeight;
-
-    if (width / height < 1.8) {
-      video.style.width = "auto";
-      video.style.height = "100%";
-    } else {
-      video.style.width = "100%";
-      video.style.height = "auto";
-    }
+if(video){
+  if (width / height < 1.8) {
+    video.style.width = "auto";
+    video.style.height = "100%";
+  } else {
+    video.style.width = "100%";
+    video.style.height = "auto";
+  }
+}
     window.addEventListener("resize", () => {
       let width = window.innerWidth;
       let height = window.innerHeight;
@@ -115,6 +116,7 @@ const App = props => {
           onClick={() => {
             let transitionOut = document.querySelector(".transition-out");
             let nextIcon = document.querySelector(".next-icon");
+            let data = document.querySelector(".data");
 
             TweenMax.to(transitionOut, 1, {
               opacity: 1,
@@ -124,6 +126,12 @@ const App = props => {
             TweenMax.to(nextIcon, 1, {
               opacity: 0,
               visibility: "hidden",
+              ease: Sine.easeOut
+            });
+            TweenMax.to(data, 1, {
+              opacity: 0,
+              visibility: "hidden",
+              zIndex:0,
               ease: Sine.easeOut
             });
 
