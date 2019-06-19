@@ -358,7 +358,7 @@ export default class InteractionFive extends Interaction {
             this.tweening = true;
         }
 
-        //RESCALE FLOWER WITH DATA
+        /*//RESCALE FLOWER WITH DATA
         if(this.rescale == true) {
 
             let scoreInt1 = this.getUserData()[0].movemento
@@ -407,7 +407,7 @@ export default class InteractionFive extends Interaction {
             }
 
             this.rescale = false
-        }
+        }*/
 
         //ACTIVE FLOATING FLOWER
         if(this.float == true) {
