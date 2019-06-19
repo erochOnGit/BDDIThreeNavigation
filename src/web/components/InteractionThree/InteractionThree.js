@@ -5,6 +5,8 @@ import dat from "dat.gui";
 import Microphone from "./Microphone/Microphone";
 import Landscape from "./Landscape/Landscape";
 import Stem from "./Stem/Stem";
+import {TweenMax} from "gsap/TweenMax";
+
 
 export default class InteractionThree extends Interaction {
   constructor() {
@@ -130,12 +132,40 @@ export default class InteractionThree extends Interaction {
       });
       updateUserData(userDataUpdate);
     }
-    this.rings.forEach((ring, index) => {
-      ring.update(
-        time,
-        this.mic.spectrum[Math.round((index / 50) * 511)] * 0.001 || 0,
-        this.mic.volume || 0
-      );
-    });
+      if (
+          document.querySelector(".video-container").style.opacity < "0.8" ||
+          document.querySelector(".video-player").style.opacity < "0.8"
+      ) {
+          if (this.mic.volume < 30) {
+              this.rings.forEach((ring, index) => {
+                  TweenMax.to(ring.mesh.scale, 1.3, {x: 1, y: 1, z: 1, ease: Sine.easeOut})
+                  ring.update(
+                      time,
+                      this.mic.spectrum[Math.round((index / 50) * 511)] * 0.001 || 0,
+                      this.mic.volume * .7 || 0
+                  );
+              });
+          }
+          if (this.mic.volume > 30 && this.mic.volume < 80) {
+              this.rings.forEach((ring, index) => {
+                  TweenMax.to(ring.mesh.scale, 1.3, {x: 1.1, y: 1.1, z: 1.1, ease: Sine.easeOut})
+                  ring.update(
+                      time,
+                      this.mic.spectrum[Math.round((index / 50) * 511)] * 0.001 || 0,
+                      this.mic.volume * 1.2 || 0
+                  );
+              });
+          }
+          if (this.mic.volume > 80) {
+              this.rings.forEach((ring, index) => {
+                  TweenMax.to(ring.mesh.scale, 1.3, {x: 1.2, y: 1.2, z: 1.2, ease: Sine.easeOut})
+                  ring.update(
+                      time,
+                      this.mic.spectrum[Math.round((index / 50) * 511)] * 0.001 || 0,
+                      this.mic.volume * 2 || 0
+                  );
+              });
+          }
+      }
   }
 }

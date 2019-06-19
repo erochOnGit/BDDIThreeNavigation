@@ -163,7 +163,7 @@ const EnhanceProgressCircle = props =>
           ) {
             if (this.props.circle.props.strokeDashoffset > 0) {
               this.props.setProgress(
-                this.props.userData[this.props.finishState - 1].movemento * 2
+                this.props.userData[this.props.finishState - 1].movemento * 10
               );
               this.props.setLastMovemento(
                 this.props.userData[this.props.finishState - 1].movemento

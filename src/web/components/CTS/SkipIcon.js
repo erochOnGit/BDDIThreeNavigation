@@ -30,15 +30,18 @@ const SkipIcon = props => {
                 TweenMax.to(data,2,{opacity:1,zIndex:30,visibility: 'visible', ease: Sine.easeOut})
             },3000)
             
+            data.classList.add('skipped')
             data.classList.remove("unscale")
             data.classList.add("megarescale")
-            
             //TIME SPEAK DATA
             setTimeout(()=>{
                 data.classList.remove("megarescale")
                 data.classList.add("end")
                 setTimeout(()=>{
                     data.classList.add("unscale")
+                    setTimeout(()=> {
+                        data.classList.remove('end')
+                    },1000)
                 },1000)
             },17000)
             

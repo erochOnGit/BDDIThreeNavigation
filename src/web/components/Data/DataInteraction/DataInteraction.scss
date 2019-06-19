@@ -6,6 +6,7 @@
     transition: opacity 0.2s ease-in-out;
     z-index: 32;
     cursor: pointer;
+    z-index: 200;
 
     h3 {
       font-family: MadeCanvas;
@@ -111,7 +112,7 @@
     margin-top: 50vh;
     transform: translate(-50%, -50%) scale(3);
   &.megarescale{
-    transform: translate(-50%, -50%) scale(8);
+    transform: translate(-50%, -50%) scale(6.5);
   }
     .circle {
       border: 0.1px solid white;

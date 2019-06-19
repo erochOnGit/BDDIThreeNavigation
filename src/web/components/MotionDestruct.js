@@ -83,13 +83,18 @@ let MotionDestruct = (sentence, step) => {
                         data.classList.add("megarescale")
                         
                         //TIME SPEAK DATA
-                        setTimeout(()=>{
-                            data.classList.remove("megarescale")
-                            data.classList.add("end")
-                            setTimeout(()=>{
-                                data.classList.add("unscale")
-                            },1000)
-                        },17000)
+                        console.log('motion destruct')
+                        let skip = document.querySelector('.skipped')
+                        if(!skip) {
+                            console.log('passed')
+                            setTimeout(() => {
+                                data.classList.remove("megarescale")
+                                data.classList.add("end")
+                                setTimeout(() => {
+                                    data.classList.add("unscale")
+                                }, 1000)
+                            }, 17000)
+                        }
 
                     } else {
                         //Remove Motion at end
