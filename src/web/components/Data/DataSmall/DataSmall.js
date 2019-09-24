@@ -14,11 +14,11 @@ let DataSmall = props => {
   return (
     <div
       className="data"
-      onClick={
+      // onClick={
         // props.step < 2 ?
-        openInteractionSix(props)
+        //openInteractionSix(props)
         //  : null
-      }
+      // } 
     >
       {(() => {
         if (props.step === 0) {

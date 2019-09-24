@@ -56,11 +56,14 @@ let DataInteraction = props => {
             sub={interactionName.sub}
           />
         ))}
+        {console.log(props.sizeState)}
       <div
         className={`data scale ${props.sizeState === "big" ? "" : "unscale"}`}
         onClick={() => {
-          props.toggleCamera();
-          props.setSizeState(props.sizeState === "big" ? "small" : "big");
+          if(props.sizeState === "small"){
+            props.toggleCamera();
+            props.setSizeState(props.sizeState === "big" ? "small" : "big");
+          }
         }}
       >
         {props.sizeState === "big" &&

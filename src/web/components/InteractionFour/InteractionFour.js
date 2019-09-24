@@ -1,4 +1,6 @@
 import Interaction from "../ThreeContainer/Interaction";
+import InkSpreading from "./InkSpreading";
+import leaves from "src/web/assets/Texture/alphaMap/leavesAlphaMap.jpg";
 import RorchachTile from "./Rorchach/RorchachTile";
 // import RorchachTile from "./Rorchach/RorchachShaderRendering";
 import Fluid from "./Rorchach/Fluid";
@@ -38,33 +40,47 @@ export default class InteractionFour extends Interaction {
     /**
      * obj
      */
-    this.fluid = new Fluid(200, 8.2, 0, 0.00000002);
-    this.rorchach = new RorchachTile({
-      inversed: true,
-      position: new THREE.Vector3(-0.5, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid,
-      renderer
-    });
-    this.objects.push(this.rorchach);
-    this.rorchach2 = new RorchachTile({
-      inversed: false,
-      position: new THREE.Vector3(0.5, 0, 0.1),
-      rotation: new THREE.Vector3(0, 0, 0),
-      width: 1,
-      height: 1,
-      rows: 20,
-      columns: 20,
-      fluid: this.fluid,
-      renderer
-    });
-    this.objects.push(this.rorchach2);
+    this.inkGreen = new InkSpreading({ renderer, color: 0x00ff00, seed: 2.5 });
+    this.objects.push(this.inkGreen);
+    this.inkGreen.mesh.renderOrder = 1;
+    this.inkBlue = new InkSpreading({ renderer, color: 0x0000ff, seed: 5 });
+    this.objects.push(this.inkBlue);
+    this.inkBlue.mesh.renderOrder = 2;
+    this.inkBlue.mesh.position.z = +0.1;
+    this.inkRed = new InkSpreading({ renderer, color: 0xff0000, seed: 7.5 });
+    this.objects.push(this.inkRed);
+    this.inkRed.mesh.renderOrder = 3;
+    this.inkRed.mesh.position.z = +0.2;
+
+    // this.fluid = new Fluid(200, 8.2, 0, 0.00000002);
+    // this.rorchach = new RorchachTile({
+    //   inversed: true,
+    //   position: new THREE.Vector3(-0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(this.rorchach);
+    // this.rorchach2 = new RorchachTile({
+    //   inversed: false,
+    //   position: new THREE.Vector3(0.5, 0, 0.1),
+    //   rotation: new THREE.Vector3(0, 0, 0),
+    //   width: 1,
+    //   height: 1,
+    //   rows: 20,
+    //   columns: 20,
+    //   fluid: this.fluid,
+    //   renderer
+    // });
+    // this.objects.push(this.rorchach2);
     //LANDSCAPE
     this.landscape = new Landscape();
+    this.landscape.mesh.renderOrder = 0;
+
     this.objects.push(this.landscape);
     // let rorchach = new RorchachTile({
     //   renderer,
@@ -110,11 +126,16 @@ export default class InteractionFour extends Interaction {
      */
     this.trackings.push({
       start: () => {
-        let dist = camera.position.z - this.rorchach.mesh.position.z;
-        let height = 1; // desired height to fit
-        camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-        camera.updateProjectionMatrix();
+        // let dist = camera.position.z - this.rorchach.mesh.position.z;
+        // let height = 1; // desired height to fit
+        // camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+        // camera.updateProjectionMatrix();
         // fitCameraToObject(camera, this.rorchach.mesh, 0);
+        // let dist = camera.position.z - this.inkGreen.mesh.position.z;
+        // let height = 1; // desired height to fit
+        // camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+        // camera.updateProjectionMatrix();
+        // fitCameraToObject(camera, this.inkGreen.mesh, 0);
       },
       stop: () => {
         // this.fluid.monWorker.terminate();
@@ -163,7 +184,16 @@ export default class InteractionFour extends Interaction {
                 this.updateUserData(userDataUpdate);
               }
               //update pointer
-              this.rorchach.updatePointer({
+
+              this.inkGreen.updatePointer({
+                x: mapping(rect.x, 0, 230, 0.5, -0.5),
+                y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              });
+              this.inkBlue.updatePointer({
+                x: mapping(rect.x, 0, 230, 0.5, -0.5),
+                y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              });
+              this.inkRed.updatePointer({
                 x: mapping(rect.x, 0, 230, 0.5, -0.5),
                 y: mapping(rect.y, 0, 140, 0.5, -0.5)
               });
@@ -177,11 +207,16 @@ export default class InteractionFour extends Interaction {
     });
   }
   onResize(camera) {
-    let cam = this.camera || camera;
-    let dist = cam.position.z - this.rorchach.mesh.position.z;
-    let height = 1; // desired height to fit
-    cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-    cam.updateProjectionMatrix();
+    // let cam = this.camera || camera;
+    // let dist = cam.position.z - this.rorchach.mesh.position.z;
+    // let height = 1; // desired height to fit
+    // cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+    // cam.updateProjectionMatrix();
+    // let cam = this.camera || camera;
+    // let dist = cam.position.z - this.inkGreen.mesh.position.z;
+    // let height = 1; // desired height to fit
+    // cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
+    // cam.updateProjectionMatrix();
   }
   mouseClickHandler(canvasThis) {
     let onMouseClick = event => {
@@ -192,20 +227,31 @@ export default class InteractionFour extends Interaction {
       canvasThis.intersects = canvasThis.raycaster.intersectObjects(
         canvasThis.scene.children
       );
-      let rorchachTiles = this.objects.filter(obj => {
-        return obj instanceof RorchachTile;
+      let ink = this.objects.filter(obj => {
+        return obj instanceof InkSpreading;
       });
       for (var i = 0; i < canvasThis.intersects.length; i++) {
-        for (let j = 0; j < rorchachTiles.length; j++) {
-          if (
-            rorchachTiles[j] &&
-            canvasThis.intersects[i].object.uuid == rorchachTiles[j].id
-          ) {
-            rorchachTiles[j].updatePointer(canvasThis.intersects[i].point);
+        for (let j = 0; j < ink.length; j++) {
+          if (ink[j] && canvasThis.intersects[i].object.uuid == ink[j].id) {
+            ink[j].updatePointer(canvasThis.intersects[i].point);
           }
         }
       }
       canvasThis.intersects = [];
+      // let rorchachTiles = this.objects.filter(obj => {
+      //   return obj instanceof RorchachTile;
+      // });
+      // for (var i = 0; i < canvasThis.intersects.length; i++) {
+      //   for (let j = 0; j < rorchachTiles.length; j++) {
+      //     if (
+      //       rorchachTiles[j] &&
+      //       canvasThis.intersects[i].object.uuid == rorchachTiles[j].id
+      //     ) {
+      //       rorchachTiles[j].updatePointer(canvasThis.intersects[i].point);
+      //     }
+      //   }
+      // }
+      // canvasThis.intersects = [];
     };
     return onMouseClick;
   }
@@ -214,5 +260,6 @@ export default class InteractionFour extends Interaction {
     //LANDSCAPE ANIMATION
     this.landscape.update();
     this.objects.forEach(object => object.update(time));
+    // this.ink.update(time);
   }
 }

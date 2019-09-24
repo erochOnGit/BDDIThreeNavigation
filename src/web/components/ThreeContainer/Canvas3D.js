@@ -73,6 +73,7 @@ export default class Canvas3D {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
 
+
     /*document.querySelector('.screen').addEventListener('click', ()=>{
       console.log('hola')
         let img = window.open( renderer.domElement.toDataURL( 'image/png' ), 'download' );
@@ -155,9 +156,9 @@ export default class Canvas3D {
     this.container.style.display = "block";
   }
   createInteraction(success) {
-    this.interactions.push(new InteractionOne({ camera: this.camera }));
-    this.interactions.push(new InteractionTwo({ camera: this.camera }));
-    this.interactions.push(new InteractionThree());
+    // this.interactions.push(new InteractionOne({ camera: this.camera }));
+    // this.interactions.push(new InteractionTwo({ camera: this.camera }));
+    // this.interactions.push(new InteractionThree());
     this.interactions.push(
       new InteractionFour({
         renderer: this.renderer,
