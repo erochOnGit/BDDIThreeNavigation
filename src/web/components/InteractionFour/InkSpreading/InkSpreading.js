@@ -74,7 +74,7 @@ export default class InkSpreading {
       let pointNeeded = Math.round(
         Math.abs((x - this.previousPosition.x) * 10)
       );
-      console.log(pointNeeded);
+      console.log("pointNeeded",pointNeeded);
       for (let i = 0; i < pointNeeded; i++) {
         console.log(pointNeeded);
         this.alphaMaterial.uniforms.pointer.value = new THREE.Vector2(
