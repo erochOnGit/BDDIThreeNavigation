@@ -23,6 +23,7 @@ export default class RorchachTile {
     this.columns = columns || 10;
     this.geometry = new THREE.PlaneGeometry(width, height, rows, columns);
     // this.material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    console.log(fluid)
     this.fluid = fluid;
     this.textureWidth = this.fluid.N;
     this.textureHeight = this.fluid.N;
