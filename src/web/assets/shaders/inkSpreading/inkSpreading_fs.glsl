@@ -12,7 +12,7 @@ vec4 get(sampler2D tex,float x,float y){
 void main(){
     vec4 backbuffer=get(inputTexture,0.,0.);
     vec4 init=get(initTexture,0.,0.);
-    
+     
     float sum=
     get(inputTexture,-1./250.,-1./250.).r*.15+
     get(inputTexture,-1./250.,0./250.).r*.1+
@@ -22,6 +22,7 @@ void main(){
     get(inputTexture,1./250.,-1./250.).r*.15+
     get(inputTexture,1./250.,0./250.).r*.1+
     get(inputTexture,1./250.,1./250.).r*.15;
+    
     
     float tap=.02;
     vec3 finalSum=vec3(0);
