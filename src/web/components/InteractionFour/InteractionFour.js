@@ -40,15 +40,17 @@ export default class InteractionFour extends Interaction {
     /**
      * obj
      */
-    this.inkGreen = new InkSpreading({ renderer, color: 0x00ff00, seed: 2.5 });
-    this.objects.push(this.inkGreen);
-    this.inkGreen.mesh.renderOrder = 1;
-    this.inkBlue = new InkSpreading({ renderer, color: 0x0000ff, seed: 5 });
-    this.objects.push(this.inkBlue);
-    this.inkBlue.mesh.renderOrder = 2;
-    this.inkBlue.mesh.position.z = +0.1;
+    // this.inkGreen = new InkSpreading({ renderer, color: 0x00ff00, seed: 2.5 });
+    // this.objects.push(this.inkGreen);
+    // this.inkGreen.mesh.renderOrder = 1;
+    // this.inkBlue = new InkSpreading({ renderer, color: 0x0000ff, seed: 5 });
+    // this.objects.push(this.inkBlue);
+    // this.inkBlue.mesh.renderOrder = 2;
+    // this.inkBlue.mesh.position.z = +0.1;
     this.inkRed = new InkSpreading({ renderer, color: 0xff0000, seed: 7.5 });
     this.objects.push(this.inkRed);
+    this.objects.push({ mesh: this.inkRed.meshAlpha, update: () => {} });
+    this.objects.push({ mesh: this.inkRed.meshColor, update: () => {} });
     this.inkRed.mesh.renderOrder = 3;
     this.inkRed.mesh.position.z = +0.2;
 
@@ -185,14 +187,14 @@ export default class InteractionFour extends Interaction {
               }
               //update pointer
 
-              this.inkGreen.updatePointer({
-                x: mapping(rect.x, 0, 230, 0.5, -0.5),
-                y: mapping(rect.y, 0, 140, 0.5, -0.5)
-              });
-              this.inkBlue.updatePointer({
-                x: mapping(rect.x, 0, 230, 0.5, -0.5),
-                y: mapping(rect.y, 0, 140, 0.5, -0.5)
-              });
+              // this.inkGreen.updatePointer({
+              //   x: mapping(rect.x, 0, 230, 0.5, -0.5),
+              //   y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              // });
+              // this.inkBlue.updatePointer({
+              //   x: mapping(rect.x, 0, 230, 0.5, -0.5),
+              //   y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              // });
               this.inkRed.updatePointer({
                 x: mapping(rect.x, 0, 230, 0.5, -0.5),
                 y: mapping(rect.y, 0, 140, 0.5, -0.5)

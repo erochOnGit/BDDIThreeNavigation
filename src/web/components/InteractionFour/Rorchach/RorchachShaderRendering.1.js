@@ -52,6 +52,7 @@ export default class RorchachTile {
       this.classicShaderMaterial
     );
     this.densitySim.render();
+    
     this.material = new THREE.MeshPhongMaterial({
       map: this.densitySim.fbos[1].texture
     });
