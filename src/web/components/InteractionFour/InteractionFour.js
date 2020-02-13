@@ -1,5 +1,7 @@
 import Interaction from "../ThreeContainer/Interaction";
 import InkSpreading from "./InkSpreading";
+import FluidEngine from "./FluidEngine";
+
 import leaves from "src/web/assets/Texture/alphaMap/leavesAlphaMap.jpg";
 import RorchachTile from "./Rorchach/RorchachTile";
 // import RorchachTile from "./Rorchach/RorchachShaderRendering";
@@ -37,9 +39,23 @@ export default class InteractionFour extends Interaction {
     this.getInteractionIndex =
       getInteractionIndex ||
       console.error("can't find the current index in interaction 4");
+    this.renderer = renderer;
+
     /**
      * obj
      */
+    this.quad = {
+      mesh: new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(2, 2),
+        // new THREE.PlaneGeometry( 5, 20, 32 ),
+        new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide })
+      ),
+      update: () => {}
+    };
+    console.log(this.quad);
+    this.objects.push(this.quad);
+    this.fluidEngine = new FluidEngine({ renderer, quad: this.quad });
+    console.log(this.fluidEngine);
     // this.inkGreen = new InkSpreading({ renderer, color: 0x00ff00, seed: 2.5 });
     // this.objects.push(this.inkGreen);
     // this.inkGreen.mesh.renderOrder = 1;
@@ -47,12 +63,15 @@ export default class InteractionFour extends Interaction {
     // this.objects.push(this.inkBlue);
     // this.inkBlue.mesh.renderOrder = 2;
     // this.inkBlue.mesh.position.z = +0.1;
-    this.inkRed = new InkSpreading({ renderer, color: 0xff0000, seed: 7.5 });
-    this.objects.push(this.inkRed);
-    this.objects.push({ mesh: this.inkRed.meshAlpha, update: () => {} });
-    this.objects.push({ mesh: this.inkRed.meshColor, update: () => {} });
-    this.inkRed.mesh.renderOrder = 3;
-    this.inkRed.mesh.position.z = +0.2;
+
+    //------------
+    // this.inkRed = new InkSpreading({ renderer, color: 0xff0000, seed: 7.5 });
+    // this.objects.push(this.inkRed);
+    // this.objects.push({ mesh: this.inkRed.meshAlpha, update: () => {} });
+    // this.objects.push({ mesh: this.inkRed.meshColor, update: () => {} });
+    // this.inkRed.mesh.renderOrder = 3;
+    // this.inkRed.mesh.position.z = +0.2;
+    //------------
 
     // this.fluid = new Fluid(200, 8.2, 0, 0.00000002);
     // this.rorchach = new RorchachTile({
@@ -195,10 +214,12 @@ export default class InteractionFour extends Interaction {
               //   x: mapping(rect.x, 0, 230, 0.5, -0.5),
               //   y: mapping(rect.y, 0, 140, 0.5, -0.5)
               // });
-              this.inkRed.updatePointer({
-                x: mapping(rect.x, 0, 230, 0.5, -0.5),
-                y: mapping(rect.y, 0, 140, 0.5, -0.5)
-              });
+              //----------------
+              // this.inkRed.updatePointer({
+              //   x: mapping(rect.x, 0, 230, 0.5, -0.5),
+              //   y: mapping(rect.y, 0, 140, 0.5, -0.5)
+              // });
+              //----------------
             }.bind(this)
           );
         });
@@ -262,6 +283,8 @@ export default class InteractionFour extends Interaction {
     //LANDSCAPE ANIMATION
     this.landscape.update();
     this.objects.forEach(object => object.update(time));
+    this.fluidEngine.update(this.renderer);
     // this.ink.update(time);
+    // console.log(this.fluidEngine);
   }
 }

@@ -8,7 +8,7 @@ import InteractionSix from "../InteractionSix/";
 import InteractionTest from "../InteractionTest/";
 import Interaction from "./Interaction.js";
 import dat from "dat.gui";
-var OrbitControls = require("three-orbit-controls")(THREE);
+// var OrbitControls = require("three-orbit-controls")(THREE);
 
 //POST PROC
 import "three/examples/js/postprocessing/EffectComposer";
@@ -62,17 +62,18 @@ export default class Canvas3D {
     var size = 10;
     var divisions = 10;
 
-    // var gridHelper = new THREE.GridHelper(size, divisions);
-    // this.scene.add(gridHelper);
+    var gridHelper = new THREE.GridHelper(size, divisions);
+    this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       preserveDrawingBuffer: true
     });
+    // TODO to put everywhere
+    this.renderer.autoClear = false;
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
-
 
     /*document.querySelector('.screen').addEventListener('click', ()=>{
       console.log('hola')
@@ -131,8 +132,8 @@ export default class Canvas3D {
       this.onWindowResize();
       this.clock = new THREE.Clock();
       this.clock.start();
-      let gl = this.renderer.context;
-      console.log(gl.min_capability_mode);
+      //let gl = this.renderer.context;
+      //console.log(gl.min_capability_mode);
       this.renderer.setAnimationLoop(this.render.bind(this));
     });
   }
@@ -146,8 +147,8 @@ export default class Canvas3D {
       this.interactionsIndex
     );
     // console.log(this.scene);
-    // this.renderer.render(this.scene, this.camera);
-    composer.render(); //Bloom
+    this.renderer.render(this.scene, this.camera);
+    //composer.render(); //Bloom
   }
   hide() {
     this.container.style.display = "none";

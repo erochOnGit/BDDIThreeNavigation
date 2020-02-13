@@ -2,7 +2,7 @@
   {
     "name": "interaction1",
     "camera": {
-      "position": [0, 0, 3.5],
+      "position": [0, 0, 2.0],
       "rotation": [0, 0, 0]
     },
     "bloom": {
