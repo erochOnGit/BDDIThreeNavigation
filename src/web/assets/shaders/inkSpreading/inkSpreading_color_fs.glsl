@@ -127,9 +127,12 @@ float snoise(vec3 v){
                     float distancePointerPixel=distance(pointer.xy,vUv.xy);
                     if(distancePointerPixel<tap){
 
-                        sumR=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumR,.3);
-                        sumG=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumG,.5);
-                        sumB=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumB,.1);
+                        // sumR=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumR,.3);
+                        // sumG=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumG,.5);
+                        // sumB=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(time,vUv.x*10.,vUv.y*10.)+0.5)),sumB,.1);
+                        sumR=mix(abs(cos(time/2.)),sumR,.3);
+                        sumG=mix(abs(cos(time/2.)),sumG,.5);
+                        sumB=mix(abs(cos(time/2.)),sumB,.1);
                     }
                 }
                 finalSum=vec3(
