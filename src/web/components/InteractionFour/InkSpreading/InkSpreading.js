@@ -1,4 +1,5 @@
 import inkSpreading_vs from "src/web/assets/shaders/inkSpreading/inkSpreading_vs.glsl";
+import inkSpreading_field_fs from "src/web/assets/shaders/inkSpreading/inkSpreading_field_fs.glsl";
 import inkSpreading_alpha_fs from "src/web/assets/shaders/inkSpreading/inkSpreading_alpha_fs.glsl";
 import inkSpreading_color_fs from "src/web/assets/shaders/inkSpreading/inkSpreading_color_fs.glsl";
 import inkSpreading_fs from "src/web/assets/shaders/inkSpreading/inkSpreading_fs.glsl";
@@ -15,6 +16,7 @@ export default class InkSpreading {
     this.textureWidth = 2050;
     this.textureHeight = 2050;
     this.geometry = new THREE.PlaneGeometry(2, 2, 10, 10);
+    this.geometryXDoubled = new THREE.PlaneGeometry(4, 2, 10, 10);
     // this.material = new THREE.MeshBasicMaterial({
     //   // color: color,
     //   transparent: true
@@ -37,6 +39,7 @@ export default class InkSpreading {
         //inputTexture is the backbuffer
         inputTexture: { type: "t", value: null },
         initTexture: { type: "t", value: initTexture },
+        field: { type: "t", value: null },
         pointer: { value: new THREE.Vector2(0.5, 0.5) },
         time: { type: "f", value: this.time }
       },
@@ -76,6 +79,28 @@ export default class InkSpreading {
     );
     this.alphaFBO.render();
 
+    this.fieldMaterial = new THREE.RawShaderMaterial({
+      uniforms: {
+        //inputTexture is the backbuffer
+        inputTexture: { type: "t", value: null },
+        initTexture: { type: "t", value: initTexture },
+        pointer: { value: new THREE.Vector2(0.5, 0.5) },
+        previousPointer: { value: new THREE.Vector2(0.5, 0.5) },
+        time: { type: "f", value: this.time },
+      },
+      // side: THREE.BackSide,
+      transparent: true,
+      vertexShader: simulation_vs,
+      fragmentShader: inkSpreading_field_fs
+    });
+    this.fieldFBO = new GPUSim(
+      renderer,
+      this.textureWidth,
+      this.textureHeight,
+      this.fieldMaterial
+    );
+    this.fieldFBO.render();
+
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
         //inputTexture is the backbuffer
@@ -92,12 +117,14 @@ export default class InkSpreading {
       fragmentShader: inkSpreading_fs
     });
 
+    this.meshField = new THREE.Mesh(this.geometry, this.fieldMaterial);
+    this.meshField.position.set(-2.0, -1.2, 0);
     this.meshAlpha = new THREE.Mesh(this.geometry, this.alphaMaterial);
-    this.meshAlpha.position.set(1, 0, 0);
+    this.meshAlpha.position.set(2.5, 2, 0);
     this.meshColor = new THREE.Mesh(this.geometry, this.colorMaterial);
-    this.meshColor.position.set(2.5, 0, 0);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(-2, 0, 0);
+    this.meshColor.position.set(2.5, -1.0, 0);
+    this.mesh = new THREE.Mesh(this.geometryXDoubled, this.material);
+    this.mesh.position.set(0, 1., 0);
     this.id = this.mesh.uuid;
   }
   getEmptyData(width, height, size) {
@@ -110,6 +137,8 @@ export default class InkSpreading {
     let x = pos.x + 0.5;
     let y = pos.y + 0.5;
     this.colorMaterial.uniforms.pointer.value = new THREE.Vector2(x, y);
+    this.fieldMaterial.uniforms.pointer.value = new THREE.Vector2(x, y);
+    this.fieldFBO.render();
     this.colorFBO.render();
     if (this.previousPosition) {
       let multiplicator =
@@ -122,21 +151,26 @@ export default class InkSpreading {
           x + i,
           multiplicator * x + i
         );
+        this.fieldMaterial.uniforms.pointer.value = new THREE.Vector2(
+          x + i,
+          multiplicator * x + i
+        );
+        this.fieldFBO.render();
         this.colorFBO.render();
       }
+      this.fieldMaterial.uniforms.previousPointer.value = this.previousPosition;
     }
     this.previousPosition = { x, y };
   }
   update(time) {
+    this.fieldFBO.render();
+    let field = this.fieldFBO.fbos[this.fieldFBO.current].texture;
+    this.colorMaterial.uniforms.field.value = field;
     this.colorFBO.render();
-    let color = this.colorFBO.fbos[
-      this.colorFBO.current
-    ].texture;
+    let color = this.colorFBO.fbos[this.colorFBO.current].texture;
     this.material.uniforms.color.value = color;
     this.alphaFBO.render();
-    let alpha = this.alphaFBO.fbos[
-      this.alphaFBO.current
-    ].texture;
+    let alpha = this.alphaFBO.fbos[this.alphaFBO.current].texture;
     this.alphaMaterial.uniforms.color.value = color;
     this.material.uniforms.alpha.value = alpha;
     this.colorMaterial.uniforms.pointer.value = new THREE.Vector2(0.5, 0.5);

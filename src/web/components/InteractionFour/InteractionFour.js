@@ -51,6 +51,7 @@ export default class InteractionFour extends Interaction {
     this.objects.push(this.inkRed);
     this.objects.push({ mesh: this.inkRed.meshAlpha, update: () => {} });
     this.objects.push({ mesh: this.inkRed.meshColor, update: () => {} });
+    this.objects.push({ mesh: this.inkRed.meshField, update: () => {} });
     this.inkRed.mesh.renderOrder = 3;
     this.inkRed.mesh.position.z = +0.2;
 
@@ -133,11 +134,11 @@ export default class InteractionFour extends Interaction {
         // camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
         // camera.updateProjectionMatrix();
         // fitCameraToObject(camera, this.rorchach.mesh, 0);
-        // let dist = camera.position.z - this.inkGreen.mesh.position.z;
+        // let dist = camera.position.z - this.inkRed.mesh.position.z;
         // let height = 1; // desired height to fit
         // camera.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
         // camera.updateProjectionMatrix();
-        // fitCameraToObject(camera, this.inkGreen.mesh, 0);
+        // fitCameraToObject(camera, this.inkRed.mesh, 0);
       },
       stop: () => {
         // this.fluid.monWorker.terminate();
@@ -158,7 +159,7 @@ export default class InteractionFour extends Interaction {
 
     this.tracker = new window.tracking.ObjectTracker("face");
     this.tracker.setInitialScale(4);
-    this.tracker.setStepSize(0.5);
+    this.tracker.setStepSize(0.1);
     this.tracker.setEdgesDensity(0.1);
 
     this.trackings.push({
@@ -215,7 +216,7 @@ export default class InteractionFour extends Interaction {
     // cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
     // cam.updateProjectionMatrix();
     // let cam = this.camera || camera;
-    // let dist = cam.position.z - this.inkGreen.mesh.position.z;
+    // let dist = cam.position.z - this.inkRed.mesh.position.z;
     // let height = 1; // desired height to fit
     // cam.fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
     // cam.updateProjectionMatrix();
