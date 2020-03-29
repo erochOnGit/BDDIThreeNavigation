@@ -142,12 +142,20 @@ void main(){
             //sumG=mix(abs(cos(time/2.))+0.5,sumG,.5);
             //sumB=mix(abs(cos(time/2.1))+0.5,sumB,.1);
 
-            sumR=mix((abs(cos(time/2.5))+0.5),sumR,.3) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y + gl_FragColor.y,time)*100.);
-            sumG=mix((abs(cos(time/2.))+0.5),sumG,.5) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y+ gl_FragColor.y,time)*100.);
-            sumB=mix((abs(cos(time/2.1))+0.5),sumB,.1) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y+ gl_FragColor.y,time)*100.);
+            //sumR=mix((abs(cos(time/2.5))+0.5),sumR,.3) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y + gl_FragColor.y,time)*100.);
+            //sumG=mix((abs(cos(time/2.))+0.5),sumG,.5) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y+ gl_FragColor.y,time)*100.);
+            //sumB=mix((abs(cos(time/2.1))+0.5),sumB,.1) -snoise(vec3(currentField.x + gl_FragColor.x, currentField.y+ gl_FragColor.y,time)*100.);
             //sumR=mix((abs(cos(time/2.))+0.5)/2.,sumR,.3);
             //sumG=mix((abs(cos(time/2.))+0.5)/2.,sumG,.5);
             //sumB=mix((abs(cos(time/2.))+0.5)/2.,sumB,.1);
+
+         //   sumR=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,vUv.x*10.,vUv.y*10.)+0.5)),sumR,.3);
+         //   sumG=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,vUv.x*10.,vUv.y*10.)+0.5)),sumG,.5);
+         //   sumB=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,vUv.x*10.,vUv.y*10.)+0.5)),sumB,.1);
+           sumR=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,currentField.x*10.,currentField.y*10.)+0.5)),sumR,.3);
+            sumG=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,currentField.x*10.,currentField.y*10.)+0.5)),sumG,.5);
+            sumB=mix(abs(cos(time/2.)*3.)*abs(snoise(vec3(1.0,currentField.x*10.,currentField.y*10.)+0.5)),sumB,.1);
+            //devoir : mettre les valeur du champs de vecteur sur une seule valeur du noise et remapper les coordonés (vUv sur la gauche du pointeur jusqu'a sa droite)
         }
     }
     finalSum=vec3(
